@@ -1,6 +1,6 @@
 import './ButtonComponent.css';
 import Button from '@mui/material/Button';
-import { MouseEventHandler, useMemo } from 'react';
+import { MouseEventHandler } from 'react';
 
 interface propsInput {
     type?: "inherit" | "primary" | "secondary" | "success" | "error" | "info" | "warning" | undefined
