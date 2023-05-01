@@ -1,0 +1,41 @@
+.nav-options {
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+}
+
+.nav-option {
+    padding: 5px;
+    border-radius: 10px;
+    padding: 10px 0px 10px 20px;
+    margin: 10px 10px 0px 10px;
+    cursor: pointer;
+}
+
+.nav-options ul li {
+    padding: 10px 0px 10px 20px;
+    margin: 5px 10px 0px 10px;
+    border-radius: 10px;
+    text-indent: 10%;
+    list-style-type: none;
+    cursor: pointer;
+}
+
+.list-hide {
+    display: none;
+}
+
+.list-show {
+    animation-name: showItens;
+    animation-duration: 1s;
+}
+
+@keyframes showItens {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 100;
+    }
+}

@@ -1,0 +1,137 @@
+.pessoa-cadastro-container {
+    display: flex;
+    flex-direction: column;
+    background-color: antiquewhite;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+
+#foto {
+    margin: 10px;
+}
+
+.fields-container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(14, 1fr);
+}
+
+#codigo {
+    grid-column: 1 / span 3;
+    grid-row: 1;
+}
+
+#nome {
+    grid-column: 1 / span 4;
+    grid-row: 2;
+}
+
+#cpf {
+    grid-column: 5/span 2;
+    grid-row: 2;
+}
+
+#rg {
+    grid-column: 7/span 2;
+    grid-row: 2;
+}
+
+#dataNascimento {
+    grid-column: 9/span 2;
+    grid-row: 2;
+}
+
+#nacionalidadePais {
+    grid-column: 1/ span 2;
+    grid-row: 3;
+}
+
+#nacionalidadeEstado {
+    grid-column: 3/ span 2;
+    grid-row: 3;
+}
+
+#nacionalidadeMunicipio {
+    grid-column: 5/ span 2;
+    grid-row: 3;
+}
+
+#sexo {
+    grid-column: 7/ span 2;
+    grid-row: 3;
+}
+
+#estadoCivil {
+    grid-column: 9/ span 2;
+    grid-row: 3;
+}
+
+#tituloEleitorNumero {
+    grid-column: 1/ span 2;
+    grid-row: 4;
+}
+
+#tituloEleitorZona {
+    grid-column: 3/ span 2;
+    grid-row: 4;
+}
+
+#tituloEleitorEstado {
+    grid-column: 5/ span 2;
+    grid-row: 4;
+}
+
+#tituloEleitorExpedicao {
+    grid-column: 7/ span 2;
+    grid-row: 4;
+}
+
+#tituloEleitorSecao {
+    grid-column: 9/ span 2;
+    grid-row: 4;
+}
+
+#nomePai {
+    grid-column: 1/ span 4;
+    grid-row: 5;
+}
+
+#nomeMae {
+    grid-column: 5/ span 4;
+    grid-row: 5;
+}
+
+#contatos_enderecos_tabs {
+    grid-column: 1/ span 10;
+    grid-row: 6
+}
+
+#contatos_container {
+    margin: 10px 5px 5px 5px;
+    grid-column: 1/ span 10;
+    grid-row: 7/ span 7;
+}
+
+#enderecos_container {
+    margin: 10px 5px 5px 5px;
+    grid-column: 1/ span 10;
+    grid-row: 7/ span 7;
+}
+
+#contatos_enderecos_tabs>.MuiTabs-root>.MuiTabs-scroller {
+    height: 40px;
+}
+
+#btn_voltar {
+    grid-column: 9/ span 2;
+    grid-row: 14;
+    margin-left: 100px;
+
+}
+
+#btn_salvar {
+    grid-column: 9/ span 2;
+    grid-row: 14;
+    margin-left: 200px;
+}

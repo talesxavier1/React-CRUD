@@ -1,0 +1,40 @@
+#grid-container {
+    border-color: black;
+}
+
+.grid-container_565775cd>.MuiDataGrid-root>.MuiDataGrid-main>.MuiDataGrid-columnHeaders>.MuiDataGrid-columnHeadersInner>div>.MuiDataGrid-columnHeader {
+    border-right: 1px solid rgb(85, 85, 85);
+    border-top: 1px solid rgb(85, 85, 85);
+    border-bottom: 1px solid rgb(85, 85, 85);
+}
+
+.grid-container_565775cd>.MuiDataGrid-root>.MuiDataGrid-main>.MuiDataGrid-columnHeaders>.MuiDataGrid-columnHeadersInner>div>.MuiDataGrid-columnHeaderCheckbox {
+    border-left: 1px solid rgb(85, 85, 85);
+}
+
+.grid-container_565775cd>.MuiDataGrid-root>.MuiDataGrid-main>div>.MuiDataGrid-virtualScroller>.MuiDataGrid-virtualScrollerContent>.MuiDataGrid-virtualScrollerRenderZone>.MuiDataGrid-row>.MuiDataGrid-cell {
+    border-right: 1px solid rgb(85, 85, 85);
+    border-bottom: 1px solid rgb(85, 85, 85);
+}
+
+.grid-container_565775cd>.MuiDataGrid-root>.MuiDataGrid-main>div>.MuiDataGrid-virtualScroller>.MuiDataGrid-virtualScrollerContent>.MuiDataGrid-virtualScrollerRenderZone>.MuiDataGrid-row>.MuiDataGrid-cell:empty {
+    border-right: 1px solid rgba(224, 224, 224, 1);
+    border-bottom: 1px solid rgba(224, 224, 224, 1);
+}
+
+.grid-container_565775cd>.MuiDataGrid-root>.MuiDataGrid-main>div>.MuiDataGrid-virtualScroller>.MuiDataGrid-virtualScrollerContent>.MuiDataGrid-virtualScrollerRenderZone>.MuiDataGrid-row>.MuiDataGrid-cellCheckbox {
+    border-left: 1px solid rgb(85, 85, 85);
+}
+
+.isLoading_false_be860d61>.MuiDataGrid-root>.MuiDataGrid-main>div>.MuiDataGrid-overlay {
+    opacity: 0;
+    background-color: rgba(211, 57, 57, 0)
+}
+
+.isLoading_true_be860d61>.MuiDataGrid-root>.MuiDataGrid-main>div>.MuiDataGrid-overlay {
+    background-color: rgba(211, 57, 57, 0)
+}
+
+/* .grid-container_565775cd>.MuiDataGrid-root>div>.MuiDataGrid-footerContainer>.MuiDataGrid-selectedRowCount {
+    opacity: 0;
+} */

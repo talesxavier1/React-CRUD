@@ -1,0 +1,174 @@
+- Formação acadêmica (curso, instituição, ano de conclusão)
+	* Graduação em Letras
+	* Graduação em Matemática
+	* Graduação em Ciências Biológicas
+	* Graduação em Educação Física
+	* Graduação em História
+	* Graduação em Geografia
+	* Graduação em Física
+	* Graduação em Química
+	* Graduação em Pedagogia
+	* Graduação em Filosofia
+	* Graduação em Artes
+	* Graduação em Engenharia
+	* Mestrado em Educação
+	* Mestrado em Linguística
+	* Mestrado em Matemática
+	* Mestrado em Biologia
+	* Mestrado em História
+	* Mestrado em Geografia
+	* Mestrado em Física
+	* Mestrado em Química
+	* Doutorado em Educação
+	* Doutorado em Linguística
+	* Doutorado em Matemática
+	* Doutorado em Biologia
+	* Doutorado em História
+	* Doutorado em Geografia
+	* Doutorado em Física
+	* Doutorado em Química
+
+- Área de atuação
+	Língua Portuguesa
+	Língua Inglesa
+	Matemática
+	Biologia
+	Física
+	Química
+	Geografia
+	História
+	Sociologia
+	Filosofia
+	Artes
+	Educação Física
+	Pedagogia
+	Informática
+	Engenharia
+	Medicina
+	Psicologia
+	Direito
+	Administração
+	Contabilidade
+	Marketing
+	Finanças
+	Recursos Humanos
+	Relações Públicas
+	Comunicação Social
+	Design
+	Moda
+	Gastronomia
+	Turismo
+	Hotelaria
+	Outros
+
+- Experiência profissional (instituição, cargo, período)
+	- Nome da instituição
+	- Cargo ocupado
+		Analista
+		Coordenador
+		Gerente
+		Diretor
+		Supervisor
+		Consultor
+		Especialista
+		Desenvolvedor
+		Programador
+		Designer
+		Professor
+		Pesquisador
+		Técnico
+		Auxiliar
+		Estagiário
+		Trainee
+		Outros
+	- Área de atuação
+		Língua Portuguesa
+		Língua Inglesa
+		Matemática
+		Biologia
+		Física
+		Química
+		Geografia
+		História
+		Sociologia
+		Filosofia
+		Artes
+		Educação Física
+		Pedagogia
+		Informática
+		Engenharia
+		Medicina
+		Psicologia
+		Direito
+		Administração
+		Contabilidade
+		Marketing
+		Finanças
+		Recursos Humanos
+		Relações Públicas
+		Comunicação Social
+		Design
+		Moda
+		Gastronomia
+		Turismo
+		Hotelaria
+		Administração
+		Finanças
+		Recursos Humanos
+		Marketing
+		Vendas
+		Tecnologia da Informação
+		Design
+		Engenharia
+		Educação
+		Saúde
+		Direito
+		Comunicação
+		Meio Ambiente
+		Logística
+		Produção
+		Consultoria
+		Turismo
+		Serviços
+		Arte e Cultura
+		Agricultura e Agropecuária
+		Outros
+
+	- Data de início e fim do trabalho
+	- Descrição das atividades realizadas
+	- Regime de contratação (CLT, PJ, estágio, entre outros)
+		CLT
+		PJ
+		Estágio
+		Outros
+	- Carga horária semanal
+	- Salário ou remuneração recebida
+
+
+- Cursos realizados (nome do curso, instituição, período)
+	- Nome do curso
+	- Instituição de ensino
+	- Carga horária
+	- Data de início e fim do curso
+	- Descrição do curso (objetivos, conteúdo programático)
+	- Certificado ou diploma obtido
+	- Área de atuação relacionada ao curso
+	- Investimento financeiro
+	- Modalidade do curso (presencial, à distância, semipresencial)
+
+
+- Idiomas que fala
+
+- Nível de ensino que ministra
+	Educação infantil (creche e pré-escola)
+	Ensino fundamental I (1º ao 5º ano)
+	Ensino fundamental II (6º ao 9º ano)
+	Ensino médio (1º ao 3º ano)
+	Ensino técnico
+	Ensino superior (graduação)
+	Pós-graduação (especialização, mestrado, doutorado)
+
+- Carga horária
+
+- Valor da hora-aula ou salário
+

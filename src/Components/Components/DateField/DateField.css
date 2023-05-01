@@ -1,0 +1,59 @@
+.fea82eaf {
+    margin: 10px;
+}
+
+.fea82eaf>.MuiFormControl-root {
+    height: 30px;
+}
+
+.fea82eaf>.MuiFormControl-root>.MuiInputBase-root {
+    height: 40px;
+    border-color: coral;
+}
+
+.fea82eaf>.MuiFormControl-root>.MuiInputBase-root>input {
+    padding-top: 20px;
+}
+
+.fea82eaf>.MuiFormControl-root>.MuiInputBase-root>.MuiInputAdornment-root>button>svg {
+    color: #727272;
+}
+
+.fea82eaf>.MuiFormControl-root>label {
+    top: -5px;
+    animation-name: frameFocusFalse;
+    animation-duration: 0.1s;
+    color: #727272;
+}
+
+.fea82eaf>.MuiFormControl-root>label.MuiFormLabel-filled {
+    top: 0px;
+    animation-name: frameFocusTrue;
+}
+
+
+.fea82eaf>.MuiFormControl-root>label.Mui-focused {
+    top: 0;
+    animation-name: frameFocusTrue;
+    animation-duration: 0.1s;
+}
+
+@keyframes frameFocusTrue {
+    from {
+        top: -5px;
+    }
+
+    to {
+        top: 0;
+    }
+}
+
+@keyframes frameFocusFalse {
+    from {
+        top: 0;
+    }
+
+    to {
+        top: -5px;
+    }
+}

@@ -1,0 +1,61 @@
+/* select_component_container_4e690e86 */
+
+.select_component_container_4e690e86 {
+    margin: 10px;
+}
+
+.select_component_container_4e690e86>.MuiAutocomplete-root {
+    height: 40px;
+}
+
+.select_component_container_4e690e86>.MuiAutocomplete-root>.MuiFormControl-root {
+    height: 40px;
+}
+
+.select_component_container_4e690e86>.MuiAutocomplete-root>.MuiFormControl-root>.MuiInputBase-root {
+    height: 40px;
+}
+
+.select_component_container_4e690e86>.MuiAutocomplete-root>.MuiFormControl-root>.MuiInputBase-root>span {
+    position: relative;
+    top: -5px
+}
+
+.select_component_container_4e690e86>.MuiAutocomplete-root>.MuiFormControl-root>.MuiInputBase-root>input {
+    position: relative;
+    top: -5px
+}
+
+.select_component_container_4e690e86>.MuiAutocomplete-root>.MuiFormControl-root>.MuiFormLabel-root {
+    top: -5px;
+    animation-name: frameFocusFalse;
+    animation-duration: 0.1s;
+}
+
+.select_component_container_4e690e86>.MuiAutocomplete-root>.MuiFormControl-root>.MuiInputLabel-shrink {
+    top: 0;
+    animation-name: frameFocusTrue;
+    animation-duration: 0.2s;
+}
+
+@keyframes frameFocusTrue {
+    from {
+        top: -5px;
+    }
+
+    to {
+        top: 0;
+    }
+}
+
+@keyframes frameFocusFalse {
+    from {
+        top: 0;
+    }
+
+    to {
+        top: -5px;
+    }
+}
+
+/*  */

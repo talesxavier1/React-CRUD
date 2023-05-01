@@ -1,0 +1,34 @@
+.modal-container {
+    width: 1600px;
+    height: fit-content;
+    min-height: 200px;
+    background-color: antiquewhite;
+}
+
+button {
+    background-color: transparent;
+}
+
+button i {
+    margin: 10px 25px 10px 10px;
+    background-color: transparent;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.modal-header {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+}
+
+.modal-content {
+    max-height: 650px;
+    min-height: 200px;
+    overflow-y: auto;
+}
+
+.buttuns-area {
+    display: flex;
+    flex-direction: row-reverse;
+}

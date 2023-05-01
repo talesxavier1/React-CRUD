@@ -1,0 +1,39 @@
+.grid_container {
+    height: 100%;
+}
+
+.buttons_area {
+    display: flex;
+    flex-direction: row;
+}
+
+.fields-container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+#codigo {
+    grid-column: 1 / span 3;
+    grid-row: 1;
+}
+
+#nomeContato {
+    grid-column: 1 / span 4;
+    grid-row: 2;
+}
+
+#email {
+    grid-column: 5 / span 4;
+    grid-row: 2;
+}
+
+#telefoneCelular {
+    grid-column: 9 / span 2;
+    grid-row: 2;
+}
+
+#telefoneFixo {
+    grid-column: 1 / span 2;
+    grid-row: 3;
+}
