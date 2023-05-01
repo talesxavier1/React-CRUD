@@ -143,10 +143,10 @@ interface IFormacaoAcademicaContent {
 
 const FormacaoAcademicaContent = (props: IFormacaoAcademicaContent) => {
     return (
-        <div className={styles["fields-container"]}>
+        <>
             <TextFieldComponent readonly id={styles["codigo"]} value={props.content?.codigo ?? GUID.getGUID()} inputRef={props.refs.get("codigo")} sx={{ width: "330px" }} label='Código' />
             <TextFieldComponent id={styles["formacao"]} inputRef={props.refs.get("formacao")} sx={{ width: "100%" }} value={props.content?.formacao ?? ""} label='Formação' />
-        </div>
+        </>
     )
 }
 
