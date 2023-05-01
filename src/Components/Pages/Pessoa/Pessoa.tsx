@@ -1,5 +1,5 @@
 import { GridColDef, GridSelectionModel } from '@mui/x-data-grid';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { mask } from '../../../utils/mask';
