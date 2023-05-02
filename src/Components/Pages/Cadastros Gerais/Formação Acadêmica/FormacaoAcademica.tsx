@@ -99,7 +99,9 @@ const FormacaoAcademica = () => {
                     value='Adicionar'
                     variant='outlined'
                     style={{ color: '#222834', backgroundColor: '#539553' }}
-                    onClick={callBackModal}
+                    onClick={() => {
+                        setModalProps({ modalAberto: true, content: undefined })
+                    }}
                 />
                 <ButtonComponent
                     value='Editar'
