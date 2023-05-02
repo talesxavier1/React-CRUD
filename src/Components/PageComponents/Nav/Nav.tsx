@@ -95,6 +95,14 @@ const Nav = () => {
                                     <ListItemText primary="Área de Atuação" />
                                 </ListItemButton>
                             </List>
+                            {/* Cargos */}
+                            <List component="div" disablePadding>
+                                <ListItemButton sx={{ pl: 8 }} onClick={() => { navigate("/main/cargos") }}>
+                                    <ListItemIcon>
+                                    </ListItemIcon>
+                                    <ListItemText primary="Cargos" />
+                                </ListItemButton>
+                            </List>
                         </Collapse>
                     </List>
                 </Collapse>
