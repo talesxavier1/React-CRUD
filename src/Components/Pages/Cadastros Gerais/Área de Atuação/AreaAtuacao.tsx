@@ -25,7 +25,6 @@ const AreaAtuacao = () => {
     const [gridPage, setGridPage] = useState<number>(0);
     let refsMap = RefFormatter.generateObjectRefs(new AreaAtuacaoModel(), []);
 
-
     const callBackModal = () => {
         if (modalProps.modalAberto) {
             setModalProps({
@@ -96,7 +95,9 @@ const AreaAtuacao = () => {
                     value='Adicionar'
                     variant='outlined'
                     style={{ color: '#222834', backgroundColor: '#539553' }}
-                    onClick={callBackModal}
+                    onClick={() => {
+                        setModalProps({ modalAberto: true, content: undefined })
+                    }}
                 />
                 <ButtonComponent
                     value='Editar'
@@ -116,18 +117,18 @@ const AreaAtuacao = () => {
                         backgroundColor: `${selectedRows.length > 0 ? "#ff6868" : ""}`
                     }}
                 />
-                <div className={styles["grid_area"]}>
-                    <Grid
-                        loading={false}
-                        linhasGrid={values ?? []}
-                        propriedadesColunas={propriedadesColunas}
-                        setSelectedRows={setSelectedRows}
-                        gridSizePage={0}
-                        pageChange={setGridPage}
-                        currentPage={gridPage}
-                    />
-                </div>
             </div >
+            <div className={styles["grid_area"]}>
+                <Grid
+                    loading={false}
+                    linhasGrid={values ?? []}
+                    propriedadesColunas={propriedadesColunas}
+                    setSelectedRows={setSelectedRows}
+                    gridSizePage={0}
+                    pageChange={setGridPage}
+                    currentPage={gridPage}
+                />
+            </div>
         </>
     )
 }
@@ -141,7 +142,7 @@ const AreaAtuacaoContent = (props: IFormacaoAcademicaContent) => {
     return (
         <div className={styles["fields-container"]}>
             <TextFieldComponent readonly id={styles["codigo"]} value={props.content?.codigo ?? GUID.getGUID()} inputRef={props.refs.get("codigo")} sx={{ width: "330px" }} label='Código' />
-            <TextFieldComponent id={styles["formacao"]} inputRef={props.refs.get("formacao")} sx={{ width: "100%" }} value={props.content?.area ?? ""} label='Área de Atuação' />
+            <TextFieldComponent id={styles["area"]} inputRef={props.refs.get("area")} sx={{ width: "100%" }} value={props.content?.area ?? ""} label='Área' />
         </div>
     );
 }
