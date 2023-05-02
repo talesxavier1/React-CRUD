@@ -17,6 +17,7 @@ import AuthProvider from "../Contexts/Auth";
 import RouterGuard from "./RouterGuard";
 import FormacaoAcademica from "../Components/Pages/Cadastros Gerais/Formação Acadêmica/FormacaoAcademica";
 import AreaAtuacao from "../Components/Pages/Cadastros Gerais/Área de Atuação/AreaAtuacao";
+import Cargos from "../Components/Pages/Cadastros Gerais/Cargos/Cargos";
 
 const Rotas = () => {
     return (
@@ -148,6 +149,15 @@ const Rotas = () => {
                                 </RouterGuard>
                             } />
                         } />
+
+                        <Route path="/main/cargos" element={
+                            <App wrapperShow={
+                                <RouterGuard>
+                                    <Cargos />
+                                </RouterGuard>
+                            } />
+                        } />
+
                     </Routes>
                 </AuthProvider>
             </Router>
