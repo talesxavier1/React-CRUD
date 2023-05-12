@@ -83,7 +83,6 @@ const FormacaoAcademica = () => {
 
     const saveFormcao = async () => {
         let teste = RefFormatter.getObjectFromRefs(new FormacaoModel(), refsMap);
-        console.log(JSON.stringify(teste));
     }
 
     return (

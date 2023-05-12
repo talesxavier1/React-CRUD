@@ -2,6 +2,12 @@
     border-color: black;
 }
 
+.grid-container_565775cd>.MuiDataGrid-root>.MuiDataGrid-main>.MuiDataGrid-columnHeaders {
+    border-right: 1px solid rgba(0, 0, 0, 0);
+    border-top: 1px solid rgba(0, 0, 0, 0);
+    border-bottom: 1px solid rgba(0, 0, 0, 0);
+}
+
 .grid-container_565775cd>.MuiDataGrid-root>.MuiDataGrid-main>.MuiDataGrid-columnHeaders>.MuiDataGrid-columnHeadersInner>div>.MuiDataGrid-columnHeader {
     border-right: 1px solid rgb(85, 85, 85);
     border-top: 1px solid rgb(85, 85, 85);
@@ -18,8 +24,8 @@
 }
 
 .grid-container_565775cd>.MuiDataGrid-root>.MuiDataGrid-main>div>.MuiDataGrid-virtualScroller>.MuiDataGrid-virtualScrollerContent>.MuiDataGrid-virtualScrollerRenderZone>.MuiDataGrid-row>.MuiDataGrid-cell:empty {
-    border-right: 1px solid rgba(224, 224, 224, 1);
-    border-bottom: 1px solid rgba(224, 224, 224, 1);
+    border-right: 1px solid rgba(0, 0, 0, 0);
+    border-bottom: 1px solid rgba(0, 0, 0, 0);
 }
 
 .grid-container_565775cd>.MuiDataGrid-root>.MuiDataGrid-main>div>.MuiDataGrid-virtualScroller>.MuiDataGrid-virtualScrollerContent>.MuiDataGrid-virtualScrollerRenderZone>.MuiDataGrid-row>.MuiDataGrid-cellCheckbox {
@@ -35,6 +41,14 @@
     background-color: rgba(211, 57, 57, 0)
 }
 
-/* .grid-container_565775cd>.MuiDataGrid-root>div>.MuiDataGrid-footerContainer>.MuiDataGrid-selectedRowCount {
-    opacity: 0;
-} */
+.grid-container_565775cd>.MuiDataGrid-root>.MuiDataGrid-main>div>.MuiDataGrid-virtualScroller>.MuiDataGrid-virtualScrollerContent>.MuiDataGrid-virtualScrollerRenderZone>.Mui-selected {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.grid-container_565775cd>.MuiDataGrid-root>.MuiDataGrid-main>div>.MuiDataGrid-virtualScroller>.MuiDataGrid-virtualScrollerContent>.MuiDataGrid-virtualScrollerRenderZone>.Mui-selected>.MuiDataGrid-cell {
+    background-color: rgba(25, 118, 210, 0.08);
+}
+
+.grid-container_565775cd>.MuiDataGrid-root>.MuiDataGrid-main>div>.MuiDataGrid-virtualScroller>.MuiDataGrid-virtualScrollerContent>.MuiDataGrid-virtualScrollerRenderZone>.Mui-selected>.MuiDataGrid-cell:empty {
+    background-color: rgba(0, 0, 0, 0);
+}
