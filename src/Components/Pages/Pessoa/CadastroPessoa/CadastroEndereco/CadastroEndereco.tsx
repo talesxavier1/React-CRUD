@@ -102,8 +102,6 @@ const CadastroEndereco = () => {
                 text: 'Não foi possível salvar!',
             });
         }
-
-        console.log(endereco as EnderecoModel);
     };
 
     const deleteEndereco = async () => {

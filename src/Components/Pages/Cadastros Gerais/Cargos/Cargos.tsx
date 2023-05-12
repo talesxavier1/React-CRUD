@@ -70,7 +70,6 @@ const Cargos = () => {
 
     const saveCargo = async () => {
         let teste = RefFormatter.getObjectFromRefs(new CargosModel(), refsMap);
-        console.log(JSON.stringify(teste));
     }
 
     return (
