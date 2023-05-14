@@ -8,6 +8,9 @@ import { GridColDef, GridSelectionModel } from "@mui/x-data-grid"
 import ModalComponent from "../../../Components/Modal/ModalComponent"
 import ButtonComponent from "../../../Components/Button/ButtonComponent"
 import Grid from "../../../Components/Grid/Grid"
+import CargoRepository from "../../../../Repository/Implementations/CargoRepository"
+import { useQuery } from "react-query"
+import Swal from "sweetalert2"
 
 interface ImodalProps {
     modalAberto: boolean
@@ -23,6 +26,8 @@ const Cargos = () => {
 
     const [selectedRows, setSelectedRows] = useState<GridSelectionModel>([]);
     const [gridPage, setGridPage] = useState<number>(0);
+    const [cargos, setCargos] = useState<CargosModel[]>([]);
+    const userToken = sessionStorage.getItem("userToken") ?? "";
     let refsMap = RefFormatter.generateObjectRefs(new CargosModel(), []);
 
     const callBackModal = () => {
@@ -36,7 +41,7 @@ const Cargos = () => {
                 modalAberto: true,
                 content: (() => {
                     if (selectedRows.length == 1) {
-                        return values.find(VALUE => VALUE.codigo == selectedRows[0]);
+                        return cargos.find(VALUE => VALUE.codigo == selectedRows[0]);
                     }
                 })()
             });
@@ -45,31 +50,83 @@ const Cargos = () => {
 
     const propriedadesColunas: GridColDef[] = [
         { field: 'codigo', type: 'string', headerName: 'Código', width: 300, sortable: false },
-        { field: 'cargo', headerName: 'Cargo', width: 300, sortable: false },
+        { field: 'position', headerName: 'Cargo', width: 300, sortable: false },
     ];
 
-    const values: CargosModel[] = [
-        { codigo: "5930f9ad-64ff-4220-a087-398799e44af3", cargo: "Analista" },
-        { codigo: "56dccc9f-f669-48fc-85c2-aa07932f28f0", cargo: "Coordenador" },
-        { codigo: "3c3ea1ee-ae11-4710-84d3-a3da4f76a0e8", cargo: "Gerente" },
-        { codigo: "41af2720-3fca-4a56-bfe9-ca5166a20295", cargo: "Diretor" },
-        { codigo: "cb30d849-8b8b-4fba-9fb1-992ee2b575b7", cargo: "Supervisor" },
-        { codigo: "8a682434-3018-41da-8fb3-bab557ac10d7", cargo: "Consultor" },
-        { codigo: "55abaad2-5c15-4819-8e8d-60c15925c6a4", cargo: "Especialista" },
-        { codigo: "22d8d14c-ddfc-4716-828c-f943cbc42232", cargo: "Desenvolvedor" },
-        { codigo: "8dab0e13-9d50-4e15-88d4-70e4fc591b29", cargo: "Programador" },
-        { codigo: "b28cb4e3-5825-44c2-8205-f6ef205a01a3", cargo: "Designer" },
-        { codigo: "3cd3bf3e-3a50-47d8-b727-4e54a9cc509f", cargo: "Professor" },
-        { codigo: "d2b1f675-288e-4f19-82d3-584172c54baa", cargo: "Pesquisador" },
-        { codigo: "1ace7812-714d-42ff-a5f8-461d272be9da", cargo: "Técnico" },
-        { codigo: "f1257e6a-b22d-4374-8544-230ec766721b", cargo: "Auxiliar" },
-        { codigo: "bc6cab3b-cd79-44f9-a692-3b7044a91a12", cargo: "Estagiário" },
-        { codigo: "21ee157b-7391-4a96-864e-412d2a0a6c9f", cargo: "Trainee" },
-        { codigo: "ce98583d-e4a9-4aaa-8dde-41d30db9bd1b", cargo: "Outros" }
-    ];
+    const { isFetching: cargosIsFetching, refetch: cargosAtuacaoRefetch } = useQuery(
+        ["areasAtuacao", gridPage],
+        (async () => {
+            let result = await new CargoRepository().getPositions(userToken, gridPage * 5, 5);
+            setCargos(result);
+        }),
+        { refetchOnWindowFocus: false, cacheTime: 2000 }
+    );
+
+    const { data: cargosAtuacaoCount, refetch: cargosAtuacaoCountRefetc } = useQuery(
+        ["areaAtuacaoCount", gridPage],
+        (async () => {
+            let result = new CargoRepository().countPositions(userToken);
+            return result;
+        }),
+        { refetchOnWindowFocus: false, cacheTime: 2000 }
+    );
 
     const saveCargo = async () => {
-        let teste = RefFormatter.getObjectFromRefs(new CargosModel(), refsMap);
+        let cargo: CargosModel = RefFormatter.getObjectFromRefs(new CargosModel(), refsMap);
+
+        let result;
+        if (cargos.find(VALUE => VALUE.codigo == cargo.codigo)) {
+            result = await new CargoRepository().modifyPosition(userToken, cargo);
+        } else {
+            result = await new CargoRepository().addPosition(userToken, cargo)
+        }
+
+        if (result) {
+            Swal.fire({
+                icon: 'success',
+                text: 'Salvo com sucesso!',
+            }).then(() => {
+                callBackModal();
+                cargosAtuacaoRefetch();
+                cargosAtuacaoCountRefetc();
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                text: 'Não foi possível salvar!',
+            });
+        }
+    }
+
+    const deleteAreaAtuacao = async () => {
+        let results = [];
+        for (let VALUE of selectedRows) {
+            let result = await new CargoRepository().logicalDeletePosition(userToken, VALUE.toString());
+            results.push({ "result": result, "id": VALUE.toString() });
+        }
+
+        Swal.fire({
+            icon: 'success',
+            html: (() => {
+                let result = [];
+
+                let comSucesso = results.filter(VALUE => VALUE.result);
+                if (comSucesso.length > 0) {
+                    result.push("Registros apagados:");
+                    result.push(comSucesso.map(VALUE => `   ${VALUE.id}<br/>`).join(""));
+                }
+
+                let semSucesso = results.filter(VALUE => !VALUE.result);
+                if (semSucesso.length > 0) {
+                    result.push("Registros não pagados:");
+                    result.push(semSucesso.map(VALUE => `   ${VALUE.id}<br/>`).join(""));
+                }
+                return result.join("<br/>")
+            })(),
+        }).then(() => {
+            cargosAtuacaoRefetch();
+            cargosAtuacaoCountRefetc();
+        });
     }
 
     return (
@@ -102,6 +159,7 @@ const Cargos = () => {
                 <ButtonComponent
                     value='Excluir'
                     variant='outlined'
+                    onClick={deleteAreaAtuacao}
                     style={{
                         color: '#222834',
                         backgroundColor: `${selectedRows.length > 0 ? "#ff6868" : ""}`
@@ -111,11 +169,11 @@ const Cargos = () => {
             </div >
             <div className={styles["grid_area"]}>
                 <Grid
-                    loading={false}
-                    linhasGrid={values ?? []}
+                    loading={cargosIsFetching}
+                    linhasGrid={cargos ?? []}
                     propriedadesColunas={propriedadesColunas}
                     setSelectedRows={setSelectedRows}
-                    gridSizePage={0}
+                    gridSizePage={cargosAtuacaoCount ?? 0}
                     pageChange={setGridPage}
                     currentPage={gridPage}
                 />
@@ -134,7 +192,7 @@ const CargoContent = (props: IFormacaoAcademicaContent) => {
     return (
         <>
             <TextFieldComponent readonly id={styles["codigo"]} value={props.content?.codigo ?? GUID.getGUID()} inputRef={props.refs.get("codigo")} sx={{ width: "330px" }} label='Código' />
-            <TextFieldComponent id={styles["cargo"]} inputRef={props.refs.get("cargo")} sx={{ width: "100%" }} value={props.content?.cargo ?? ""} label='Cargo' />
+            <TextFieldComponent id={styles["cargo"]} inputRef={props.refs.get("position")} sx={{ width: "100%" }} value={props.content?.position ?? ""} label='Cargo' />
         </>
     )
 }
