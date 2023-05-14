@@ -81,7 +81,7 @@ const Nav = () => {
                         <Collapse in={showSubItens == "professor_subItens"} timeout="auto" unmountOnExit>
                             {/* Formação Acadêmica */}
                             <List component="div" disablePadding>
-                                <ListItemButton sx={{ pl: 8 }} onClick={() => { navigate("/main/formacaoAcademica") }}>
+                                <ListItemButton sx={{ pl: 6 }} onClick={() => { navigate("/main/formacaoAcademica") }}>
                                     <ListItemIcon>
                                     </ListItemIcon>
                                     <ListItemText primary="Formação Acadêmica" />
@@ -89,7 +89,7 @@ const Nav = () => {
                             </List>
                             {/* Área de atuação */}
                             <List component="div" disablePadding>
-                                <ListItemButton sx={{ pl: 8 }} onClick={() => { navigate("/main/areaAtuacao") }}>
+                                <ListItemButton sx={{ pl: 6 }} onClick={() => { navigate("/main/areaAtuacao") }}>
                                     <ListItemIcon>
                                     </ListItemIcon>
                                     <ListItemText primary="Área de Atuação" />
@@ -97,7 +97,7 @@ const Nav = () => {
                             </List>
                             {/* Cargos */}
                             <List component="div" disablePadding>
-                                <ListItemButton sx={{ pl: 8 }} onClick={() => { navigate("/main/cargos") }}>
+                                <ListItemButton sx={{ pl: 6 }} onClick={() => { navigate("/main/cargos") }}>
                                     <ListItemIcon>
                                     </ListItemIcon>
                                     <ListItemText primary="Cargos" />
