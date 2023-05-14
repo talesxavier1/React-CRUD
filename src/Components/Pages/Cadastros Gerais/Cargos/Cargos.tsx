@@ -54,7 +54,7 @@ const Cargos = () => {
     ];
 
     const { isFetching: cargosIsFetching, refetch: cargosAtuacaoRefetch } = useQuery(
-        ["areasAtuacao", gridPage],
+        ["cargos", gridPage],
         (async () => {
             let result = await new CargoRepository().getPositions(userToken, gridPage * 5, 5);
             setCargos(result);
@@ -63,7 +63,7 @@ const Cargos = () => {
     );
 
     const { data: cargosAtuacaoCount, refetch: cargosAtuacaoCountRefetc } = useQuery(
-        ["areaAtuacaoCount", gridPage],
+        ["cargosCount", gridPage],
         (async () => {
             let result = new CargoRepository().countPositions(userToken);
             return result;
@@ -118,7 +118,7 @@ const Cargos = () => {
 
                 let semSucesso = results.filter(VALUE => !VALUE.result);
                 if (semSucesso.length > 0) {
-                    result.push("Registros não pagados:");
+                    result.push("Registros não apagados:");
                     result.push(semSucesso.map(VALUE => `   ${VALUE.id}<br/>`).join(""));
                 }
                 return result.join("<br/>")

@@ -1,4 +1,4 @@
 interface IFormacao {
     codigo: string
-    formacao: string
+    education: string
 }

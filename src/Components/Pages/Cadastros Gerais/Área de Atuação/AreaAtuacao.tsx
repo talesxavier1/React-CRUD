@@ -118,7 +118,7 @@ const AreaAtuacao = () => {
 
                 let semSucesso = results.filter(VALUE => !VALUE.result);
                 if (semSucesso.length > 0) {
-                    result.push("Registros não pagados:");
+                    result.push("Registros não apagados:");
                     result.push(semSucesso.map(VALUE => `   ${VALUE.id}<br/>`).join(""));
                 }
                 return result.join("<br/>")
