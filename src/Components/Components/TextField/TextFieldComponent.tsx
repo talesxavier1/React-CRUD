@@ -14,6 +14,10 @@ interface props {
     value?: any
     inputRef?: MutableRefObject<any>
     readonly?: boolean
+    multiline?: {
+        maxRows: number
+        rows: number
+    }
 }
 
 const TextFieldComponent = (props: props) => {
@@ -22,37 +26,31 @@ const TextFieldComponent = (props: props) => {
         setTextFieldValue(props.value ?? "");
     }, [props.value]);
 
-    if (props.mask && textFieldValue) {
-        return (
-            <div id={props.id} className='textFieldComponet-bdc8183e'>
-                <TextField
-                    inputRef={props.inputRef}
-                    value={new mask({ mask: props.mask, type: 'number', value: textFieldValue }).applyMask()}
-                    sx={props.sx}
-                    label={props.label}
-                    onChange={(e) => {
-                        setTextFieldValue(e.currentTarget.value);
-                    }}
-                    disabled={props.readonly}
-                />
-            </div>
-        );
-    }
-
     return (
         <div id={props.id} className='textFieldComponet-bdc8183e'>
             <TextField
                 inputRef={props.inputRef}
                 sx={props.sx}
                 label={props.label}
-                value={textFieldValue ?? ""}
+                value={(() => {
+                    if (!textFieldValue) { return "" }
+                    if (props.mask) {
+                        return new mask({ mask: props.mask, type: 'number', value: textFieldValue }).applyMask();
+                    }
+                    return textFieldValue
+                })()}
                 onChange={(e) => {
                     setTextFieldValue(e.currentTarget.value);
                 }}
                 disabled={props.readonly}
+                size='small'
+                multiline={props.multiline ? true : false}
+                maxRows={props.multiline ? props.multiline.maxRows : undefined}
+                rows={props.multiline ? props.multiline.rows : undefined}
             />
         </div>
-    );
+    )
+
 }
 
 export default TextFieldComponent;
