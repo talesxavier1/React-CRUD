@@ -1,0 +1,60 @@
+.buttons-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.content_container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+}
+
+#codigo {
+    grid-column: 1 / span 3;
+    grid-row: 1;
+}
+
+#nome_da_instituicao {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+}
+
+#cargo_ocupado {
+    grid-column: 3 / span 2;
+    grid-row: 2;
+}
+
+#area_de_atuacao {
+    grid-column: 5 / span 2;
+    grid-row: 2;
+}
+
+#data_inicio {
+    grid-column: 7 / span 2;
+    grid-row: 2;
+}
+
+#data_fim {
+    grid-column: 9 / span 2;
+    grid-row: 2;
+}
+
+#descricao_das_atividades_realizadas {
+    grid-column: 1 / span 10;
+    grid-row: 3 / span 3;
+}
+
+#regime_de_contratacao {
+    grid-column: 1 / span 2;
+    grid-row: 5;
+}
+
+#carga_horaria_semanal {
+    grid-column: 3 / span 2;
+    grid-row: 5;
+}
+
+#salario_ou_remuneracao_recebida {
+    grid-column: 5 / span 2;
+    grid-row: 5;
+}
