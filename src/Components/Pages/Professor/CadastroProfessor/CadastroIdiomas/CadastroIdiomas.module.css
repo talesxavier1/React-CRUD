@@ -2,3 +2,29 @@
     display: flex;
     flex-direction: row;
 }
+
+.content_container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+#codigo {
+    grid-column: 1 / span 3;
+    grid-row: 1;
+}
+
+#idioma {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+}
+
+#nivel_de_proficiencia {
+    grid-column: 3 / span 2;
+    grid-row: 2;
+}
+
+#aplicacoes_praticas {
+    grid-column: 5 / span 6;
+    grid-row: 2;
+}

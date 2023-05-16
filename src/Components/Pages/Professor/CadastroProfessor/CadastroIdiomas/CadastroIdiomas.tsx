@@ -2,6 +2,7 @@ import styles from "./CadastroIdiomas.module.css"
 import ButtonComponent from "../../../../Components/Button/ButtonComponent"
 import ModalComponent from "../../../../Components/Modal/ModalComponent"
 import { useState } from "react"
+import TextFieldComponent from "../../../../Components/TextField/TextFieldComponent"
 
 interface ICadastroIdiomas {
     id: string
@@ -33,8 +34,7 @@ const CadastroIdiomas = (props: ICadastroIdiomas) => {
                     btnSaveAction={() => { }}
                 />
                 </>
-                <><ButtonComponent
-                    value='Adicionar'
+                <><ButtonComponent value='Adicionar'
                     variant='outlined'
                     style={{
                         color: '#222834',
@@ -42,8 +42,7 @@ const CadastroIdiomas = (props: ICadastroIdiomas) => {
                     }}
                     onClick={callBackcloseOpenModal} />
                 </>
-                <><ButtonComponent
-                    value='Editar'
+                <><ButtonComponent value='Editar'
                     variant='outlined'
                     style={{
                         color: '#222834',
@@ -53,8 +52,7 @@ const CadastroIdiomas = (props: ICadastroIdiomas) => {
                 // disabled={selectedRows.length != 1}
                 />
                 </>
-                <><ButtonComponent
-                    value='Excluir'
+                <><ButtonComponent value='Excluir'
                     variant='outlined'
                     style={{
                         color: '#222834',
@@ -71,7 +69,37 @@ const CadastroIdiomas = (props: ICadastroIdiomas) => {
 
 const Content = () => {
     return (
-        <h1>CONTENT</h1>
+        <div className={styles["content_container"]}>
+            <><TextFieldComponent label='Código'
+                readonly
+                // inputRef={refsMap.get("codigo")}
+                // value={pessoaContext?.pessoa?.codigo ?? ""}
+                id={styles["codigo"]}
+                sx={{ width: "330px" }}
+            />
+            </>
+            <><TextFieldComponent label='Idioma'
+                // inputRef={refsMap.get("codigo")}
+                // value={pessoaContext?.pessoa?.codigo ?? ""}
+                id={styles["idioma"]}
+                sx={{ width: "100%" }}
+            />
+            </>
+            <><TextFieldComponent label='Nível de Proficiência'
+                // inputRef={refsMap.get("codigo")}
+                // value={pessoaContext?.pessoa?.codigo ?? ""}
+                id={styles["nivel_de_proficiencia"]}
+                sx={{ width: "100%" }}
+            />
+            </>
+            <><TextFieldComponent label='Aplicações Práticas'
+                // inputRef={refsMap.get("codigo")}
+                // value={pessoaContext?.pessoa?.codigo ?? ""}
+                id={styles["aplicacoes_praticas"]}
+                sx={{ width: "100%" }}
+            />
+            </>
+        </div>
     )
 }
 
