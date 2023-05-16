@@ -3,7 +3,6 @@ import ButtonComponent from "../../../../Components/Button/ButtonComponent"
 import { useState } from "react";
 import ModalComponent from "../../../../Components/Modal/ModalComponent";
 import TextFieldComponent from "../../../../Components/TextField/TextFieldComponent";
-import { TextField } from "@mui/material";
 
 interface ICadastroExperiencias {
     id: string
@@ -123,7 +122,7 @@ const Content = () => {
                 // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["descricao_das_atividades_realizadas"]}
                 sx={{ width: "100%", height: "100%" }}
-                multiline={{ maxRows: 4, rows: 4 }}
+                multiline={{ rows: 4 }}
             />
             </>
             <><TextFieldComponent label='Regime de contratação'

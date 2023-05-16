@@ -133,7 +133,7 @@ const Content = () => {
                 // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["descricao_do_curso"]}
                 sx={{ width: "100%" }}
-                multiline={{ maxRows: 4, rows: 4 }}
+                multiline={{ rows: 4 }}
             />
             </>
         </div>
