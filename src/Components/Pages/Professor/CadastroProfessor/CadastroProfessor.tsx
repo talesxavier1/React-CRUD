@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import TextFieldComponent from '../../../Components/TextField/TextFieldComponent';
 import styles from './CadastroProfessor.module.css'
 import Tabs from '@mui/material/Tabs';
@@ -42,7 +42,7 @@ const CadastroProfessor = () => {
                         </Tabs>
                     </div>
                     {
-                        (() => {
+                        useCallback(() => {
                             switch (tabShow) {
                                 case 0:
                                     return (
@@ -57,7 +57,7 @@ const CadastroProfessor = () => {
                                         <CadastroIdiomas id={styles["showTab"]} />
                                     );
                             }
-                        })()
+                        }, [tabShow])()
                     }
                 </>
             </div>
