@@ -1,7 +1,7 @@
 import Avatar from '@mui/material/Avatar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import DateField from '../../../Components/DateField/DateField';
 import TextFieldComponent from '../../../Components/TextField/TextFieldComponent';
 import styles from './CadastroPessoa.module.css'
