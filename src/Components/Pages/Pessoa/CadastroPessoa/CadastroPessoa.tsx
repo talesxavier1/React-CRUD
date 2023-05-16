@@ -302,9 +302,11 @@ const CadastroPessoa = () => {
                         sx={{ width: "100%" }}
                     />
                     </>
-                    {useMemo(() => {
-                        return <TabsContatosEnderecos />
-                    }, [])}
+                    <> {/* TabsContatosEnderecos */}
+                        {useMemo(() => {
+                            return <TabsContatosEnderecos />
+                        }, [])}
+                    </>
                     <><ButtonComponent value='Salvar'
                         id={styles["btn_salvar"]}
 
