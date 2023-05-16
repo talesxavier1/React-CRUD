@@ -1,7 +1,7 @@
 import Avatar from '@mui/material/Avatar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import DateField from '../../../Components/DateField/DateField';
 import TextFieldComponent from '../../../Components/TextField/TextFieldComponent';
 import styles from './CadastroPessoa.module.css'
@@ -129,13 +129,43 @@ const CadastroPessoa = () => {
             <div className={styles["pessoa-cadastro-container"]}>
                 <Avatar id={styles["foto"]} sx={{ width: "110px", height: "110px" }} />
                 <div className={styles['fields-container']}>
-                    <TextFieldComponent readonly inputRef={refsMap.get("codigo")} value={pessoaContext?.pessoa?.codigo ?? ""} id={styles["codigo"]} sx={{ width: "330px" }} label='Código' />
-                    <TextFieldComponent inputRef={refsMap.get("nome")} value={pessoaContext?.pessoa?.nome ?? ""} id={styles["nome"]} sx={{ width: "100%" }} label='Nome' />
-                    <TextFieldComponent inputRef={refsMap.get("cpf")} value={pessoaContext?.pessoa?.cpf ?? ""} id={styles["cpf"]} sx={{ width: "100%" }} label='CPF' mask='###.###.###-##' />
-                    <TextFieldComponent inputRef={refsMap.get("rg")} value={pessoaContext?.pessoa?.rg ?? ""} id={styles["rg"]} sx={{ width: "100%" }} label='RG' />
-                    <DateField inputRef={refsMap.get("dataNascimento")} value={pessoaContext?.pessoa?.dataNascimento ?? ""} id={styles["dataNascimento"]} sx={{ width: "100%" }} label='Data de Nasimento' />
-                    <SelectComponent
-                        inputLabel='Pais'
+                    <><TextFieldComponent label='Código'
+                        readonly
+                        inputRef={refsMap.get("codigo")}
+                        value={pessoaContext?.pessoa?.codigo ?? ""}
+                        id={styles["codigo"]}
+                        sx={{ width: "330px" }}
+                    />
+                    </>
+                    <><TextFieldComponent label='Nome'
+                        inputRef={refsMap.get("nome")}
+                        value={pessoaContext?.pessoa?.nome ?? ""}
+                        id={styles["nome"]}
+                        sx={{ width: "100%" }}
+                    />
+                    </>
+                    <><TextFieldComponent label='CPF'
+                        inputRef={refsMap.get("cpf")}
+                        value={pessoaContext?.pessoa?.cpf ?? ""}
+                        id={styles["cpf"]} sx={{ width: "100%" }}
+                        mask='###.###.###-##'
+                    />
+                    </>
+                    <><TextFieldComponent label='RG'
+                        inputRef={refsMap.get("rg")}
+                        value={pessoaContext?.pessoa?.rg ?? ""}
+                        id={styles["rg"]}
+                        sx={{ width: "100%" }}
+                    />
+                    </>
+                    <><DateField label='Data de Nasimento'
+                        inputRef={refsMap.get("dataNascimento")}
+                        value={pessoaContext?.pessoa?.dataNascimento ?? ""}
+                        id={styles["dataNascimento"]}
+                        sx={{ width: "100%" }}
+                    />
+                    </>
+                    <><SelectComponent inputLabel='Pais'
                         sx={{ width: "100%" }}
                         asyncOptions={true}
                         id={styles["nacionalidadePais"]}
@@ -151,8 +181,8 @@ const CadastroPessoa = () => {
                         inputRefDesc={refsMap.get("nacionalidadePais")}
                         inputRefID={refsMap.get("nacionalidadePaisID")}
                     />
-                    <SelectComponent
-                        inputLabel='Estado'
+                    </>
+                    <><SelectComponent inputLabel='Estado'
                         sx={{ width: "100%" }}
                         asyncOptions={true}
                         id={styles["nacionalidadeEstado"]}
@@ -168,8 +198,8 @@ const CadastroPessoa = () => {
                         inputRefDesc={refsMap.get("nacionalidadeEstado")}
                         inputRefID={refsMap.get("nacionalidadeEstadoID")}
                     />
-                    <SelectComponent
-                        inputLabel='Municipio'
+                    </>
+                    <><SelectComponent inputLabel='Municipio'
                         sx={{ width: "100%" }}
                         asyncOptions={true}
                         id={styles["nacionalidadeMunicipio"]}
@@ -185,8 +215,8 @@ const CadastroPessoa = () => {
                         inputRefDesc={refsMap.get("nacionalidadeMunicipio")}
                         inputRefID={refsMap.get("nacionalidadeMunicipioID")}
                     />
-                    <SelectComponent
-                        inputLabel='Sexo'
+                    </>
+                    <><SelectComponent inputLabel='Sexo'
                         inputRefID={refsMap.get("sexo")}
                         sx={{ width: "100%" }}
                         asyncOptions={false}
@@ -203,8 +233,8 @@ const CadastroPessoa = () => {
                             { "desc": "FEMININO", "id": "FEMININO" }
                         ]}
                     />
-                    <SelectComponent
-                        inputLabel='Estado Civil'
+                    </>
+                    <><SelectComponent inputLabel='Estado Civil'
                         inputRefID={refsMap.get("estadoCivil")}
                         sx={{ width: "100%" }}
                         asyncOptions={false}
@@ -224,16 +254,82 @@ const CadastroPessoa = () => {
                             { "desc": "VIÚVO (A)", "id": "VIÚVO (A)" }
                         ]}
                     />
-                    <TextFieldComponent inputRef={refsMap.get("tituloEleitorNumero")} value={pessoaContext?.pessoa?.tituloEleitorNumero ?? ""} id={styles["tituloEleitorNumero"]} sx={{ width: "100%" }} label='N° Título de eleitor' mask='### ### ###' />
-                    <TextFieldComponent inputRef={refsMap.get("tituloEleitorZona")} value={pessoaContext?.pessoa?.tituloEleitorZona ?? ""} id={styles["tituloEleitorZona"]} sx={{ width: "100%" }} label='Zona Título de eleitor' mask='###' />
-                    <TextFieldComponent inputRef={refsMap.get("tituloEleitorSecao")} value={pessoaContext?.pessoa?.tituloEleitorSecao ?? ""} id={styles["tituloEleitorSecao"]} sx={{ width: "100%" }} label='Seção' mask='####' />
-                    <DateField inputRef={refsMap.get("tituloEleitorExpedicao")} value={pessoaContext?.pessoa?.tituloEleitorExpedicao ?? ""} id={styles["tituloEleitorExpedicao"]} sx={{ width: "100%" }} label='Expedição Título de Eleitor' />
-                    <TextFieldComponent inputRef={refsMap.get("tituloEleitorEstado")} value={pessoaContext?.pessoa?.tituloEleitorEstado ?? ""} id={styles["tituloEleitorEstado"]} sx={{ width: "100%" }} label='Estado Título de Eleitor' />
-                    <TextFieldComponent inputRef={refsMap.get("nomePai")} value={pessoaContext?.pessoa?.nomePai ?? ""} id={styles["nomePai"]} sx={{ width: "100%" }} label='Nome do Pai' />
-                    <TextFieldComponent inputRef={refsMap.get("nomeMae")} value={pessoaContext?.pessoa?.nomeMae ?? ""} id={styles["nomeMae"]} sx={{ width: "100%" }} label='Nome da Mãe' />
-                    <TabsContatosEnderecos />
-                    <ButtonComponent id={styles["btn_salvar"]} value='Salvar' variant='outlined' style={{ color: '#222834', backgroundColor: '#539553' }} onClick={async () => { await savePessoa() }} />
-                    <ButtonComponent id={styles["btn_voltar"]} value='Voltar' variant='outlined' style={{ color: '#222834', backgroundColor: '#6C757D' }} onClick={() => navigate("/main/pessoa")} />
+                    </>
+                    <><TextFieldComponent label='N° Título de eleitor'
+                        inputRef={refsMap.get("tituloEleitorNumero")}
+                        value={pessoaContext?.pessoa?.tituloEleitorNumero ?? ""}
+                        id={styles["tituloEleitorNumero"]} sx={{ width: "100%" }}
+                        mask='### ### ###' />
+                    </>
+                    <><TextFieldComponent label='Zona Título de eleitor'
+                        inputRef={refsMap.get("tituloEleitorZona")}
+                        value={pessoaContext?.pessoa?.tituloEleitorZona ?? ""}
+                        id={styles["tituloEleitorZona"]} sx={{ width: "100%" }}
+                        mask='###'
+                    />
+                    </>
+                    <><TextFieldComponent label='Seção'
+                        inputRef={refsMap.get("tituloEleitorSecao")}
+                        value={pessoaContext?.pessoa?.tituloEleitorSecao ?? ""}
+                        id={styles["tituloEleitorSecao"]} sx={{ width: "100%" }}
+                        mask='####'
+                    />
+                    </>
+                    <><DateField label='Expedição Título de Eleitor'
+                        inputRef={refsMap.get("tituloEleitorExpedicao")}
+                        value={pessoaContext?.pessoa?.tituloEleitorExpedicao ?? ""}
+                        id={styles["tituloEleitorExpedicao"]} sx={{ width: "100%" }}
+                    />
+                    </>
+                    <><TextFieldComponent label='Estado Título de Eleitor'
+                        inputRef={refsMap.get("tituloEleitorEstado")}
+                        value={pessoaContext?.pessoa?.tituloEleitorEstado ?? ""}
+                        id={styles["tituloEleitorEstado"]}
+                        sx={{ width: "100%" }}
+                    />
+                    </>
+                    <><TextFieldComponent label='Nome do Pai'
+                        inputRef={refsMap.get("nomePai")}
+                        value={pessoaContext?.pessoa?.nomePai ?? ""}
+                        id={styles["nomePai"]}
+                        sx={{ width: "100%" }}
+                    />
+                    </>
+                    <><TextFieldComponent label='Nome da Mãe'
+                        inputRef={refsMap.get("nomeMae")}
+                        value={pessoaContext?.pessoa?.nomeMae ?? ""}
+                        id={styles["nomeMae"]}
+                        sx={{ width: "100%" }}
+                    />
+                    </>
+                    {useMemo(() => {
+                        return <TabsContatosEnderecos />
+                    }, [])}
+                    <><ButtonComponent value='Salvar'
+                        id={styles["btn_salvar"]}
+
+                        variant='outlined'
+                        style={{
+                            color: '#222834',
+                            backgroundColor: '#539553'
+                        }}
+                        onClick={async () => {
+                            await savePessoa()
+                        }}
+                    />
+                    </>
+                    <><ButtonComponent value='Voltar'
+                        id={styles["btn_voltar"]}
+                        variant='outlined'
+                        style={{
+                            color: '#222834',
+                            backgroundColor: '#6C757D'
+                        }}
+                        onClick={() => {
+                            navigate("/main/pessoa")
+                        }}
+                    />
+                    </>
                 </div>
             </div>
         </>

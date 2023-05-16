@@ -3,7 +3,6 @@ import TextFieldComponent from '../../../Components/TextField/TextFieldComponent
 import styles from './CadastroProfessor.module.css'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import ButtonComponent from '../../../Components/Button/ButtonComponent';
 import CadastroExperiencias from './CadastroExperiencias/CadastroExperiencias';
 import CadastroCursos from './CadastroCursos/CadastroCursos';
 import CadastroIdiomas from './CadastroIdiomas/CadastroIdiomas';
