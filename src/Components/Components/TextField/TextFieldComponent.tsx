@@ -15,7 +15,6 @@ interface props {
     inputRef?: MutableRefObject<any>
     readonly?: boolean
     multiline?: {
-        maxRows: number
         rows: number
     }
 }
@@ -45,7 +44,6 @@ const TextFieldComponent = (props: props) => {
                 disabled={props.readonly}
                 size='small'
                 multiline={props.multiline ? true : false}
-                maxRows={props.multiline ? props.multiline.maxRows : undefined}
                 rows={props.multiline ? props.multiline.rows : undefined}
             />
         </div>
