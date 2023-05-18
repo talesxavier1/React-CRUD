@@ -58,12 +58,6 @@ const SelectComponent = (props: ISelectComponent) => {
                 }}
                 onChange={(event, value) => {
                     setSelectedValue(value);
-                    if (props.inputRefID) {
-                        props.inputRefID.current.value = value?.id;
-                    }
-                    if (props.inputRefDesc) {
-                        props.inputRefDesc.current.value = value?.desc;
-                    }
                     if (props.callBackOption) {
                         props.callBackOption(value);
                     }
