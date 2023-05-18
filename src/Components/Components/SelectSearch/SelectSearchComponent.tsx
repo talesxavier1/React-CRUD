@@ -1,11 +1,8 @@
-import './SelectSearch.css'
+import './SelectSearchComponent.css'
 import { Theme } from "@emotion/react"
 import { Autocomplete, CircularProgress, SxProps, TextField } from "@mui/material"
 import { MutableRefObject, useEffect, useState } from "react"
 import { useQuery } from "react-query"
-import ButtonComponent from "../Button/ButtonComponent"
-import Button from '@mui/material/Button';
-import Fontawesome from "../Fontawesome Icon/fontawesome"
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
@@ -26,7 +23,7 @@ interface ISelectComponent {
     getOptions?: (textSearch: string) => Promise<IOption[]>
 }
 
-const SelectSearch = (props: ISelectComponent) => {
+const SelectSearchComponent = (props: ISelectComponent) => {
     const [selectedValue, setSelectedValue] = useState<IOption | null>(null);
     const [inputTextValue, setInputTextValue] = useState<string>("");
 
@@ -108,4 +105,4 @@ const SelectSearch = (props: ISelectComponent) => {
 
 }
 
-export default SelectSearch;
+export default SelectSearchComponent;
