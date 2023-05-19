@@ -183,52 +183,6 @@ const CadastroEndereco = () => {
 }
 
 const CadastroEnderecoContent = (props: { value?: IEnderecoModel, refsMap: Map<string, MutableRefObject<any>> }) => {
-    let tipoenderecoOptions = [
-        { "desc": "AEROPORTO", "id": "AEROPORTO" },
-        { "desc": "ALAMEDA", "id": "ALAMEDA" },
-        { "desc": "ÁREA", "id": "ÁREA" },
-        { "desc": "AVENIDA", "id": "AVENIDA" },
-        { "desc": "CAMPO", "id": "CAMPO" },
-        { "desc": "CHÁCARA", "id": "CHÁCARA" },
-        { "desc": "COLÔNIA", "id": "COLÔNIA" },
-        { "desc": "CONDOMÍNIO", "id": "CONDOMÍNIO" },
-        { "desc": "CONJUNTO", "id": "CONJUNTO" },
-        { "desc": "DISTRITO", "id": "DISTRITO" },
-        { "desc": "ESPLANADA", "id": "ESPLANADA" },
-        { "desc": "ESTAÇÃO", "id": "ESTAÇÃO" },
-        { "desc": "ESTRADA", "id": "ESTRADA" },
-        { "desc": "FAVELA", "id": "FAVELA" },
-        { "desc": "FAZENDA", "id": "FAZENDA" },
-        { "desc": "FEIRA", "id": "FEIRA" },
-        { "desc": "JARDIM", "id": "JARDIM" },
-        { "desc": "LADEIRA", "id": "LADEIRA" },
-        { "desc": "LAGO", "id": "LAGO" },
-        { "desc": "LAGOA", "id": "LAGOA" },
-        { "desc": "LARGO", "id": "LARGO" },
-        { "desc": "LOTEAMENTO", "id": "LOTEAMENTO" },
-        { "desc": "MORRO", "id": "MORRO" },
-        { "desc": "NÚCLEO", "id": "NÚCLEO" },
-        { "desc": "PARQUE", "id": "PARQUE" },
-        { "desc": "PASSARELA", "id": "PASSARELA" },
-        { "desc": "PÁTIO", "id": "PÁTIO" },
-        { "desc": "PRAÇA", "id": "PRAÇA" },
-        { "desc": "QUADRA", "id": "QUADRA" },
-        { "desc": "RECANTO", "id": "RECANTO" },
-        { "desc": "RESIDENCIAL", "id": "RESIDENCIAL" },
-        { "desc": "RODOVIA", "id": "RODOVIA" },
-        { "desc": "RUA", "id": "RUA" },
-        { "desc": "SETOR", "id": "SETOR" },
-        { "desc": "SÍTIO", "id": "SÍTIO" },
-        { "desc": "TRAVESSA", "id": "TRAVESSA" },
-        { "desc": "TRECHO", "id": "TRECHO" },
-        { "desc": "TREVO", "id": "TREVO" },
-        { "desc": "VALE", "id": "VALE" },
-        { "desc": "VEREDA", "id": "VEREDA" },
-        { "desc": "VIA", "id": "VIA" },
-        { "desc": "VIADUTO", "id": "VIADUTO" },
-        { "desc": "VIELA", "id": "VIELA" },
-        { "desc": "VILA", "id": "VILA" }
-    ];
 
     const userToken = sessionStorage.getItem("userToken") ?? "";
     const localidade = {
@@ -259,10 +213,23 @@ const CadastroEnderecoContent = (props: { value?: IEnderecoModel, refsMap: Map<s
     const [municipioValorSelecionado, setMunicipioValorSelecionado] = useState<IOption | null | undefined>(undefined);
     return (
         <div className={style['fields-container']}>
-            <TextFieldComponent readonly inputRef={props.refsMap.get("codigo")} id={style["codigo"]} value={props.value?.codigo ?? GUID.getGUID()} sx={{ width: "330px" }} label='Código' />
-            <TextFieldComponent inputRef={props.refsMap.get("cep")} id={style["cep"]} value={props.value?.cep ?? ""} sx={{ width: "100%" }} label='cep' mask='#####-###' />
-            <SelectComponent
-                inputLabel='Tipo de Endereço'
+            <><TextFieldComponent label='Código'
+                readonly
+                inputRef={props.refsMap.get("codigo")}
+                id={style["codigo"]}
+                value={props.value?.codigo ?? GUID.getGUID()}
+                sx={{ width: "330px" }}
+
+            />
+            </>
+            <><TextFieldComponent label='cep'
+                inputRef={props.refsMap.get("cep")}
+                id={style["cep"]} value={props.value?.cep ?? ""}
+                sx={{ width: "100%" }}
+                mask='#####-###'
+            />
+            </>
+            <><SelectComponent inputLabel='Tipo de Endereço'
                 sx={{ width: "100%" }}
                 asyncOptions={false}
                 id={style["tipoEndereco"]}
@@ -273,31 +240,99 @@ const CadastroEnderecoContent = (props: { value?: IEnderecoModel, refsMap: Map<s
                     }
                     return undefined;
                 })()}
-                options={tipoenderecoOptions}
+                options={[
+                    { "desc": "AEROPORTO", "id": "AEROPORTO" },
+                    { "desc": "ALAMEDA", "id": "ALAMEDA" },
+                    { "desc": "ÁREA", "id": "ÁREA" },
+                    { "desc": "AVENIDA", "id": "AVENIDA" },
+                    { "desc": "CAMPO", "id": "CAMPO" },
+                    { "desc": "CHÁCARA", "id": "CHÁCARA" },
+                    { "desc": "COLÔNIA", "id": "COLÔNIA" },
+                    { "desc": "CONDOMÍNIO", "id": "CONDOMÍNIO" },
+                    { "desc": "CONJUNTO", "id": "CONJUNTO" },
+                    { "desc": "DISTRITO", "id": "DISTRITO" },
+                    { "desc": "ESPLANADA", "id": "ESPLANADA" },
+                    { "desc": "ESTAÇÃO", "id": "ESTAÇÃO" },
+                    { "desc": "ESTRADA", "id": "ESTRADA" },
+                    { "desc": "FAVELA", "id": "FAVELA" },
+                    { "desc": "FAZENDA", "id": "FAZENDA" },
+                    { "desc": "FEIRA", "id": "FEIRA" },
+                    { "desc": "JARDIM", "id": "JARDIM" },
+                    { "desc": "LADEIRA", "id": "LADEIRA" },
+                    { "desc": "LAGO", "id": "LAGO" },
+                    { "desc": "LAGOA", "id": "LAGOA" },
+                    { "desc": "LARGO", "id": "LARGO" },
+                    { "desc": "LOTEAMENTO", "id": "LOTEAMENTO" },
+                    { "desc": "MORRO", "id": "MORRO" },
+                    { "desc": "NÚCLEO", "id": "NÚCLEO" },
+                    { "desc": "PARQUE", "id": "PARQUE" },
+                    { "desc": "PASSARELA", "id": "PASSARELA" },
+                    { "desc": "PÁTIO", "id": "PÁTIO" },
+                    { "desc": "PRAÇA", "id": "PRAÇA" },
+                    { "desc": "QUADRA", "id": "QUADRA" },
+                    { "desc": "RECANTO", "id": "RECANTO" },
+                    { "desc": "RESIDENCIAL", "id": "RESIDENCIAL" },
+                    { "desc": "RODOVIA", "id": "RODOVIA" },
+                    { "desc": "RUA", "id": "RUA" },
+                    { "desc": "SETOR", "id": "SETOR" },
+                    { "desc": "SÍTIO", "id": "SÍTIO" },
+                    { "desc": "TRAVESSA", "id": "TRAVESSA" },
+                    { "desc": "TRECHO", "id": "TRECHO" },
+                    { "desc": "TREVO", "id": "TREVO" },
+                    { "desc": "VALE", "id": "VALE" },
+                    { "desc": "VEREDA", "id": "VEREDA" },
+                    { "desc": "VIA", "id": "VIA" },
+                    { "desc": "VIADUTO", "id": "VIADUTO" },
+                    { "desc": "VIELA", "id": "VIELA" },
+                    { "desc": "VILA", "id": "VILA" }
+                ]}
                 inputRefID={props.refsMap.get("tipoEndereco")}
             />
-            <TextFieldComponent inputRef={props.refsMap.get("rua")} id={style["rua"]} value={props.value?.rua ?? ""} sx={{ width: "100%" }} label='Rua' />
-            <TextFieldComponent inputRef={props.refsMap.get("numero")} id={style["numero"]} value={props.value?.numero ?? ""} sx={{ width: "100%" }} label='Número' />
-            <TextFieldComponent inputRef={props.refsMap.get("bairro")} id={style["bairro"]} value={props.value?.bairro ?? ""} sx={{ width: "100%" }} label='Bairro' />
-            <SelectComponent
-                inputLabel='Estado'
+            </>
+            <><TextFieldComponent label='Rua'
+                inputRef={props.refsMap.get("rua")}
+                id={style["rua"]}
+                value={props.value?.rua ?? ""}
+                sx={{ width: "100%" }}
+            />
+            </>
+            <><TextFieldComponent label='Número'
+                inputRef={props.refsMap.get("numero")}
+                id={style["numero"]}
+                value={props.value?.numero ?? ""}
+                sx={{ width: "100%" }}
+            />
+            </>
+            <><TextFieldComponent label='Bairro'
+                inputRef={props.refsMap.get("bairro")}
+                id={style["bairro"]}
+                value={props.value?.bairro ?? ""}
+                sx={{ width: "100%" }}
+
+            />
+            </>
+            <><SelectComponent inputLabel='Estado'
                 sx={{ width: "100%" }}
                 asyncOptions={true}
                 id={style["estado"]}
                 defaulOption={(() => {
-                    let value = props.value?.estado ?? "";
-                    if (value) {
-                        return { "desc": value, "id": value };
+                    let desc = props.value?.estado ?? "";
+                    let id = props.value?.estadoID ?? "";
+                    if (desc) {
+                        return {
+                            "desc": desc,
+                            "id": id ?? desc
+                        };
                     }
                     return undefined;
                 })()}
                 getOptions={localidade.buscarEstados}
-                options={tipoenderecoOptions}
                 inputRefDesc={props.refsMap.get("estado")}
                 inputRefID={props.refsMap.get("estadoID")}
                 callBackOption={setEstadoValorSelecionado}
             />
-            <TextFieldComponent
+            </>
+            <><TextFieldComponent label='Código IBGE Estado'
                 inputRef={props.refsMap.get("codigoIBGEEstado")}
                 id={style["codigoIBGEEstado"]}
                 value={(() => {
@@ -312,27 +347,27 @@ const CadastroEnderecoContent = (props: { value?: IEnderecoModel, refsMap: Map<s
                     return "";
                 })()}
                 sx={{ width: "100%" }}
-                label='Código IBGE Estado'
             />
-            <SelectComponent
-                inputLabel='Cidade'
+            </>
+            <><SelectComponent inputLabel='Cidade'
                 sx={{ width: "100%" }}
                 asyncOptions={true}
                 id={style["cidade"]}
                 defaulOption={(() => {
-                    let value = props.value?.cidade ?? "";
-                    if (value) {
-                        return { "desc": value, "id": value };
+                    let desc = props.value?.cidade ?? "";
+                    let id = props.value?.cidadeID ?? "";
+                    if (desc) {
+                        return { "desc": desc, "id": id ?? desc };
                     }
                     return undefined;
                 })()}
                 getOptions={localidade.buscarMunicipios}
-                options={tipoenderecoOptions}
                 inputRefDesc={props.refsMap.get("cidade")}
                 inputRefID={props.refsMap.get("cidadeID")}
                 callBackOption={setMunicipioValorSelecionado}
             />
-            <TextFieldComponent
+            </>
+            <><TextFieldComponent label='Código IBGE Cidade'
                 inputRef={props.refsMap.get("codigoIBGECidade")}
                 id={style["codigoIBGECidade"]}
                 value={(() => {
@@ -347,8 +382,8 @@ const CadastroEnderecoContent = (props: { value?: IEnderecoModel, refsMap: Map<s
                     return "";
                 })()}
                 sx={{ width: "100%" }}
-                label='Código IBGE Cidade'
             />
+            </>
         </div>
     )
 }

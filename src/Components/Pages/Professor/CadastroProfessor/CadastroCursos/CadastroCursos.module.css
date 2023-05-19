@@ -1,0 +1,55 @@
+.buttons-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.content_container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+}
+
+#codigo {
+    grid-column: 1 / span 3;
+    grid-row: 1;
+}
+
+#nome_do_curso {
+    grid-column: 1 / span 4;
+    grid-row: 2;
+}
+
+#instituicao_de_ensino {
+    grid-column: 5 / span 4;
+    grid-row: 2;
+}
+
+#carga_horaria {
+    grid-column: 9 / span 2;
+    grid-row: 2;
+}
+
+#data_de_inicio {
+    grid-column: 1 / span 2;
+    grid-row: 3;
+}
+
+#data_de_fim {
+    grid-column: 3 / span 2;
+    grid-row: 3;
+}
+
+#modalidade_do_curso {
+    grid-column: 5 / span 2;
+    grid-row: 3;
+}
+
+#investimento_financeiro {
+    grid-column: 7 / span 2;
+    grid-row: 3;
+}
+
+#descricao_do_curso {
+    grid-column: 1 / span 10;
+    grid-row: 4/ span 3;
+}

@@ -29,10 +29,8 @@ const SelectComponent = (props: ISelectComponent) => {
     useEffect(() => {
         if (props.defaulOption) {
             setSelectedValue(props.defaulOption);
-        } else {
-            setSelectedValue(null);
         }
-    }, [props.defaulOption]);
+    }, []);
 
     const { data, isFetching } = useQuery(
         `getOptions_${props.id}`,
@@ -64,7 +62,7 @@ const SelectComponent = (props: ISelectComponent) => {
                         props.callBackOption(value);
                     }
                 }}
-                isOptionEqualToValue={(option, value) => option.id === value.id}
+                isOptionEqualToValue={(option, value) => option.id == value.id}
                 getOptionLabel={(option) => {
                     return option.desc
                 }}

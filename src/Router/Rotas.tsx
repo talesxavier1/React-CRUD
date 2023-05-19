@@ -18,6 +18,7 @@ import RouterGuard from "./RouterGuard";
 import FormacaoAcademica from "../Components/Pages/Cadastros Gerais/Formação Acadêmica/FormacaoAcademica";
 import AreaAtuacao from "../Components/Pages/Cadastros Gerais/Área de Atuação/AreaAtuacao";
 import Cargos from "../Components/Pages/Cadastros Gerais/Cargos/Cargos";
+import ProfessorContextProvider from "../Components/Pages/Professor/ProfessorContext";
 
 const Rotas = () => {
     return (
@@ -73,7 +74,9 @@ const Rotas = () => {
                         <Route path="/main/professor" element={
                             <App wrapperShow={
                                 <RouterGuard>
-                                    <Professor />
+                                    <ProfessorContextProvider>
+                                        <Professor />
+                                    </ProfessorContextProvider>
                                 </RouterGuard>
                             } />
                         } />
@@ -129,7 +132,9 @@ const Rotas = () => {
                         <Route path="/main/professor/page" element={
                             <App wrapperShow={
                                 <RouterGuard>
-                                    <CadastroProfessor />
+                                    <ProfessorContextProvider>
+                                        <CadastroProfessor />
+                                    </ProfessorContextProvider>
                                 </RouterGuard>
                             } />
                         } />

@@ -158,6 +158,13 @@
 
 
 - Idiomas que fala
+	* Idioma
+	* Nível de Proficiência
+		 básico
+		 intermediário
+		 avançado
+		 nativo
+	* Aplicações Práticas
 
 - Nível de ensino que ministra
 	Educação infantil (creche e pré-escola)
