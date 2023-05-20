@@ -7,6 +7,7 @@ export default interface IPersonRepository {
     modifyPerson: (userToken: string, pessoa: IPessoaModel) => Promise<boolean>
     getPersonList: (userToken: string, skip: number, take: number) => Promise<PessoaModel[]>
     getPersonsByStringQuery: (userToken: string, query: string) => Promise<PessoaModel[]>
+    countPersonsByQuery: (userToken: string, query: string) => Promise<number>
     getPersonById: (userToken: string, codigo: string) => Promise<IPessoaModel | undefined>
     countPersons: (userToken: string) => Promise<number>
 }
