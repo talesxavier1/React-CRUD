@@ -107,7 +107,7 @@ const SelectComponent = (props: ISelectComponent) => {
                     }
                 }}
                 isOptionEqualToValue={(option, value) => {
-                    return option === value;
+                    return JSON.stringify(option) === JSON.stringify(value);
                 }}
                 getOptionLabel={(option) => {
                     if (typeof option == "string") {
