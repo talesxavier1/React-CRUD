@@ -1,6 +1,6 @@
 import './SelectComponent.css'
 import { Autocomplete, CircularProgress, SxProps, TextField, Theme } from "@mui/material";
-import React, { MutableRefObject, useEffect, useState } from "react";
+import React, { MutableRefObject, memo, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 export interface IOption {
@@ -15,22 +15,22 @@ interface ISelectComponent {
     inputLabel: string
     inputRefDesc?: MutableRefObject<any>
     inputRefID?: MutableRefObject<any>
-    callBackOption?: (value: IOption | null) => void
+    callBackOption?: (value: IOption[] | null) => void
     asyncOptions: boolean
     options?: IOption[]
-    defaulOption?: IOption
+    defaulOption?: IOption[]
     getOptions?: () => Promise<IOption[]>
+    multiple?: boolean
 }
 
 const SelectComponent = (props: ISelectComponent) => {
-    const [selectedValue, setSelectedValue] = useState<IOption | null>(null);
+    const [selectedValue, setSelectedValue] = useState<IOption[] | null>(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
+    let depString = props.defaulOption ? JSON.stringify(props.defaulOption) : undefined;
     useEffect(() => {
-        if (props.defaulOption) {
-            setSelectedValue(props.defaulOption);
-        }
-    }, []);
+        setSelectedValue(props.defaulOption ?? null);
+    }, [depString]);
 
     const { data, isFetching } = useQuery(
         `getOptions_${props.id}`,
@@ -42,28 +42,81 @@ const SelectComponent = (props: ISelectComponent) => {
 
     return (
         <div className="select_component_container_4e690e86" id={props.id}>
-            <TextField sx={{ display: "none" }} value={selectedValue?.id ?? ""} inputRef={props.inputRefID} />
-            <TextField sx={{ display: "none" }} value={selectedValue?.desc ?? ""} inputRef={props.inputRefDesc} />
+            <><TextField
+                sx={{ display: "none" }}
+                value={(() => {
+                    if (!selectedValue) {
+                        if (props.multiple) { return "[]" }
+                        return "";
+                    }
 
-            <Autocomplete
+                    if (props.multiple) {
+                        return JSON.stringify(selectedValue.map(VALUE => VALUE.id));
+                    }
+                    return selectedValue[0].id;
+
+                })()}
+                inputRef={props.inputRefID}
+            />
+            </>
+            <><TextField
+                sx={{ display: "none" }}
+                value={(() => {
+
+                    if (!selectedValue) {
+                        if (props.multiple) { return [] }
+                        return "";
+                    }
+
+                    if (props.multiple) {
+                        return selectedValue.map(VALUE => VALUE.desc);
+                    }
+                    return selectedValue[0].desc;
+                })()}
+                inputRef={props.inputRefDesc}
+            />
+            </>
+            <><Autocomplete
+                size='small'
                 noOptionsText="Sem Opções"
                 id={`Autocomplete_id_${props.id}`}
                 sx={props.sx}
+                freeSolo
                 forcePopupIcon={true}
+                multiple={props.multiple}
                 onOpen={() => {
                     setIsOpen(true);
                 }}
                 onClose={() => {
                     setIsOpen(false)
                 }}
-                onChange={(event, value) => {
+                onChange={(event, valueParam) => {
+                    let value = (() => {
+                        if (Array.isArray(valueParam)) {
+                            return valueParam as IOption[];
+                        } else if (!valueParam) {
+                            return null;
+                        } else {
+                            return [valueParam] as IOption[];
+                        }
+                    })();
+
                     setSelectedValue(value);
                     if (props.callBackOption) {
                         props.callBackOption(value);
                     }
                 }}
-                isOptionEqualToValue={(option, value) => option.id == value.id}
+                isOptionEqualToValue={(option, value) => {
+                    return JSON.stringify(option) === JSON.stringify(value);
+                }}
                 getOptionLabel={(option) => {
+                    if (typeof option == "string") {
+                        return option;
+                    }
+
+                    if (Array.isArray(option)) {
+                        return option.map(VALUE => VALUE.desc).join(",");
+                    }
                     return option.desc
                 }}
                 options={(() => {
@@ -72,7 +125,13 @@ const SelectComponent = (props: ISelectComponent) => {
                     }
                     return data && !isFetching ? data : []
                 })()}
-                value={selectedValue}
+                value={(() => {
+                    if (!selectedValue) {
+                        if (props.multiple) { return [] }
+                        return null;
+                    }
+                    return selectedValue;
+                })()}
                 renderInput={(params) => (
                     <TextField
                         {...params}
@@ -89,51 +148,9 @@ const SelectComponent = (props: ISelectComponent) => {
                     />
                 )}
             />
+            </>
         </div>
     );
 }
 
 export default SelectComponent;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="Age"
-                    value={"teste22"}
-                    
-                    aria-checked
-                >
-                    {props.values.map((VALUE) => {
-                        return (<MenuItem value={VALUE.id}>{VALUE.desc}</MenuItem>)
-                    })}
-                </Select>
-            </FormControl> */}
-{/* <InputLabel id="demo-simple-select-label">Age</InputLabel>
-            <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="Age"
-                value={"sss"}
-                aria-label="aaa"
-                inputRef={props.inputRef}
-                sx={{ width: '120px' }}
-            >
-                {props.values.map((VALUE) => {
-                    return (<MenuItem value={VALUE.id}>{VALUE.desc}</MenuItem>)
-                })}
-            </Select> */}

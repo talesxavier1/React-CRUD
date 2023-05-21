@@ -209,8 +209,8 @@ const CadastroEnderecoContent = (props: { value?: IEnderecoModel, refsMap: Map<s
         }
     }
 
-    const [estadoValorSelecionado, setEstadoValorSelecionado] = useState<IOption | null | undefined>(undefined);
-    const [municipioValorSelecionado, setMunicipioValorSelecionado] = useState<IOption | null | undefined>(undefined);
+    const [estadoValorSelecionado, setEstadoValorSelecionado] = useState<IOption[] | null | undefined>();
+    const [municipioValorSelecionado, setMunicipioValorSelecionado] = useState<IOption[] | null | undefined>();
     return (
         <div className={style['fields-container']}>
             <><TextFieldComponent label='Código'
@@ -236,7 +236,7 @@ const CadastroEnderecoContent = (props: { value?: IEnderecoModel, refsMap: Map<s
                 defaulOption={(() => {
                     let value = props.value?.tipoEndereco ?? "";
                     if (value) {
-                        return { "desc": value, "id": value };
+                        return [{ "desc": value, "id": value }];
                     }
                     return undefined;
                 })()}
@@ -319,10 +319,7 @@ const CadastroEnderecoContent = (props: { value?: IEnderecoModel, refsMap: Map<s
                     let desc = props.value?.estado ?? "";
                     let id = props.value?.estadoID ?? "";
                     if (desc) {
-                        return {
-                            "desc": desc,
-                            "id": id ?? desc
-                        };
+                        return [{ "desc": desc, "id": id ?? desc }];
                     }
                     return undefined;
                 })()}
@@ -336,15 +333,14 @@ const CadastroEnderecoContent = (props: { value?: IEnderecoModel, refsMap: Map<s
                 inputRef={props.refsMap.get("codigoIBGEEstado")}
                 id={style["codigoIBGEEstado"]}
                 value={(() => {
-                    if (estadoValorSelecionado) {
-                        let value = estadoValorSelecionado.optionOriginalValue as EstadoModel;
-                        return value.stateIBGECode;
-                    } else if (estadoValorSelecionado === null) {
-                        return "";
-                    } else if (props.value?.codigoIBGEEstado) {
-                        return props.value.codigoIBGEEstado;
+                    if (estadoValorSelecionado === undefined) {
+                        return props?.value?.codigoIBGEEstado ?? "";
                     }
-                    return "";
+                    if (estadoValorSelecionado === null) {
+                        return "";
+                    }
+                    let value = estadoValorSelecionado[0].optionOriginalValue as EstadoModel;
+                    return value.stateIBGECode;
                 })()}
                 sx={{ width: "100%" }}
             />
@@ -357,7 +353,7 @@ const CadastroEnderecoContent = (props: { value?: IEnderecoModel, refsMap: Map<s
                     let desc = props.value?.cidade ?? "";
                     let id = props.value?.cidadeID ?? "";
                     if (desc) {
-                        return { "desc": desc, "id": id ?? desc };
+                        return [{ "desc": desc, "id": id ?? desc }];
                     }
                     return undefined;
                 })()}
@@ -371,15 +367,14 @@ const CadastroEnderecoContent = (props: { value?: IEnderecoModel, refsMap: Map<s
                 inputRef={props.refsMap.get("codigoIBGECidade")}
                 id={style["codigoIBGECidade"]}
                 value={(() => {
-                    if (municipioValorSelecionado) {
-                        let value = municipioValorSelecionado.optionOriginalValue as MunicipioModel;
-                        return value.cityIBGECode;
-                    } else if (municipioValorSelecionado === null) {
-                        return "";
-                    } else if (props.value?.codigoIBGECidade) {
-                        return props.value.codigoIBGECidade;
+                    if (municipioValorSelecionado === undefined) {
+                        return props?.value?.codigoIBGECidade ?? "";
                     }
-                    return "";
+                    if (municipioValorSelecionado === null) {
+                        return "";
+                    }
+                    let value = municipioValorSelecionado[0].optionOriginalValue as MunicipioModel;
+                    return value.cityIBGECode;
                 })()}
                 sx={{ width: "100%" }}
             />
