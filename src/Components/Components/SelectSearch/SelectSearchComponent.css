@@ -2,74 +2,20 @@
     margin: 10px;
 }
 
-.select_component_container_a816ecb5>.MuiAutocomplete-root {
-    height: 40px;
-}
-
-.select_component_container_a816ecb5>.MuiAutocomplete-root>.MuiFormControl-root {
-    height: 40px;
-}
-
-.select_component_container_a816ecb5>.MuiAutocomplete-root>.MuiFormControl-root>.MuiInputBase-root {
-    height: 40px;
-}
-
-.select_component_container_a816ecb5>.MuiAutocomplete-root>.MuiFormControl-root>.MuiInputBase-root>span {
-    position: relative;
-    top: -5px
-}
-
-.select_component_container_a816ecb5>.MuiAutocomplete-root>.MuiFormControl-root>.MuiInputBase-root>input {
-    position: relative;
-    top: -5px
-}
-
-.select_component_container_a816ecb5>.MuiAutocomplete-root>.MuiFormControl-root>.MuiFormLabel-root {
-    top: -5px;
-    animation-name: frameFocusFalse;
-    animation-duration: 0.1s;
-}
-
-.select_component_container_a816ecb5>.MuiAutocomplete-root>.MuiFormControl-root>.MuiInputLabel-shrink {
-    top: 0;
-    animation-name: frameFocusTrue;
-    animation-duration: 0.2s;
-}
-
-@keyframes frameFocusTrue {
-    from {
-        top: -5px;
-    }
-
-    to {
-        top: 0;
-    }
-}
-
-@keyframes frameFocusFalse {
-    from {
-        top: 0;
-    }
-
-    to {
-        top: -5px;
-    }
-}
-
 .pageButton_a816ecb5 {
     background-color: rgb(43, 207, 207);
     /* display: block; */
     position: relative;
 }
 
-.nao_sei_ainda_a816ecb5 {
+.input_container_a816ecb5 {
     display: flex;
     align-items: center;
     position: absolute;
     right: 40px;
 }
 
-.nao_sei_ainda_a816ecb5>.button_arrow {
+.input_container_a816ecb5>.button_arrow {
     text-align: center;
     text-decoration: none;
     margin-top: 2px;
@@ -79,10 +25,10 @@
     cursor: pointer;
 }
 
-.nao_sei_ainda_a816ecb5>.button_arrow:hover {
+.input_container_a816ecb5>.button_arrow:hover {
     background-color: rgba(0, 0, 0, 0.04);
 }
 
-.nao_sei_ainda_a816ecb5>.button_arrow:active {
+.input_container_a816ecb5>.button_arrow:active {
     background-color: rgba(0, 0, 0, 0.08);
 }
