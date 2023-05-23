@@ -82,6 +82,7 @@ const SelectComponent = (props: ISelectComponent) => {
                 id={`Autocomplete_id_${props.id}`}
                 sx={props.sx}
                 freeSolo
+                clearOnBlur
                 forcePopupIcon={true}
                 multiple={props.multiple}
                 onOpen={() => {
