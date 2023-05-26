@@ -10,7 +10,7 @@ export default class PersonRepository implements IPersonRepository {
         let url = `${import.meta.env.VITE_REACT_APP_API}/Person/countPersons`;
         let response: any = await RequestModel().request(url, "GET", null, { "userToken": userToken }, true);
         if (response?.oparationStatus == 0) {
-            return response.data;
+            return response.data as number;
         }
         return 0;
     };
@@ -42,8 +42,8 @@ export default class PersonRepository implements IPersonRepository {
         return [];
     }
 
-    getPersonsByStringQuery = async (userToken: string, query: string) => {
-        let url = `${import.meta.env.VITE_REACT_APP_API}/Person/getPersonsByStringQuery`;
+    getPersonsByStringQuery = async (userToken: string, query: string, skip: number, take: number) => {
+        let url = `${import.meta.env.VITE_REACT_APP_API}/Person/getPersonsByStringQuery?skip=${skip}&take=${take}`;
         let response: any = await RequestModel().request(url, "POST", query, { "userToken": userToken, "Content-Type": 'application/json' }, false);
         if (response?.oparationStatus == 0) {
             return (response.data as PessoaModel[]);

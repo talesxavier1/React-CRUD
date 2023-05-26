@@ -20,6 +20,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import SelectComponent, { IOption } from '../../../Components/Select/SelectComponent';
 import LocalidadesRepository from '../../../../Repository/Implementations/LocalidadesRepository';
 import { useQuery } from 'react-query';
+import TryParse from '../../../../utils/TryParse';
 
 
 
@@ -173,9 +174,8 @@ const CadastroPessoa = () => {
                             let desc = pessoaContext?.pessoa?.nacionalidadePais;
                             let id = pessoaContext?.pessoa?.nacionalidadePaisID;
                             if (desc && id) {
-                                return { "desc": desc, "id": id } as IOption;
+                                return [{ "desc": desc, "id": id }] as IOption[];
                             }
-                            return undefined;
                         })()}
                         getOptions={localidade.buscarPaises}
                         inputRefDesc={refsMap.get("nacionalidadePais")}
@@ -190,9 +190,8 @@ const CadastroPessoa = () => {
                             let desc = pessoaContext?.pessoa?.nacionalidadeEstado;
                             let id = pessoaContext?.pessoa?.nacionalidadeEstadoID;
                             if (desc && id) {
-                                return { "desc": desc, "id": id } as IOption;
+                                return [{ "desc": desc, "id": id }] as IOption[];
                             }
-                            return undefined;
                         })()}
                         getOptions={localidade.buscarEstados}
                         inputRefDesc={refsMap.get("nacionalidadeEstado")}
@@ -207,9 +206,8 @@ const CadastroPessoa = () => {
                             let desc = pessoaContext?.pessoa?.nacionalidadeMunicipio;
                             let id = pessoaContext?.pessoa?.nacionalidadeMunicipioID;
                             if (desc && id) {
-                                return { "desc": desc, "id": id } as IOption;
+                                return [{ "desc": desc, "id": id }] as IOption[];
                             }
-                            return undefined;
                         })()}
                         getOptions={localidade.buscarMunicipios}
                         inputRefDesc={refsMap.get("nacionalidadeMunicipio")}
@@ -224,9 +222,8 @@ const CadastroPessoa = () => {
                         defaulOption={(() => {
                             let value = pessoaContext?.pessoa?.sexo ?? "";
                             if (value) {
-                                return { "desc": value, "id": value } as IOption;
+                                return [{ "desc": value, "id": value }] as IOption[];
                             }
-                            return undefined;
                         })()}
                         options={[
                             { "desc": "MASCULINO", "id": "MASCULINO" },
@@ -240,11 +237,13 @@ const CadastroPessoa = () => {
                         asyncOptions={false}
                         id={styles["estadoCivil"]}
                         defaulOption={(() => {
-                            let value = pessoaContext?.pessoa?.estadoCivil ?? "";
+                            let value = TryParse(pessoaContext?.pessoa?.estadoCivil ?? "");
                             if (value) {
-                                return { "desc": value, "id": value } as IOption;
+                                if (typeof value == "object") {
+                                    return value.map((VALUE: any) => { return { "desc": VALUE, "id": VALUE } });
+                                }
+                                return [{ "desc": value, "id": value }] as IOption[];
                             }
-                            return undefined;
                         })()}
                         options={[
                             { "desc": "SOLTEIRO (A)", "id": "SOLTEIRO (A)" },
