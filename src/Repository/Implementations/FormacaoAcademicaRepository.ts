@@ -10,9 +10,18 @@ export default class FormacaoAcademicaRepository implements IFormacaoAcademicaRe
         return response?.oparationStatus == 0;
     }
 
-    countAcademicBackgrounds = async (userToken: string, query?: string) => {
-        let url = `${import.meta.env.VITE_REACT_APP_API}/academicBackground/countAcademicBackgrounds{0}`.replace("{0}", query ? `?query=${query}` : "");
+    countAcademicBackgrounds = async (userToken: string) => {
+        let url = `${import.meta.env.VITE_REACT_APP_API}/academicBackground/countAcademicBackgrounds`;
         let response: any = await RequestModel().request(url, "GET", null, { "userToken": userToken }, true);
+        if (response?.oparationStatus == 0) {
+            return (response.data as number);
+        }
+        return 0;
+    }
+
+    countAcademicBackgroundsByQuery = async (userToken: string, query: string) => {
+        let url = `${import.meta.env.VITE_REACT_APP_API}/academicBackground/countAcademicBackgroundsByQuery`;
+        let response: any = await RequestModel().request(url, "POST", query, { "userToken": userToken }, true);
         if (response?.oparationStatus == 0) {
             return (response.data as number);
         }
@@ -28,12 +37,22 @@ export default class FormacaoAcademicaRepository implements IFormacaoAcademicaRe
         return null;
     }
 
-    getAcademicBackgrounds = async (userToken: string, skip: number, take: number, query?: string) => {
-        let url = `${import.meta.env.VITE_REACT_APP_API}/academicBackground/getAcademicBackgrounds?skip={0}&take={1}{2}`
+    getAcademicBackgrounds = async (userToken: string, skip: number, take: number) => {
+        let url = `${import.meta.env.VITE_REACT_APP_API}/academicBackground/getAcademicBackgrounds?skip={0}&take={1}`
             .replace("{0}", skip.toString())
-            .replace("{1}", take.toString())
-            .replace("{2}", query ? `&query=${query}` : "");
+            .replace("{1}", take.toString());
         let response: any = await RequestModel().request(url, "GET", null, { "userToken": userToken }, true);
+        if (response?.oparationStatus == 0) {
+            return (response.data as FormacaoModel[]);
+        }
+        return [];
+    }
+
+    getAcademicBackgroundsByQuery = async (userToken: string, skip: number, take: number, query: string) => {
+        let url = `${import.meta.env.VITE_REACT_APP_API}/academicBackground/getAcademicBackgroundsByQuery?skip={0}&take={1}`
+            .replace("{0}", skip.toString())
+            .replace("{1}", take.toString());
+        let response: any = await RequestModel().request(url, "POST", query, { "userToken": userToken }, true);
         if (response?.oparationStatus == 0) {
             return (response.data as FormacaoModel[]);
         }

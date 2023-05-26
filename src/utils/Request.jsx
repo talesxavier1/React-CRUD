@@ -5,7 +5,7 @@ export const RequestModel = () => ({
 
         let responseReturn;
         await axios({
-            url: URL,
+            url: urlencode(URL),
             method: method,
             data: dataCall,
             headers: headers

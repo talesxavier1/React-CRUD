@@ -11,9 +11,18 @@ export default class AreaAtuacaoRepository implements IAreaAtuacaoRepository {
         return response?.oparationStatus == 0;
     }
 
-    countAreaOfSpecialization = async (userToken: string, query?: string) => {
-        let url = `${import.meta.env.VITE_REACT_APP_API}/areaOfSpecialization/countAreaOfSpecialization{0}`.replace("{0}", (query ? `?query=${query}` : ""));
+    countAreaOfSpecialization = async (userToken: string) => {
+        let url = `${import.meta.env.VITE_REACT_APP_API}/areaOfSpecialization/countAreaOfSpecialization`;
         let response: any = await RequestModel().request(url, "GET", null, { "userToken": userToken }, true);
+        if (response?.oparationStatus == 0) {
+            return (response.data as number);
+        }
+        return 0;
+    }
+
+    countAreaOfSpecializationByQuery = async (userToken: string, query: string) => {
+        let url = `${import.meta.env.VITE_REACT_APP_API}/areaOfSpecialization/countAreaOfSpecializationByQuery`;
+        let response: any = await RequestModel().request(url, "POST", query, { "userToken": userToken }, true);
         if (response?.oparationStatus == 0) {
             return (response.data as number);
         }
@@ -29,12 +38,22 @@ export default class AreaAtuacaoRepository implements IAreaAtuacaoRepository {
         return null;
     }
 
-    getAreasOfSpecialization = async (userToken: string, skip: number, take: number, query?: string) => {
-        let url = `${import.meta.env.VITE_REACT_APP_API}/areaOfSpecialization/getAreasOfSpecialization?skip={0}&take={1}{2}`
+    getAreasOfSpecialization = async (userToken: string, skip: number, take: number) => {
+        let url = `${import.meta.env.VITE_REACT_APP_API}/areaOfSpecialization/getAreasOfSpecialization?skip={0}&take={1}`
             .replace("{0}", skip.toString())
-            .replace("{1}", take.toString())
-            .replace("{2}", query ? `&query=${query}` : "");
+            .replace("{1}", take.toString());
         let response: any = await RequestModel().request(url, "GET", null, { "userToken": userToken }, true);
+        if (response?.oparationStatus == 0) {
+            return (response.data as AreaAtuacaoModel[]);
+        }
+        return [];
+    }
+
+    getAreasOfSpecializationByQuery = async (userToken: string, skip: number, take: number, query: string) => {
+        let url = `${import.meta.env.VITE_REACT_APP_API}/areaOfSpecialization/getAreasOfSpecializationByQuery?skip={0}&take={1}`
+            .replace("{0}", skip.toString())
+            .replace("{1}", take.toString());
+        let response: any = await RequestModel().request(url, "POST", query, { "userToken": userToken }, true);
         if (response?.oparationStatus == 0) {
             return (response.data as AreaAtuacaoModel[]);
         }
