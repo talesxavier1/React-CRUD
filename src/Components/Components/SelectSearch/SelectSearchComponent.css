@@ -35,6 +35,11 @@
     display: flex;
 }
 
+.endAdornment_a816ecb5>.MuiAutocomplete-endAdornment>div {
+    display: flex;
+    align-items: flex-start;
+}
+
 .arrow_buttons_a816ecb5 {
     margin-top: 5px;
 }

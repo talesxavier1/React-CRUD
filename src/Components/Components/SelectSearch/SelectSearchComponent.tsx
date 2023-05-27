@@ -6,6 +6,7 @@ import { useQuery } from "react-query"
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import useDebounce from '../../../utils/useDebounce'
+import { GUID } from '../../../utils/GUID'
 
 export interface IOption {
     desc: any
@@ -39,7 +40,7 @@ const SelectSearchComponent = (props: ISelectComponent) => {
         setSelectedValue(props.defaulOption ?? null);
     }, [depString]);
 
-    const { data: options, isFetching: optionsIsFetching, remove: optionsRemove } = useQuery(
+    const { data: options, isFetching: optionsIsFetching } = useQuery(
         `getOptions_${props.id}_${debouncedValue}_${page}`,
         async () => {
             let result: IOption[] = [];
@@ -48,26 +49,27 @@ const SelectSearchComponent = (props: ISelectComponent) => {
             }
             return result
         },
-        { refetchOnWindowFocus: false, enabled: !!inputTextValue || isOpen }
+        { refetchOnWindowFocus: false, enabled: !!inputTextValue || isOpen, cacheTime: 2000 }
     );
 
-    const { data: count, remove: countRemove } = useQuery(
-        `countOptions_${props.id}_${debouncedValue}_${page}`,
+    const { data: count } = useQuery(
+        `countOptions_${props.id}_${debouncedValue}`,
         async () => {
+            console.log(`countOptions_${props.id}_${debouncedValue}`);
             return props.countOptions ? await props.countOptions(inputTextValue) : 0;
         },
-        { refetchOnWindowFocus: false, enabled: !!inputTextValue || isOpen }
+        { refetchOnWindowFocus: false, enabled: !!inputTextValue || isOpen, cacheTime: 2000 }
     );
 
     function addToEndAdornment(endAdornment: any) {
         const children = React.Children.toArray(endAdornment.props.children);
         children.unshift(
-            <>
+            <div key={GUID.getGUID()}>
                 <div className='circular_progress_a816ecb5'>
                     {optionsIsFetching ? <CircularProgress color="inherit" size={20} sx={{ color: "#736C63" }} /> : null}
                 </div>
-                {(count && count > 5) ?
-                    <div className='arrow_buttons_a816ecb5'>
+                {(count && count > 5 && isOpen) ?
+                    <div className='arrow_buttons_a816ecb5' >
                         <button className='button_arrow'
                             onClick={() => {
                                 setPage(page - 1);
@@ -89,7 +91,7 @@ const SelectSearchComponent = (props: ISelectComponent) => {
                     :
                     null
                 }
-            </>
+            </div>
         );
         return React.cloneElement(endAdornment, {}, children);
     }
@@ -138,8 +140,6 @@ const SelectSearchComponent = (props: ISelectComponent) => {
                     if (props.multiple) {
                         setInputTextValue("");
                     }
-                    optionsRemove();
-                    countRemove();
                     setPage(0);
                 }}
                 clearOnBlur={!props.multiple}
@@ -149,7 +149,7 @@ const SelectSearchComponent = (props: ISelectComponent) => {
                 sx={props.sx}
                 filterOptions={(x) => x}
                 onOpen={() => { setIsOpen(true) }}
-                onClose={() => { setIsOpen(false) }}
+                onClose={() => { setIsOpen(false); setPage(0); }}
                 onChange={(event, valueParam) => {
                     let value = (() => {
                         if (Array.isArray(valueParam)) {
@@ -165,8 +165,6 @@ const SelectSearchComponent = (props: ISelectComponent) => {
                     if (props.callBackOption) {
                         props.callBackOption(value);
                     }
-                    optionsRemove();
-                    countRemove();
                     setPage(0);
                 }}
                 onInputChange={(event, newInputValue) => {
