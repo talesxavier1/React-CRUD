@@ -22,7 +22,7 @@ export default class AreaAtuacaoRepository implements IAreaAtuacaoRepository {
 
     countAreaOfSpecializationByQuery = async (userToken: string, query: string) => {
         let url = `${import.meta.env.VITE_REACT_APP_API}/areaOfSpecialization/countAreaOfSpecializationByQuery`;
-        let response: any = await RequestModel().request(url, "POST", query, { "userToken": userToken }, true);
+        let response: any = await RequestModel().request(url, "POST", query, { "userToken": userToken, "Content-Type": 'application/json' }, true);
         if (response?.oparationStatus == 0) {
             return (response.data as number);
         }
@@ -53,7 +53,7 @@ export default class AreaAtuacaoRepository implements IAreaAtuacaoRepository {
         let url = `${import.meta.env.VITE_REACT_APP_API}/areaOfSpecialization/getAreasOfSpecializationByQuery?skip={0}&take={1}`
             .replace("{0}", skip.toString())
             .replace("{1}", take.toString());
-        let response: any = await RequestModel().request(url, "POST", query, { "userToken": userToken }, true);
+        let response: any = await RequestModel().request(url, "POST", query, { "userToken": userToken, "Content-Type": 'application/json' }, true);
         if (response?.oparationStatus == 0) {
             return (response.data as AreaAtuacaoModel[]);
         }

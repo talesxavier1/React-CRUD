@@ -135,12 +135,14 @@ const SelectSearchComponent = (props: ISelectComponent) => {
                 size='small'
                 freeSolo
                 onBlur={() => {
-                    setInputTextValue("");
+                    if (props.multiple) {
+                        setInputTextValue("");
+                    }
                     optionsRemove();
                     countRemove();
                     setPage(0);
                 }}
-
+                clearOnBlur={!props.multiple}
                 inputValue={inputTextValue}
                 multiple={props.multiple}
                 forcePopupIcon={true}
