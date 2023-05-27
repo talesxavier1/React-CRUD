@@ -1,8 +1,12 @@
 import styles from "./CadastroExperiencias.module.css"
 import ButtonComponent from "../../../../Components/Button/ButtonComponent"
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ModalComponent from "../../../../Components/Modal/ModalComponent";
 import TextFieldComponent from "../../../../Components/TextField/TextFieldComponent";
+import DateField from "../../../../Components/DateField/DateField";
+import SelectComponent from "../../../../Components/Select/SelectComponent";
+import { ProfessorContext } from "../../ProfessorContext";
+import SelectSearchComponent from "../../../../Components/SelectSearch/SelectSearchComponent";
 
 interface ICadastroExperiencias {
     id: string
@@ -72,6 +76,8 @@ const CadastroExperiencias = (props: ICadastroExperiencias) => {
 }
 
 const Content = () => {
+    const professorContext = useContext(ProfessorContext);
+
     return (
         <div className={styles["content_container"]}>
             <><TextFieldComponent label='Código'
@@ -89,28 +95,56 @@ const Content = () => {
                 sx={{ width: "100%" }}
             />
             </>
-            <><TextFieldComponent label='Cargo Ocupado'
-                // inputRef={refsMap.get("codigo")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
+            <><SelectSearchComponent inputLabel='Cargo Ocupado'
                 id={styles["cargo_ocupado"]}
                 sx={{ width: "100%" }}
+                getOptions={async (textSearch: string, skip: number, take: number) => {
+                    let result = await professorContext?.getFuncao(skip, take, textSearch);
+                    if (result) {
+                        return result.map(VALUE => {
+                            return {
+                                "desc": VALUE.position,
+                                "id": VALUE.codigo,
+                                "optionOriginalValue": VALUE
+                            }
+                        });
+                    }
+                    return [];
+                }}
+                countOptions={async (textSearch: string) => {
+                    let result = await professorContext?.countFuncao(textSearch);
+                    return result ?? 0;
+                }}
             />
             </>
-            <><TextFieldComponent label='Área de Atuação'
-                // inputRef={refsMap.get("codigo")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
+            <><SelectSearchComponent inputLabel='Área de Atuação'
                 id={styles["area_de_atuacao"]}
                 sx={{ width: "100%" }}
+                getOptions={async (textSearch: string, skip: number, take: number) => {
+                    let result = await professorContext?.getAreaAtuacao(textSearch, skip, take);
+                    if (result) {
+                        return result.map(VALUE => {
+                            return {
+                                "desc": VALUE.area,
+                                "id": VALUE.codigo,
+                                "optionOriginalValue": VALUE
+                            }
+                        });
+                    }
+                    return [];
+                }}
+                countOptions={async (textSearch: string) => {
+                    let result = await professorContext?.countAreaAtuacao(textSearch);
+                    return result ?? 0;
+                }}
             />
             </>
-            <><TextFieldComponent label='Data de início'
-                // inputRef={refsMap.get("codigo")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
+            <><DateField label='Data de início'
                 id={styles["data_inicio"]}
                 sx={{ width: "100%" }}
             />
             </>
-            <><TextFieldComponent label='Data Fim'
+            <><DateField label='Data Fim'
                 // inputRef={refsMap.get("codigo")}
                 // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["data_fim"]}
@@ -125,25 +159,32 @@ const Content = () => {
                 multiline={{ rows: 4 }}
             />
             </>
-            <><TextFieldComponent label='Regime de contratação'
-                // inputRef={refsMap.get("codigo")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
+            <><SelectComponent inputLabel='Regime de contratação'
                 id={styles["regime_de_contratacao"]}
                 sx={{ width: "100%" }}
+                asyncOptions={false}
+                options={[
+                    { desc: "Tempo determinado", id: "Tempo determinado" },
+                    { desc: "Tempo indeterminado", id: "Tempo indeterminado" },
+                    { desc: "Trabalho eventual", id: "Trabalho eventual" },
+                    { desc: "Estágio", id: "Estágio" },
+                    { desc: "Experiência", id: "Experiência" },
+                    { desc: "Teletrabalho", id: "Teletrabalho" },
+                    { desc: "Intermitente", id: "Ieletrabalho" },
+                    { desc: "Autônomo", id: "Autônomo" }
+                ]}
             />
             </>
             <><TextFieldComponent label='Carga Horária Semanal'
-                // inputRef={refsMap.get("codigo")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["carga_horaria_semanal"]}
                 sx={{ width: "100%" }}
+                type="number"
             />
             </>
             <><TextFieldComponent label='Salário ou Remuneração Recebida'
-                // inputRef={refsMap.get("codigo")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["salario_ou_remuneracao_recebida"]}
                 sx={{ width: "100%" }}
+                type="monetary"
             />
             </>
         </div>

@@ -3,6 +3,7 @@ import ButtonComponent from "../../../../Components/Button/ButtonComponent"
 import ModalComponent from "../../../../Components/Modal/ModalComponent"
 import { useState } from "react"
 import TextFieldComponent from "../../../../Components/TextField/TextFieldComponent"
+import SelectComponent from "../../../../Components/Select/SelectComponent"
 
 interface ICadastroIdiomas {
     id: string
@@ -85,11 +86,18 @@ const Content = () => {
                 sx={{ width: "100%" }}
             />
             </>
-            <><TextFieldComponent label='Nível de Proficiência'
+            <><SelectComponent inputLabel='Nível de Proficiência'
                 // inputRef={refsMap.get("codigo")}
                 // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["nivel_de_proficiencia"]}
                 sx={{ width: "100%" }}
+                asyncOptions={false}
+                options={[
+                    { "desc": "Básico", "id": "Básico" },
+                    { "desc": "Intermediário", "id": "Intermediário" },
+                    { "desc": "Avançado", "id": "Avançado" },
+                    { "desc": "Nativo", "id": "Nativo" }
+                ]}
             />
             </>
             <><TextFieldComponent label='Aplicações Práticas'
@@ -100,6 +108,11 @@ const Content = () => {
             />
             </>
         </div>
+
+
+
+
+
     )
 }
 
