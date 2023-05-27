@@ -3,6 +3,8 @@ import ButtonComponent from "../../../../Components/Button/ButtonComponent"
 import { useState } from "react";
 import ModalComponent from "../../../../Components/Modal/ModalComponent";
 import TextFieldComponent from "../../../../Components/TextField/TextFieldComponent";
+import DateField from "../../../../Components/DateField/DateField";
+import SelectComponent from "../../../../Components/Select/SelectComponent";
 
 interface ICadastroCursos {
     id: string
@@ -94,31 +96,37 @@ const Content = () => {
             />
             </>
             <><TextFieldComponent label='Carga Horária'
-                // inputRef={refsMap.get("codigo")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["carga_horaria"]}
                 sx={{ width: "100%" }}
+                type="number"
             />
             </>
-            <><TextFieldComponent label='Data de Início'
+            <><DateField label='Data de Início'
                 // inputRef={refsMap.get("codigo")}
                 // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["data_de_inicio"]}
                 sx={{ width: "100%" }}
             />
             </>
-            <><TextFieldComponent label='Data de Fim'
+            <><DateField label='Data de Fim'
                 // inputRef={refsMap.get("codigo")}
                 // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["data_de_fim"]}
                 sx={{ width: "100%" }}
             />
             </>
-            <><TextFieldComponent label='Modalidade do Curso'
+            <><SelectComponent inputLabel='Modalidade do Curso'
                 // inputRef={refsMap.get("codigo")}
                 // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["modalidade_do_curso"]}
                 sx={{ width: "100%" }}
+                asyncOptions={false}
+                options={[
+                    { "desc": "Presencial", "id": "Presencial" },
+                    { "desc": "Semipresencial", "id": "Semipresencial" },
+                    { "desc": "Ensino a Distância", "id": "Ensino a Distância" },
+
+                ]}
             />
             </>
             <><TextFieldComponent label='Investimento Financeiro'
@@ -126,6 +134,7 @@ const Content = () => {
                 // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["investimento_financeiro"]}
                 sx={{ width: "100%" }}
+                type="monetary"
             />
             </>
             <><TextFieldComponent label='Descrição do Curso'
