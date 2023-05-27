@@ -21,7 +21,7 @@ export default class FormacaoAcademicaRepository implements IFormacaoAcademicaRe
 
     countAcademicBackgroundsByQuery = async (userToken: string, query: string) => {
         let url = `${import.meta.env.VITE_REACT_APP_API}/academicBackground/countAcademicBackgroundsByQuery`;
-        let response: any = await RequestModel().request(url, "POST", query, { "userToken": userToken }, true);
+        let response: any = await RequestModel().request(url, "POST", query, { "userToken": userToken, "Content-Type": 'application/json' }, true);
         if (response?.oparationStatus == 0) {
             return (response.data as number);
         }
@@ -52,7 +52,7 @@ export default class FormacaoAcademicaRepository implements IFormacaoAcademicaRe
         let url = `${import.meta.env.VITE_REACT_APP_API}/academicBackground/getAcademicBackgroundsByQuery?skip={0}&take={1}`
             .replace("{0}", skip.toString())
             .replace("{1}", take.toString());
-        let response: any = await RequestModel().request(url, "POST", query, { "userToken": userToken }, true);
+        let response: any = await RequestModel().request(url, "POST", query, { "userToken": userToken, "Content-Type": 'application/json' }, true);
         if (response?.oparationStatus == 0) {
             return (response.data as FormacaoModel[]);
         }
