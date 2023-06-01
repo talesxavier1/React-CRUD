@@ -1,6 +1,6 @@
 import { Iprofessor } from "../Interfaces/IProfessor";
 
-export default class Professor implements Iprofessor {
+export default class ProfessorModel implements Iprofessor {
     codigo!: string;
     pessoa!: string;
     pessoaCPF!: string;
