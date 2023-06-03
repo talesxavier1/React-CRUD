@@ -1,6 +1,6 @@
 import ProfessorModel from "../../Models/Objects/ProfessorModel"
 
-export default interface IProfessor {
+export default interface IProfessorRepository {
     logicalDeleteTeacher: (userToken: string, codigo: string) => Promise<boolean>
     addTeacher: (userToken: string, professor: ProfessorModel) => Promise<boolean>
     modifyTeacher: (userToken: string, professor: ProfessorModel) => Promise<boolean>
@@ -8,5 +8,5 @@ export default interface IProfessor {
     getTeacherByQuery: (userToken: string, skip: number, take: number, query: string) => Promise<ProfessorModel[]>
     countTeachersByQuery: (userToken: string, query: string) => Promise<number>
     countTeachers: (userToken: string) => Promise<number>
-    getTeacherById: (userToken: string, codigo: string) => Promise<ProfessorModel>
+    getTeacherById: (userToken: string, codigo: string) => Promise<ProfessorModel | undefined>
 }
