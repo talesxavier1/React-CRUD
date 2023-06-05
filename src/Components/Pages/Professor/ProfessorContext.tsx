@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import { PessoaModel } from "../../../Models/Objects/PessoaModel";
 import PersonRepository from "../../../Repository/Implementations/PersonRepository";
 import FormacaoAcademicaRepository from "../../../Repository/Implementations/FormacaoAcademicaRepository";
@@ -7,6 +7,8 @@ import CargoRepository from "../../../Repository/Implementations/CargoRepository
 import CargosModel from "../../../Models/Objects/CargosModel";
 import AreaAtuacaoRepository from "../../../Repository/Implementations/AreaAtuacaoRepository";
 import AreaAtuacaoModel from "../../../Models/Objects/AreaAtuacaoModel";
+import ProfessorModel from "../../../Models/Objects/ProfessorModel";
+import { ProfessorRepository } from "../../../Repository/Implementations/ProfessorRepository";
 
 
 interface IProfessorContext {
@@ -25,6 +27,9 @@ export const ProfessorContext = createContext<IProfessorContext | undefined>(und
 
 const ProfessorContextProvider = (props: any) => {
     var userToken = sessionStorage.getItem("userToken") ?? "";
+    const [professor, setProfessor] = useState<ProfessorModel | undefined>(undefined)
+
+    /* ------------------------------------------ Pessoa ------------------------------------------  */
 
     const getPersons = async (name_Or_CPF: string, skip: number, take: number) => {
         let query = (() => {
@@ -49,7 +54,7 @@ const ProfessorContextProvider = (props: any) => {
         }
 
         return result;
-    }
+    };
 
     const countPersons = async (name_Or_CPF?: string) => {
         let query = (() => {
@@ -71,8 +76,10 @@ const ProfessorContextProvider = (props: any) => {
         }
 
         return result;
-    }
+    };
+    /* --------------------------------------------------------------------------------------------  */
 
+    /* ----------------------------------------- Formação -----------------------------------------  */
     const getFormacao = async (nomeFormacao: string, skip: number, take: number) => {
         let query = (() => {
             if (nomeFormacao) {
@@ -89,7 +96,7 @@ const ProfessorContextProvider = (props: any) => {
             result = await new FormacaoAcademicaRepository().getAcademicBackgrounds(userToken, skip, take) as FormacaoModel[];
         }
         return result;
-    }
+    };
 
     const countFormacao = async (nomeFormacao: string) => {
         let query = (() => {
@@ -107,8 +114,10 @@ const ProfessorContextProvider = (props: any) => {
             result = await new FormacaoAcademicaRepository().countAcademicBackgrounds(userToken) as number;
         }
         return result;
-    }
+    };
+    /* --------------------------------------------------------------------------------------------  */
 
+    /* ------------------------------------------ Função ------------------------------------------  */
     const getFuncao = async (skip: number, take: number, nomeFuncao?: string) => {
         let query = (() => {
             if (nomeFuncao) {
@@ -125,7 +134,7 @@ const ProfessorContextProvider = (props: any) => {
             result = await new CargoRepository().getPositions(userToken, skip, take) as CargosModel[];
         }
         return result;
-    }
+    };
 
     const countFuncao = async (nomeFuncao?: string) => {
         let query = (() => {
@@ -143,8 +152,10 @@ const ProfessorContextProvider = (props: any) => {
             result = await new CargoRepository().countPositions(userToken) as number;
         }
         return result
-    }
+    };
+    /* --------------------------------------------------------------------------------------------  */
 
+    /* --------------------------------------- Area Atuação ---------------------------------------  */
     const getAreaAtuacao = async (nomeArea: string, skip: number, take: number) => {
         let query = (() => {
             if (nomeArea) {
@@ -161,7 +172,7 @@ const ProfessorContextProvider = (props: any) => {
             result = await new AreaAtuacaoRepository().getAreasOfSpecialization(userToken, skip, take) as AreaAtuacaoModel[];
         }
         return result;
-    }
+    };
 
     const countAreaAtuacao = async (nomeArea: string) => {
         let query = (() => {
@@ -180,7 +191,40 @@ const ProfessorContextProvider = (props: any) => {
             result = await new AreaAtuacaoRepository().countAreaOfSpecialization(userToken) as number;
         }
         return result;
+    };
+    /* --------------------------------------------------------------------------------------------  */
+
+    /* ----------------------------------------- Professor ----------------------------------------  */
+    const getProfessor = async (codigo: string) => {
+        let result = await new ProfessorRepository().getTeacherById(userToken, codigo);
+        return result ?? undefined;
+    };
+
+    const deleteProfessor = async (codigo: string) => {
+        let result = await new ProfessorRepository().logicalDeleteTeacher(userToken, codigo);
+        return result;
+    };
+
+    const addProfessor = async (professor: ProfessorModel) => {
+        let result = await new ProfessorRepository().addTeacher(userToken, professor);
+        return result;
+    };
+
+    const alterarProfessor = async (professor: ProfessorModel) => {
+        let result = await new ProfessorRepository().modifyTeacher(userToken, professor);
+        return result;
     }
+
+    const getProfessores = async (skip: number, take: number) => {
+        let result = await new ProfessorRepository().getTeacherList(userToken, skip, take);
+        return result;
+    }
+
+    const conutProfessores = async () => {
+        let result = await new ProfessorRepository().countTeachers(userToken);
+        return result;
+    }
+    /* --------------------------------------------------------------------------------------------  */
 
     return (
         <ProfessorContext.Provider value={{
