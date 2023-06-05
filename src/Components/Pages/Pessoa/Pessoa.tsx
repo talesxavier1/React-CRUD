@@ -117,9 +117,16 @@ const Pessoa = () => {
     return (
         <div className={style['content-container']}>
             <div className={style['buttons-container']}>
-                <ButtonComponent value='Adicionar' variant='outlined' style={{ color: '#222834', backgroundColor: '#539553' }} onClick={() => navigate("/main/pessoa/page")} />
-                <ButtonComponent
-                    value='Editar'
+                <><ButtonComponent value='Adicionar'
+                    variant='outlined'
+                    style={{
+                        color: '#222834',
+                        backgroundColor: '#539553'
+                    }}
+                    onClick={() => navigate("/main/pessoa/page")}
+                />
+                </>
+                <><ButtonComponent value='Editar'
                     variant='outlined'
                     style={{
                         color: '#222834',
@@ -128,8 +135,8 @@ const Pessoa = () => {
                     onClick={() => { navigate(`/main/pessoa/page?codigo=${selectedRows[0]}`) }}
                     disabled={selectedRows.length != 1}
                 />
-                <ButtonComponent
-                    value='Excluir'
+                </>
+                <><ButtonComponent value='Excluir'
                     variant='outlined'
                     style={{
                         color: '#222834',
@@ -138,6 +145,7 @@ const Pessoa = () => {
                     disabled={selectedRows.length == 0}
                     onClick={() => { deletePessoa() }}
                 />
+                </>
             </div>
             <div className={style['grid-container']}>
                 <Grid
