@@ -55,7 +55,6 @@ const SelectSearchComponent = (props: ISelectComponent) => {
     const { data: count } = useQuery(
         `countOptions_${props.id}_${debouncedValue}`,
         async () => {
-            console.log(`countOptions_${props.id}_${debouncedValue}`);
             return props.countOptions ? await props.countOptions(inputTextValue) : 0;
         },
         { refetchOnWindowFocus: false, enabled: !!inputTextValue || isOpen, cacheTime: 2000 }
@@ -119,12 +118,12 @@ const SelectSearchComponent = (props: ISelectComponent) => {
                 value={(() => {
 
                     if (!selectedValue) {
-                        if (props.multiple) { return [] }
+                        if (props.multiple) { return "[]" }
                         return "";
                     }
 
                     if (props.multiple) {
-                        return selectedValue.map(VALUE => VALUE.desc);
+                        return JSON.stringify(selectedValue.map(VALUE => VALUE.desc));
                     }
                     return selectedValue[0].desc;
                 })()}
