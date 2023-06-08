@@ -16,4 +16,11 @@ export default class ProfessorModel implements Iprofessor {
     areaAtuacao!: string;
     areaAtuacaoID!: string;
     valorHoraAula!: number;
+
+    public static constructorMethod = (codigo: string) => {
+        let pessoa = new ProfessorModel();
+        pessoa.codigo = codigo;
+        return pessoa;
+    }
+
 }
