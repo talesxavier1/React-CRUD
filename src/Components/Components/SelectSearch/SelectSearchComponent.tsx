@@ -45,19 +45,19 @@ const SelectSearchComponent = (props: ISelectComponent) => {
         async () => {
             let result: IOption[] = [];
             if (props.getOptions) {
-                result = await props.getOptions(inputTextValue, page * 5, 5) as IOption[];
+                result = await props.getOptions(debouncedValue, page * 5, 5) as IOption[];
             }
             return result
         },
-        { refetchOnWindowFocus: false, enabled: !!inputTextValue || isOpen, cacheTime: 2000 }
+        { refetchOnWindowFocus: false, enabled: (!!debouncedValue || isOpen), cacheTime: 2000 }
     );
 
     const { data: count } = useQuery(
         `countOptions_${props.id}_${debouncedValue}`,
         async () => {
-            return props.countOptions ? await props.countOptions(inputTextValue) : 0;
+            return props.countOptions ? await props.countOptions(debouncedValue) : 0;
         },
-        { refetchOnWindowFocus: false, enabled: !!inputTextValue || isOpen, cacheTime: 2000 }
+        { refetchOnWindowFocus: false, enabled: (!!debouncedValue || isOpen), cacheTime: 2000 }
     );
 
     function addToEndAdornment(endAdornment: any) {
