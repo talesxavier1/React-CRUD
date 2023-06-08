@@ -3,6 +3,7 @@ interface IformatDate {
     format:
     "MM/dd/yyyy" | //ok
     "yyyy-MM-dd hh:mm:ss" | //ok
+    "DD/MM/YYYY" | //ok
     "dddd, dd MMMM yyyy" |
     "dddd, dd MMMM yyyy HH:mm:ss" |
     "MM/dd/yyyy HH:mm" |
@@ -47,6 +48,8 @@ export default class DateFormat {
                 return `${horas}:${minutos}:${segundos}`
             case "MM/dd/yyyy":
                 return `${mes}/${dia}/${ano}`
+            case "DD/MM/YYYY":
+                return `${dia}/${mes}/${ano}`
             default:
                 return props.isoDate;
         }

@@ -20,7 +20,14 @@ interface IProfessorContext {
     countFuncao: (nomeFuncao?: string) => Promise<number>;
     getAreaAtuacao: (nomeArea: string, skip: number, take: number) => Promise<AreaAtuacaoModel[]>;
     countAreaAtuacao: (nomeArea: string) => Promise<number>;
-
+    getProfessor: (codigo: string) => Promise<ProfessorModel | undefined>
+    deleteProfessor: (codigo: string) => Promise<boolean>;
+    addProfessor: (professor: ProfessorModel) => Promise<boolean>;
+    alterarProfessor: (professor: ProfessorModel) => Promise<boolean>;
+    getProfessores: (skip: number, take: number) => Promise<ProfessorModel[]>;
+    conutProfessores: () => Promise<number>;
+    professor: ProfessorModel | undefined;
+    setProfessor: (professor: ProfessorModel) => void;
 }
 
 export const ProfessorContext = createContext<IProfessorContext | undefined>(undefined);
@@ -235,7 +242,15 @@ const ProfessorContextProvider = (props: any) => {
             getFuncao,
             countFuncao,
             getAreaAtuacao,
-            countAreaAtuacao
+            countAreaAtuacao,
+            getProfessor,
+            deleteProfessor,
+            addProfessor,
+            alterarProfessor,
+            getProfessores,
+            conutProfessores,
+            setProfessor,
+            professor
         }}>
             {props.children}
         </ProfessorContext.Provider >
