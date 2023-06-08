@@ -64,12 +64,12 @@ const SelectComponent = (props: ISelectComponent) => {
                 value={(() => {
 
                     if (!selectedValue) {
-                        if (props.multiple) { return [] }
+                        if (props.multiple) { return "[]" }
                         return "";
                     }
 
                     if (props.multiple) {
-                        return selectedValue.map(VALUE => VALUE.desc);
+                        return JSON.stringify(selectedValue.map(VALUE => VALUE.desc));
                     }
                     return selectedValue[0].desc;
                 })()}
