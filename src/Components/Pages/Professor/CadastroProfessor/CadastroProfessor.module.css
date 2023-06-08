@@ -74,3 +74,15 @@
     grid-column: 1/ span 10;
     grid-row: 7/ span 7;
 }
+
+#btn_salvar {
+    grid-column: 10;
+    grid-row: 14;
+    margin-left: 200px;
+}
+
+#btn_voltar {
+    grid-column: 10;
+    grid-row: 14;
+    margin-left: 100px;
+}
