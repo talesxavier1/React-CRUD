@@ -192,25 +192,6 @@ const SelectSearchComponent = (props: ISelectComponent) => {
                     return selectedValue;
                 })()}
                 renderOption={(props, option) => {
-                    let isSelectedValue = (() => {
-                        if (selectedValue && selectedValue.find(VALUE => VALUE.desc == option.desc && VALUE.id == option.id)) {
-                            return true;
-                        }
-                        return false;
-                    })();
-                    props["aria-selected"] = isSelectedValue;
-
-                    if (isSelectedValue) {
-                        props["onClick"] = (() => {
-                            selectedValue?.forEach((VALUE, INDEX) => {
-                                if (VALUE.desc == option.desc && VALUE.id == option.id) {
-                                    let newSelectedValue = selectedValue.slice(INDEX, INDEX);
-                                    setSelectedValue(newSelectedValue.length == 0 ? null : newSelectedValue);
-                                }
-                            });
-                        })
-                    }
-
                     return (
                         <li  {...props} key={option.id}>
                             {option.desc}

@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import TextFieldComponent from '../../../Components/TextField/TextFieldComponent';
 import styles from './CadastroProfessor.module.css'
 import Tabs from '@mui/material/Tabs';
@@ -10,67 +10,28 @@ import { ProfessorContext } from '../ProfessorContext';
 import SelectSearchComponent from '../../../Components/SelectSearch/SelectSearchComponent';
 import SelectComponent, { IOption } from '../../../Components/Select/SelectComponent';
 import DateField from '../../../Components/DateField/DateField';
-import ButtonComponent from '../../../Components/Button/ButtonComponent';
-import { useLocation, useNavigate } from 'react-router-dom';
-import RefFormatter from '../../../../utils/RefFormatter';
-import ProfessorModel from '../../../../Models/Objects/ProfessorModel';
-import { useQuery } from 'react-query';
-import { GUID } from '../../../../utils/GUID';
-import TryParse from '../../../../utils/TryParse';
 
 
 
 const CadastroProfessor = () => {
     const [tabShow, setTabShow] = useState<number>(0);
     const professorContext = useContext(ProfessorContext);
-    const navigate = useNavigate();
-    const [professorValorSelecionado, setProfessorValorSelecionado] = useState<IOption[] | null | undefined>(undefined);
-    let refsMap = RefFormatter.generateObjectRefs(new ProfessorModel(), ["codigoRef"]);
-    const professorID = new URLSearchParams(useLocation().search).get("codigo");
 
-    const { data, isFetched, isFetching } = useQuery(
-        ["professor", professorID],
-        (async () => {
-            if (!professorID) { return ProfessorModel.constructorMethod(GUID.getGUID()); }
-            let result = await professorContext?.getProfessor(professorID);
-            if (result) { return result }
-
-            return null;
-        }),
-        { refetchOnWindowFocus: false, cacheTime: 0 }
-    );
-
-    useEffect(() => {
-        if (isFetched) {
-            if (data) {
-                professorContext?.setProfessor(data);
-            } else {
-                navigate("/main/professor/page");
-            }
-        }
-    }, [isFetched])
-
-    const saveProfessor = useCallback(() => {
-        let professor: any = RefFormatter.getObjectFromRefs(new ProfessorModel(), refsMap);
-
-        console.log(professor);
-    }, [refsMap]);
-
+    const [pessoaValorSelecionado, setPessoaValorSelecionado] = useState<IOption[] | null>(null);
     return (
         <div className={styles['container']}>
             <div className={styles['fields-container']}>
+                {/* SelectSearch */}
                 {/* Campos */}
                 <>
                     <><TextFieldComponent label='Código'
                         id={styles["codigo"]}
                         sx={{ width: "330px" }}
-                        inputRef={refsMap.get("codigo")}
-                        value={professorContext?.professor?.codigo}
                     />
                     </>
                     <><SelectSearchComponent inputLabel='Pessoa'
                         id={styles["pessoa"]}
-                        callBackOption={setProfessorValorSelecionado}
+                        callBackOption={setPessoaValorSelecionado}
                         getOptions={async (textSearch: string, skip: number, take: number) => {
                             let result = await professorContext?.getPersons(textSearch, skip, take);
                             if (result) {
@@ -88,18 +49,6 @@ const CadastroProfessor = () => {
                             let result = await professorContext?.countPersons(textSearch);
                             return result ?? 0;
                         }}
-                        inputRefDesc={refsMap.get("pessoa")}
-                        inputRefID={refsMap.get("pessoaID")}
-                        defaulOption={(() => {
-                            let desc = professorContext?.professor?.pessoa;
-                            let id = professorContext?.professor?.codigo;
-                            if (desc && id) {
-                                return [{
-                                    id: id,
-                                    desc: desc
-                                }]
-                            }
-                        })()}
                     />
                     </>
                     <><TextFieldComponent label='CPF'
@@ -107,21 +56,24 @@ const CadastroProfessor = () => {
                         sx={{ width: "100%" }}
                         readonly
                         value={(() => {
-                            if (professorValorSelecionado) {
-                                return professorValorSelecionado[0].optionOriginalValue.cpf;
-                            } else if (professorValorSelecionado === undefined) {
-                                return professorContext?.professor?.pessoaCPF ?? "";
+                            if (pessoaValorSelecionado) {
+                                let values = pessoaValorSelecionado.map(VALUE => VALUE.optionOriginalValue.cpf).join(",");
+                                return values;
+                            } else if (pessoaValorSelecionado === null) {
+                                return "";
                             }
+                            //  else if (props.value?.codigoIBGEEstado) {
+                            //     return props.value.codigoIBGEEstado;
+                            // }
                             return "";
                         })()}
                         mask='###.###.###-##'
-                        inputRef={refsMap.get("pessoaCPF")}
                     />
                     </>
                     <><SelectSearchComponent inputLabel='Função'
                         id={styles["funcao"]}
                         sx={{ width: "100%" }}
-                        getOptions={useCallback(async (textSearch: string, skip: number, take: number) => {
+                        getOptions={async (textSearch: string, skip: number, take: number) => {
                             let result = await professorContext?.getFuncao(skip, take, textSearch);
                             if (result) {
                                 return result.map(VALUE => {
@@ -133,32 +85,17 @@ const CadastroProfessor = () => {
                                 });
                             }
                             return [];
-                        }, [])}
+                        }}
                         countOptions={async (textSearch: string) => {
                             let result = await professorContext?.countFuncao(textSearch);
                             return result ?? 0;
                         }}
-                        inputRefDesc={refsMap.get("funcao")}
-                        inputRefID={refsMap.get("funcaoID")}
-                        defaulOption={(() => {
-                            let desc = professorContext?.professor?.funcao;
-                            let id = professorContext?.professor?.funcaoID;
-                            if (desc && id) {
-                                return [{
-                                    id: id,
-                                    desc: desc
-                                }]
-                            }
-
-                        })()}
                     />
                     </>
                     <><TextFieldComponent label='Carga horária'
                         id={styles["carga_horaria"]}
                         sx={{ width: "100%" }}
                         type='number'
-                        inputRef={refsMap.get("cargaHoraria")}
-                        value={professorContext?.professor?.cargaHoraria}
                     />
                     </>
                     <><SelectSearchComponent inputLabel='Formações Acadêmicas'
@@ -182,59 +119,11 @@ const CadastroProfessor = () => {
                             return result ?? 0;
                         }}
                         multiple
-                        inputRefDesc={refsMap.get("formacaoAcademica")}
-                        inputRefID={refsMap.get("formacaoAcademicaID")}
-                        defaulOption={(() => {
-                            let desc = (() => {
-                                let value = professorContext?.professor?.formacaoAcademica;
-                                if (!value) { return "" };
-
-                                let parseValue = TryParse(value);
-                                if (Array.isArray(parseValue)) {
-                                    return parseValue as string[];
-                                } else if (typeof parseValue == "string") {
-                                    return parseValue;
-                                }
-                                return undefined;
-                            })();
-
-                            let id = (() => {
-                                let value = professorContext?.professor?.formacaoAcademicaID;
-                                if (!value) { return "" };
-
-                                let parseValue = TryParse(value);
-                                if (Array.isArray(parseValue)) {
-                                    return parseValue as string[];
-                                } else if (typeof parseValue == "string") {
-                                    return parseValue;
-                                }
-                                return undefined;
-                            })();
-
-                            if (Array.isArray(desc) && Array.isArray(id)) {
-                                let valueMap = desc.map((VALUE, INDEX) => {
-                                    return {
-                                        "desc": VALUE,
-                                        "id": (id as string[])[INDEX]
-                                    };
-                                });
-                                return valueMap;
-                            } else if (typeof desc == "string" && typeof id == "string") {
-                                return [{
-                                    "desc": desc,
-                                    "id": id
-                                }]
-                            }
-
-                            return undefined;
-                        })()}
                     />
                     </>
                     <><DateField label='Data de Início da Contratação'
                         id={styles["data_de_inicio_da_contratacao"]}
                         sx={{ width: "100%" }}
-                        inputRef={refsMap.get("dataInicioContratacao")}
-                        value={professorContext?.professor?.dataInicioContratacao}
                     />
                     </>
                     <><SelectComponent inputLabel='Nívels de Ensino que Ministra'
@@ -250,51 +139,6 @@ const CadastroProfessor = () => {
                             { desc: "Ensino superior", id: "Ensino superior" },
                             { desc: "Pós-graduação", id: "Pós-graduação" }
                         ]}
-                        inputRefDesc={refsMap.get("nivelEnsinoQueMinistra")}
-                        defaulOption={(() => {
-                            let desc = (() => {
-                                let value = professorContext?.professor?.nivelEnsinoQueMinistra;
-                                if (!value) { return "" };
-
-                                let parseValue = TryParse(value);
-                                if (Array.isArray(parseValue)) {
-                                    return parseValue as string[];
-                                } else if (typeof parseValue == "string") {
-                                    return parseValue;
-                                }
-                                return undefined;
-                            })();
-
-                            let id = (() => {
-                                let value = professorContext?.professor?.nivelEnsinoQueMinistra;
-                                if (!value) { return "" };
-
-                                let parseValue = TryParse(value);
-                                if (Array.isArray(parseValue)) {
-                                    return parseValue as string[];
-                                } else if (typeof parseValue == "string") {
-                                    return parseValue;
-                                }
-                                return undefined;
-                            })();
-
-                            if (Array.isArray(desc) && Array.isArray(id)) {
-                                let valueMap = desc.map((VALUE, INDEX) => {
-                                    return {
-                                        "desc": VALUE,
-                                        "id": (id as string[])[INDEX]
-                                    };
-                                });
-                                return valueMap;
-                            } else if (typeof desc == "string" && typeof id == "string") {
-                                return [{
-                                    "desc": desc,
-                                    "id": id
-                                }]
-                            }
-
-                            return undefined;
-                        })()}
                     />
                     </>
                     <><SelectComponent inputLabel='Tipo de Contrato'
@@ -311,7 +155,6 @@ const CadastroProfessor = () => {
                             { desc: "Intermitente", id: "Ieletrabalho" },
                             { desc: "Autônomo", id: "Autônomo" }
                         ]}
-                        inputRefDesc={refsMap.get("tipoContrato")}
                     />
                     </>
                     <><SelectSearchComponent inputLabel='Áreas de Atuação'
@@ -335,15 +178,12 @@ const CadastroProfessor = () => {
                             let result = await professorContext?.countAreaAtuacao(textSearch);
                             return result ?? 0;
                         }}
-                        inputRefDesc={refsMap.get("areaAtuacao")}
-                        inputRefID={refsMap.get("areaAtuacaoID")}
                     />
                     </>
                     <><TextFieldComponent label='Valor da Hora-Aula'
                         id={styles["valor_da_hora_aula"]}
                         sx={{ width: "100%" }}
                         type='monetary'
-                        inputRef={refsMap.get("valorHoraAula")}
                     />
                     </>
                 </>
@@ -375,34 +215,6 @@ const CadastroProfessor = () => {
                             }
                         }, [tabShow])()
                     }
-                </>
-
-                {/* BOTOES */}
-                <>
-                    <><ButtonComponent value='Salvar'
-                        id={styles["btn_salvar"]}
-                        variant='outlined'
-                        style={{
-                            color: '#222834',
-                            backgroundColor: '#539553'
-                        }}
-                        onClick={async () => {
-                            await saveProfessor()
-                        }}
-                    />
-                    </>
-                    <><ButtonComponent value='Voltar'
-                        id={styles["btn_voltar"]}
-                        variant='outlined'
-                        style={{
-                            color: '#222834',
-                            backgroundColor: '#6C757D'
-                        }}
-                        onClick={() => {
-                            navigate("/main/professor");
-                        }}
-                    />
-                    </>
                 </>
             </div>
         </div>
