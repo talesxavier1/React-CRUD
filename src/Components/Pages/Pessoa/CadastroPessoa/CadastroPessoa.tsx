@@ -29,27 +29,25 @@ const CadastroPessoa = () => {
     const pessoaContext = useContext(PessoaContext);
     const pessoaID = new URLSearchParams(useLocation().search).get("codigo");
 
-    const { data, isFetched, isFetching } = useQuery(
+    const { isFetching } = useQuery(
         ["pessoa", pessoaID],
         (async () => {
-            if (!pessoaID) { return PessoaModel.constructorMethod(GUID.getGUID()); }
-            let result = await pessoaContext?.buscarPessoa(pessoaID);
-            if (result) { return result }
+            let result;
+            if (!pessoaID) {
+                result = PessoaModel.constructorMethod(GUID.getGUID());
+            } else {
+                result = await pessoaContext?.buscarPessoa(pessoaID);
+            }
 
-            return null;
-        }),
-        { refetchOnWindowFocus: false, cacheTime: 0 }
-    );
-
-    useEffect(() => {
-        if (isFetched) {
-            if (data) {
-                pessoaContext?.setPessoa(data);
+            if (result) {
+                pessoaContext?.setPessoa(result);
             } else {
                 navigate("/main/pessoa/page");
             }
-        }
-    }, [isFetched])
+
+        }),
+        { refetchOnWindowFocus: false, cacheTime: 0 }
+    );
 
     let refsMap = RefFormatter.generateObjectRefs(new PessoaModel(), ["codigoRef"]);
 

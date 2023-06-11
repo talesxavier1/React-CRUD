@@ -133,6 +133,15 @@ const SelectComponent = (props: ISelectComponent) => {
                     }
                     return selectedValue;
                 })()}
+                getOptionDisabled={(option) => {
+                    let isSelectedValue = (() => {
+                        if (selectedValue && selectedValue.find(VALUE => VALUE.desc == option.desc && VALUE.id == option.id)) {
+                            return true;
+                        }
+                        return false;
+                    })();
+                    return isSelectedValue
+                }}
                 renderInput={(params) => (
                     <TextField
                         {...params}
