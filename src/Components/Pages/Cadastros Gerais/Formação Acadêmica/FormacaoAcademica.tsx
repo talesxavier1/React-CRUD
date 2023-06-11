@@ -170,7 +170,7 @@ const FormacaoAcademica = () => {
                     onClick={deleteFormacao}
                 />
             </div >
-            <div className={styles["grid_area"]}>
+            <div className={styles["grid_container"]}>
                 <Grid
                     loading={formacaoIsFetching}
                     linhasGrid={formacoes ?? []}
