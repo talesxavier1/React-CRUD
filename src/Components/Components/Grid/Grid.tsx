@@ -15,7 +15,7 @@ interface IGrid {
 
 const Grid = (props: IGrid) => {
     return (
-        <div style={{ height: 400 }} className={`grid-container_565775cd isLoading_${props.loading ? "true" : "false"}_be860d61`}>
+        <div style={{ height: "100%" }} className={`grid-container_565775cd isLoading_${props.loading ? "true" : "false"}_be860d61`}>
             <DataGrid
                 localeText={ptBR.components.MuiDataGrid.defaultProps.localeText}
                 rows={props.loading ? [] : props.linhasGrid}
