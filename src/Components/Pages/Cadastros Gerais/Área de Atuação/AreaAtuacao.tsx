@@ -167,7 +167,7 @@ const AreaAtuacao = () => {
                     onClick={deleteAreaAtuacao}
                 />
             </div >
-            <div className={styles["grid_area"]}>
+            <div className={styles["grid_container"]}>
                 <Grid
                     loading={areasAtuacaoIsFetching}
                     linhasGrid={areasAtuacao ?? []}
