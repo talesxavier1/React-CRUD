@@ -167,7 +167,7 @@ const Cargos = () => {
                     disabled={selectedRows.length == 0}
                 />
             </div >
-            <div className={styles["grid_area"]}>
+            <div className={styles["grid_container"]}>
                 <Grid
                     loading={cargosIsFetching}
                     linhasGrid={cargos ?? []}
