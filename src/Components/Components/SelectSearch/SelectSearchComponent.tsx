@@ -1,7 +1,7 @@
 import './SelectSearchComponent.css'
 import { Theme } from "@emotion/react"
 import { Autocomplete, Button, CircularProgress, SxProps, TextField } from "@mui/material"
-import React, { MutableRefObject, useEffect, useState } from "react"
+import React, { MutableRefObject, useEffect, useMemo, useState } from "react"
 import { useQuery } from "react-query"
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
@@ -60,7 +60,7 @@ const SelectSearchComponent = (props: ISelectComponent) => {
         { refetchOnWindowFocus: false, enabled: (!!debouncedValue || isOpen), cacheTime: 2000 }
     );
 
-    function addToEndAdornment(endAdornment: any) {
+    const addToEndAdornment = (endAdornment: any) => {
         const children = React.Children.toArray(endAdornment.props.children);
         children.unshift(
             <div key={GUID.getGUID()}>
@@ -93,7 +93,7 @@ const SelectSearchComponent = (props: ISelectComponent) => {
             </div>
         );
         return React.cloneElement(endAdornment, {}, children);
-    }
+    };
 
     return (
         <div className="select_component_container_a816ecb5" id={props.id}>
@@ -178,7 +178,10 @@ const SelectSearchComponent = (props: ISelectComponent) => {
                     if (Array.isArray(option)) {
                         return option.map(VALUE => VALUE.desc).join(",");
                     }
-                    return option.desc
+
+                    if (option && option.desc) {
+                        return option.desc;
+                    }
                 }}
                 isOptionEqualToValue={(option, value) => {
                     return JSON.stringify(option) === JSON.stringify(value);
@@ -191,6 +194,16 @@ const SelectSearchComponent = (props: ISelectComponent) => {
                     }
                     return selectedValue;
                 })()}
+                getOptionDisabled={(option) => {
+                    let isSelectedValue = (() => {
+                        if (selectedValue && selectedValue.find(VALUE => VALUE.desc == option.desc && VALUE.id == option.id)) {
+                            return true;
+                        }
+                        return false;
+                    })();
+
+                    return isSelectedValue
+                }}
                 renderOption={(props, option) => {
                     let isSelectedValue = (() => {
                         if (selectedValue && selectedValue.find(VALUE => VALUE.desc == option.desc && VALUE.id == option.id)) {
@@ -199,18 +212,6 @@ const SelectSearchComponent = (props: ISelectComponent) => {
                         return false;
                     })();
                     props["aria-selected"] = isSelectedValue;
-
-                    if (isSelectedValue) {
-                        props["onClick"] = (() => {
-                            selectedValue?.forEach((VALUE, INDEX) => {
-                                if (VALUE.desc == option.desc && VALUE.id == option.id) {
-                                    let newSelectedValue = selectedValue.slice(INDEX, INDEX)
-                                    setSelectedValue(newSelectedValue.length == 0 ? null : newSelectedValue);
-                                }
-                            });
-                        })
-                    }
-
                     return (
                         <li  {...props} key={option.id}>
                             {option.desc}
@@ -235,9 +236,6 @@ const SelectSearchComponent = (props: ISelectComponent) => {
             />
         </div>
     );
-
-
-
 }
 
 
