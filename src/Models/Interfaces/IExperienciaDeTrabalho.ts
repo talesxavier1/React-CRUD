@@ -6,8 +6,8 @@ export interface IExperienciaDeTrabalho {
     cargoID: string
     areaAtuacao: string
     areaAtuacaoID: string
-    dataInicio: string
-    dataFim: string
+    dataInicio: string | undefined
+    dataFim: string | undefined
     descricao: string
     regimeContratacao: string
     cargaHoraria: number

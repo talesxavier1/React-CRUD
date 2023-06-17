@@ -44,7 +44,6 @@ const Professor = () => {
                 headerName: 'Pessoa',
                 width: (() => {
                     let mapLength = professores?.map(VALUE => VALUE.pessoa.length) ?? [];
-                    console.log(mapLength.sort((a, b) => b - a));
                     return mapLength.length > 0 ? mapLength.sort((a, b) => b - a)[0] * 8 : 250;
                 })(),
                 sortable: false,
@@ -80,7 +79,6 @@ const Professor = () => {
                 width: 200,
                 sortable: false,
                 valueFormatter: (VALUE) => {
-                    let date = new Date(VALUE.value);
                     return DateFormat.formatDate({ "isoDate": VALUE.value, "format": "DD/MM/YYYY" });
                 }
             },

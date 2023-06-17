@@ -1,6 +1,6 @@
 import ExperienciaDeTrabalhoModel from "../../Models/Objects/ExperienciaDeTrabalhoModel";
 import { RequestModel } from "../../utils/Request";
-import IExperienciaProficional from "../Interfaces/IExperienciaProficional";
+import IExperienciaProficional from "../Interfaces/IExperienciaProficionalRepository";
 
 
 export default class ExperienciaProficional implements IExperienciaProficional {
@@ -13,13 +13,13 @@ export default class ExperienciaProficional implements IExperienciaProficional {
 
     addWorkExperience = async (userToken: string, experiencia: ExperienciaDeTrabalhoModel) => {
         let url = `${import.meta.env.VITE_REACT_APP_API}/WorkExperience/addWorkExperience`;
-        let response: any = await RequestModel().request(url, "POST", null, { "userToken": userToken }, false);
+        let response: any = await RequestModel().request(url, "POST", experiencia, { "userToken": userToken, "Content-Type": 'application/json' }, false);
         return response?.oparationStatus == 0 ? true : false;
     }
 
     modifyWorkExperience = async (userToken: string, experiencia: ExperienciaDeTrabalhoModel) => {
         let url = `${import.meta.env.VITE_REACT_APP_API}/WorkExperience/modifyWorkExperience`;
-        let response: any = await RequestModel().request(url, "POST", null, { "userToken": userToken }, false);
+        let response: any = await RequestModel().request(url, "POST", experiencia, { "userToken": userToken, "Content-Type": 'application/json' }, false);
         return response?.oparationStatus == 0 ? true : false;
     }
 
@@ -59,7 +59,7 @@ export default class ExperienciaProficional implements IExperienciaProficional {
     countWorkExperiences = async (userToken: string, codigoRef?: string) => {
         let url = `${import.meta.env.VITE_REACT_APP_API}/WorkExperience/countWorkExperiences{0}`
             .replace("{0}", codigoRef ? `?codigoRef=${codigoRef}` : "");
-        let response: any = await RequestModel().request(url, "POST", null, { "userToken": userToken }, false);
+        let response: any = await RequestModel().request(url, "GET", null, { "userToken": userToken }, false);
         if (response?.oparationStatus == 0) {
             return (response.data as number);
         }

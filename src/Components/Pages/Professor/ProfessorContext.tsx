@@ -9,6 +9,8 @@ import AreaAtuacaoRepository from "../../../Repository/Implementations/AreaAtuac
 import AreaAtuacaoModel from "../../../Models/Objects/AreaAtuacaoModel";
 import ProfessorModel from "../../../Models/Objects/ProfessorModel";
 import { ProfessorRepository } from "../../../Repository/Implementations/ProfessorRepository";
+import ExperienciaDeTrabalhoModel from "../../../Models/Objects/ExperienciaDeTrabalhoModel";
+import ExperienciaProficionalRepository from "../../../Repository/Implementations/ExperienciaProficionalRepository";
 
 
 interface IProfessorContext {
@@ -26,16 +28,25 @@ interface IProfessorContext {
     alterarProfessor: (professor: ProfessorModel) => Promise<boolean>;
     getProfessores: (skip: number, take: number) => Promise<ProfessorModel[]>;
     conutProfessores: () => Promise<number>;
+    getExperiencias: (skip: number, take: number, codigoRef?: string) => Promise<ExperienciaDeTrabalhoModel[]>;
+    deleteExperiencia: (codigo: string) => Promise<boolean>;
+    addExperiencia: (experiencia: ExperienciaDeTrabalhoModel) => Promise<boolean>;
+    alterarExperiencia: (experiencia: ExperienciaDeTrabalhoModel) => Promise<boolean>
+    countExperiencias: (codigoRef?: string) => Promise<number>;
+
     professor: ProfessorModel | undefined;
     setProfessor: (professor: ProfessorModel) => void;
-}
+    experiencias: { experiencias: ExperienciaDeTrabalhoModel[], count: number } | undefined
+    setExperiencias: (prop: { experiencias: ExperienciaDeTrabalhoModel[]; count: number; } | undefined) => void;
+
+};
 
 export const ProfessorContext = createContext<IProfessorContext | undefined>(undefined);
 
 const ProfessorContextProvider = (props: any) => {
     var userToken = sessionStorage.getItem("userToken") ?? "";
-    const [professor, setProfessor] = useState<ProfessorModel | undefined>(undefined)
-
+    const [professor, setProfessor] = useState<ProfessorModel | undefined>();
+    const [experiencias, setExperiencias] = useState<{ experiencias: ExperienciaDeTrabalhoModel[], count: number } | undefined>()
     /* ------------------------------------------ Pessoa ------------------------------------------  */
 
     const getPersons = async (name_Or_CPF: string, skip: number, take: number) => {
@@ -233,6 +244,35 @@ const ProfessorContextProvider = (props: any) => {
     }
     /* --------------------------------------------------------------------------------------------  */
 
+    /* ---------------------------------------- Experiencias --------------------------------------  */
+    const getExperiencias = async (skip: number, take: number, codigoRef?: string) => {
+        let result = await new ExperienciaProficionalRepository().getWorkExperienceList(userToken, skip, take, codigoRef);
+        return result;
+    };
+
+    const deleteExperiencia = async (codigo: string) => {
+        let result = await new ExperienciaProficionalRepository().logicalDeleteWorkEperience(userToken, codigo);
+        return result;
+    };
+
+    const addExperiencia = async (experiencia: ExperienciaDeTrabalhoModel) => {
+        let result = await new ExperienciaProficionalRepository().addWorkExperience(userToken, experiencia);
+        return result;
+    };
+
+    const alterarExperiencia = async (experiencia: ExperienciaDeTrabalhoModel) => {
+        let result = await new ExperienciaProficionalRepository().modifyWorkExperience(userToken, experiencia);
+        return result;
+    };
+
+    const countExperiencias = async (codigoRef?: string) => {
+        let result = await new ExperienciaProficionalRepository().countWorkExperiences(userToken, codigoRef);
+        return result;
+    }
+
+    /* --------------------------------------------------------------------------------------------  */
+
+
     return (
         <ProfessorContext.Provider value={{
             getPersons,
@@ -249,8 +289,15 @@ const ProfessorContextProvider = (props: any) => {
             alterarProfessor,
             getProfessores,
             conutProfessores,
+            getExperiencias,
+            deleteExperiencia,
+            addExperiencia,
+            alterarExperiencia,
+            countExperiencias,
             setProfessor,
-            professor
+            professor,
+            setExperiencias,
+            experiencias
         }}>
             {props.children}
         </ProfessorContext.Provider >

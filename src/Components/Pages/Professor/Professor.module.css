@@ -3,3 +3,7 @@
     flex-direction: row;
     margin: 5px;
 }
+
+.grid-container {
+    height: 400px;
+}
