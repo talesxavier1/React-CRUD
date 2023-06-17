@@ -8,10 +8,16 @@ export default class ExperienciaDeTrabalhoModel implements IExperienciaDeTrabalh
     cargoID!: string;
     areaAtuacao!: string;
     areaAtuacaoID!: string;
-    dataInicio!: string;
-    dataFim!: string;
+    dataInicio: string | undefined;
+    dataFim: string | undefined;
     descricao!: string;
     regimeContratacao!: string;
     cargaHoraria!: number;
     salario!: number;
+
+    public static constructorMethod = (codigo: string) => {
+        let pessoa = new ExperienciaDeTrabalhoModel();
+        pessoa.codigo = codigo;
+        return pessoa;
+    }
 }
