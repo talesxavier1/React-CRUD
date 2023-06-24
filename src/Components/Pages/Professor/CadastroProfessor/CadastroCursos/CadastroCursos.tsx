@@ -5,33 +5,21 @@ import ModalComponent from "../../../../Components/Modal/ModalComponent";
 import TextFieldComponent from "../../../../Components/TextField/TextFieldComponent";
 import DateField from "../../../../Components/DateField/DateField";
 import SelectComponent from "../../../../Components/Select/SelectComponent";
+import CursoModel from "../../../../../Models/Objects/CursoModel";
 
 interface ICadastroCursos {
     id: string
 }
 
 const CadastroCursos = (props: ICadastroCursos) => {
-
-    const [modalAdicionar, setModalAdicionar] = useState<{ modalaberto: boolean /* , conteudoModal?: IEnderecoModel*/ }>({ modalaberto: false });
-    const callBackcloseOpenModal = () => {
-        if (modalAdicionar.modalaberto) {
-            setModalAdicionar({
-                modalaberto: false,
-                /*  conteudoModal: undefined*/
-            });
-        } else {
-            setModalAdicionar({
-                modalaberto: true
-            });
-        }
-    };
+    const [modalProps, setModalProps] = useState<{ isOpen: boolean, content?: CursoModel }>({ isOpen: false, content: undefined });
 
     return (
         <div className={styles["container"]} id={props.id}>
             <div className={styles["buttons-container"]}>
                 <><ModalComponent
-                    modalAberto={modalAdicionar.modalaberto}
-                    closeOpenModal={callBackcloseOpenModal}
+                    modalAberto={modalProps.isOpen}
+                    closeOpenModal={() => { setModalProps({ isOpen: false, content: undefined }) }}
                     content={<Content />}
                     btnSaveAction={() => { }}
                 />
@@ -42,7 +30,7 @@ const CadastroCursos = (props: ICadastroCursos) => {
                         color: '#222834',
                         backgroundColor: '#539553'
                     }}
-                    onClick={callBackcloseOpenModal}
+                    onClick={() => { setModalProps({ isOpen: true, content: undefined }) }}
                 />
                 </>
                 <><ButtonComponent value='Editar'
