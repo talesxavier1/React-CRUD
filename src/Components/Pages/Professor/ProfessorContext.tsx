@@ -11,6 +11,10 @@ import ProfessorModel from "../../../Models/Objects/ProfessorModel";
 import { ProfessorRepository } from "../../../Repository/Implementations/ProfessorRepository";
 import ExperienciaDeTrabalhoModel from "../../../Models/Objects/ExperienciaDeTrabalhoModel";
 import ExperienciaProficionalRepository from "../../../Repository/Implementations/ExperienciaProficionalRepository";
+import CursoRepository from "../../../Repository/Implementations/CursoRepository";
+import CursoModel from "../../../Models/Objects/CursoModel";
+import LinguasFaladasRepository from "../../../Repository/Implementations/LinguasFaladasRepository";
+import LinguasFaladasModel from "../../../Models/Objects/LinguasFaladasModel";
 
 
 interface IProfessorContext {
@@ -33,12 +37,29 @@ interface IProfessorContext {
     addExperiencia: (experiencia: ExperienciaDeTrabalhoModel) => Promise<boolean>;
     alterarExperiencia: (experiencia: ExperienciaDeTrabalhoModel) => Promise<boolean>
     countExperiencias: (codigoRef?: string) => Promise<number>;
+    getCursos: (skip: number, take: number, codigoRef?: string) => Promise<CursoModel[]>
+    deleteCurso: (codigo: string) => Promise<boolean>
+    addCurso: (curso: CursoModel) => Promise<boolean>
+    alterarCurso: (curso: CursoModel) => Promise<boolean>
+    countCursos: (codigoRef?: string) => Promise<number>
+
+    getIdiomas: (skip: number, take: number, codigoRef?: string) => Promise<LinguasFaladasModel[]>
+    deleteIdioma: (codigo: string) => Promise<boolean>
+    addIdioma: (lingua: LinguasFaladasModel) => Promise<boolean>
+    alterarIdioma: (lingua: LinguasFaladasModel) => Promise<boolean>
+    countIdioma: (codigoRef?: string) => Promise<number>
 
     professor: ProfessorModel | undefined;
     setProfessor: (professor: ProfessorModel) => void;
+
     experiencias: { experiencias: ExperienciaDeTrabalhoModel[], count: number } | undefined
     setExperiencias: (prop: { experiencias: ExperienciaDeTrabalhoModel[]; count: number; } | undefined) => void;
 
+    cursos: { cursos: CursoModel[]; count: number; } | undefined
+    setCursos: (prop: { cursos: CursoModel[]; count: number; } | undefined) => void;
+
+    idiomas: { cursos: LinguasFaladasModel[]; count: number; } | undefined
+    setIdiomas: (prop: { cursos: LinguasFaladasModel[]; count: number; } | undefined) => void;
 };
 
 export const ProfessorContext = createContext<IProfessorContext | undefined>(undefined);
@@ -46,7 +67,11 @@ export const ProfessorContext = createContext<IProfessorContext | undefined>(und
 const ProfessorContextProvider = (props: any) => {
     var userToken = sessionStorage.getItem("userToken") ?? "";
     const [professor, setProfessor] = useState<ProfessorModel | undefined>();
-    const [experiencias, setExperiencias] = useState<{ experiencias: ExperienciaDeTrabalhoModel[], count: number } | undefined>()
+    const [experiencias, setExperiencias] = useState<{ experiencias: ExperienciaDeTrabalhoModel[], count: number } | undefined>();
+    const [cursos, setCursos] = useState<{ cursos: CursoModel[], count: number } | undefined>();
+    const [idiomas, setIdiomas] = useState<{ cursos: LinguasFaladasModel[], count: number } | undefined>();
+
+
     /* ------------------------------------------ Pessoa ------------------------------------------  */
 
     const getPersons = async (name_Or_CPF: string, skip: number, take: number) => {
@@ -269,9 +294,61 @@ const ProfessorContextProvider = (props: any) => {
         let result = await new ExperienciaProficionalRepository().countWorkExperiences(userToken, codigoRef);
         return result;
     }
-
     /* --------------------------------------------------------------------------------------------  */
 
+    /* ------------------------------------------- Cursos -----------------------------------------  */
+    const getCursos = async (skip: number, take: number, codigoRef?: string) => {
+        let result = await new CursoRepository().getCourseList(userToken, skip, take, codigoRef);
+        return result;
+    };
+
+    const deleteCurso = async (codigo: string) => {
+        let result = await new CursoRepository().logicalDeleteCourse(userToken, codigo);
+        return result;
+    };
+
+    const addCurso = async (curso: CursoModel) => {
+        let result = await new CursoRepository().addCourse(userToken, curso);
+        return result;
+    };
+
+    const alterarCurso = async (curso: CursoModel) => {
+        let result = await new CursoRepository().modifyCourse(userToken, curso);
+        return result;
+    };
+
+    const countCursos = async (codigoRef?: string) => {
+        let result = await new CursoRepository().countCourse(userToken, codigoRef);
+        return result;
+    }
+    /* --------------------------------------------------------------------------------------------  */
+
+    /* ------------------------------------------- Idiomas ----------------------------------------  */
+    const getIdiomas = async (skip: number, take: number, codigoRef?: string) => {
+        let result = await new LinguasFaladasRepository().getLinguaList(userToken, skip, take, codigoRef);
+        return result;
+    };
+
+    const deleteIdioma = async (codigo: string) => {
+        let result = await new LinguasFaladasRepository().logicalDeleteLingua(userToken, codigo);
+        return result;
+    };
+
+    const addIdioma = async (lingua: LinguasFaladasModel) => {
+        let result = await new LinguasFaladasRepository().addLingua(userToken, lingua);
+        return result;
+    };
+
+    const alterarIdioma = async (lingua: LinguasFaladasModel) => {
+        let result = await new LinguasFaladasRepository().modifyLingua(userToken, lingua);
+        return result;
+    };
+
+    const countIdioma = async (codigoRef?: string) => {
+        let result = await new LinguasFaladasRepository().countLingua(userToken, codigoRef);
+        return result;
+    }
+    /* --------------------------------------------------------------------------------------------  */
 
     return (
         <ProfessorContext.Provider value={{
@@ -294,10 +371,28 @@ const ProfessorContextProvider = (props: any) => {
             addExperiencia,
             alterarExperiencia,
             countExperiencias,
+            getCursos,
+            deleteCurso,
+            addCurso,
+            alterarCurso,
+            countCursos,
+            getIdiomas,
+            deleteIdioma,
+            addIdioma,
+            alterarIdioma,
+            countIdioma,
+
             setProfessor,
             professor,
+
             setExperiencias,
-            experiencias
+            experiencias,
+
+            cursos,
+            setCursos,
+
+            idiomas,
+            setIdiomas,
         }}>
             {props.children}
         </ProfessorContext.Provider >
