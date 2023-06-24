@@ -1,11 +1,14 @@
 import styles from "./CadastroCursos.module.css"
 import ButtonComponent from "../../../../Components/Button/ButtonComponent"
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import ModalComponent from "../../../../Components/Modal/ModalComponent";
 import TextFieldComponent from "../../../../Components/TextField/TextFieldComponent";
 import DateField from "../../../../Components/DateField/DateField";
 import SelectComponent from "../../../../Components/Select/SelectComponent";
 import CursoModel from "../../../../../Models/Objects/CursoModel";
+import Grid from "../../../../Components/Grid/Grid";
+import { GridColDef } from "@mui/x-data-grid";
+import DateFormat from "../../../../../utils/DateFormat";
 
 interface ICadastroCursos {
     id: string
@@ -13,6 +16,39 @@ interface ICadastroCursos {
 
 const CadastroCursos = (props: ICadastroCursos) => {
     const [modalProps, setModalProps] = useState<{ isOpen: boolean, content?: CursoModel }>({ isOpen: false, content: undefined });
+    const [gridPage, setGridPage] = useState<number>(0);
+
+    const propriedadesColunas: GridColDef[] = useMemo((): GridColDef[] => {
+        return [
+            { field: 'codigo', type: 'string', headerName: 'Código', width: 300, sortable: false },
+            { field: 'courseName', headerName: 'Nome do Curso', width: 300, sortable: false },
+            { field: 'educationalInstitution', headerName: 'Instituição de Ensino', width: 250, sortable: false },
+            { field: 'courseLoad', headerName: 'Carga Horária', width: 150, sortable: false },
+            {
+                field: 'startDate',
+                headerName: 'Data de Início',
+                width: 150,
+                sortable: false,
+                valueFormatter: (value) => {
+                    if (!value.value) { return "" }
+                    return DateFormat.formatDate({ format: "DD/MM/YYYY", isoDate: value.value })
+                }
+            },
+            {
+                field: 'endDate',
+                type: 'date',
+                headerName: 'Data de Fim',
+                width: 150,
+                sortable: false,
+                valueFormatter: (value) => {
+                    if (!value.value) { return "" }
+                    return DateFormat.formatDate({ format: "DD/MM/YYYY", isoDate: value.value })
+                }
+            },
+            { field: 'modality', headerName: 'Modalidade', width: 150, sortable: false },
+            { field: 'financialInvestment', headerName: 'Investimento', width: 150, sortable: false }
+        ];
+    }, [])
 
     return (
         <div className={styles["container"]} id={props.id}>
@@ -53,6 +89,17 @@ const CadastroCursos = (props: ICadastroCursos) => {
                 // onClick={() => { deleteEndereco() }}
                 />
                 </>
+            </div>
+            <div className={styles["grid_container__TTTTT"]}>
+                <Grid
+                    loading={false}
+                    linhasGrid={[]}
+                    propriedadesColunas={propriedadesColunas}
+                    setSelectedRows={() => { }}
+                    gridSizePage={0}
+                    pageChange={setGridPage}
+                    currentPage={gridPage}
+                />
             </div>
         </div>
     )
