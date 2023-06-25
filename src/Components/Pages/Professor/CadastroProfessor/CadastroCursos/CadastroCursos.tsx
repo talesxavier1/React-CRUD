@@ -1,6 +1,6 @@
 import styles from "./CadastroCursos.module.css"
 import ButtonComponent from "../../../../Components/Button/ButtonComponent"
-import { useMemo, useState } from "react";
+import { MutableRefObject, useMemo, useState } from "react";
 import ModalComponent from "../../../../Components/Modal/ModalComponent";
 import TextFieldComponent from "../../../../Components/TextField/TextFieldComponent";
 import DateField from "../../../../Components/DateField/DateField";
@@ -9,6 +9,7 @@ import CursoModel from "../../../../../Models/Objects/CursoModel";
 import Grid from "../../../../Components/Grid/Grid";
 import { GridColDef } from "@mui/x-data-grid";
 import DateFormat from "../../../../../utils/DateFormat";
+import RefFormatter from "../../../../../utils/RefFormatter";
 
 interface ICadastroCursos {
     id: string
@@ -48,7 +49,8 @@ const CadastroCursos = (props: ICadastroCursos) => {
             { field: 'modality', headerName: 'Modalidade', width: 150, sortable: false },
             { field: 'financialInvestment', headerName: 'Investimento', width: 150, sortable: false }
         ];
-    }, [])
+    }, []);
+    let refsMap = RefFormatter.generateObjectRefs(new CursoModel(), ["codigoRef"]);
 
     return (
         <div className={styles["container"]} id={props.id}>
@@ -56,7 +58,7 @@ const CadastroCursos = (props: ICadastroCursos) => {
                 <><ModalComponent
                     modalAberto={modalProps.isOpen}
                     closeOpenModal={() => { setModalProps({ isOpen: false, content: undefined }) }}
-                    content={<Content />}
+                    content={<Content refsMap={refsMap} curso={modalProps.content} />}
                     btnSaveAction={() => { }}
                 />
                 </>
@@ -105,53 +107,54 @@ const CadastroCursos = (props: ICadastroCursos) => {
     )
 }
 
-const Content = () => {
+const Content = (props: { curso?: CursoModel, refsMap: Map<string, MutableRefObject<any>> }) => {
     return (
         <div className={styles["content_container"]}>
             <><TextFieldComponent label='Código'
                 readonly
-                // inputRef={refsMap.get("codigo")}
+                inputRef={props.refsMap.get("codigo")}
                 // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["codigo"]}
                 sx={{ width: "330px" }}
             />
             </>
             <><TextFieldComponent label='Nome do Curso'
-                // inputRef={refsMap.get("codigo")}
+                inputRef={props.refsMap.get("courseName")}
                 // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["nome_do_curso"]}
                 sx={{ width: "100%" }}
             />
             </>
             <><TextFieldComponent label='Instituição de Ensino'
-                // inputRef={refsMap.get("codigo")}
+                inputRef={props.refsMap.get("educationalInstitution")}
                 // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["instituicao_de_ensino"]}
                 sx={{ width: "100%" }}
             />
             </>
             <><TextFieldComponent label='Carga Horária'
+                inputRef={props.refsMap.get("courseLoad")}
                 id={styles["carga_horaria"]}
                 sx={{ width: "100%" }}
                 type="number"
             />
             </>
             <><DateField label='Data de Início'
-                // inputRef={refsMap.get("codigo")}
+                inputRef={props.refsMap.get("startDate")}
                 // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["data_de_inicio"]}
                 sx={{ width: "100%" }}
             />
             </>
             <><DateField label='Data de Fim'
-                // inputRef={refsMap.get("codigo")}
+                inputRef={props.refsMap.get("endDate")}
                 // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["data_de_fim"]}
                 sx={{ width: "100%" }}
             />
             </>
             <><SelectComponent inputLabel='Modalidade do Curso'
-                // inputRef={refsMap.get("codigo")}
+                inputRefDesc={props.refsMap.get("modality")}
                 // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["modalidade_do_curso"]}
                 sx={{ width: "100%" }}
@@ -165,7 +168,7 @@ const Content = () => {
             />
             </>
             <><TextFieldComponent label='Investimento Financeiro'
-                // inputRef={refsMap.get("codigo")}
+                inputRef={props.refsMap.get("financialInvestment")}
                 // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["investimento_financeiro"]}
                 sx={{ width: "100%" }}
@@ -173,7 +176,7 @@ const Content = () => {
             />
             </>
             <><TextFieldComponent label='Descrição do Curso'
-                // inputRef={refsMap.get("codigo")}
+                inputRef={props.refsMap.get("descriptions")}
                 // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["descricao_do_curso"]}
                 sx={{ width: "100%" }}
