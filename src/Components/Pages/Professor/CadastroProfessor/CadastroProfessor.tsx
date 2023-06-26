@@ -18,11 +18,8 @@ import { useQuery } from 'react-query';
 import { GUID } from '../../../../utils/GUID';
 import TryParse from '../../../../utils/TryParse';
 import { Backdrop, CircularProgress } from '@mui/material';
-import ExperienciaDeTrabalhoModel from '../../../../Models/Objects/ExperienciaDeTrabalhoModel';
 import DateFormat from '../../../../utils/DateFormat';
 import Swal from 'sweetalert2';
-
-
 
 const CadastroProfessor = () => {
     const [tabShow, setTabShow] = useState<number>(0);

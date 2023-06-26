@@ -53,7 +53,7 @@ const CadastroExperiencias = (props: ICadastroExperiencias) => {
                     return DateFormat.formatDate({ format: "DD/MM/YYYY", isoDate: value.value })
                 }
             },
-            { field: 'regimeContratacao', headerName: 'Regime de Contratação', width: 150, sortable: false },
+            { field: 'regimeContratacao', headerName: 'Regime de Contratação', width: 200, sortable: false },
             { field: 'cargaHoraria', type: 'number', headerName: 'Carga Horária', width: 150, sortable: false },
             { field: 'salario', type: 'number', headerName: 'Salário', width: 150, sortable: false },
         ];

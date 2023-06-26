@@ -1,3 +1,8 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
 .buttons-container {
     display: flex;
     flex-direction: row;
@@ -52,4 +57,9 @@
 #descricao_do_curso {
     grid-column: 1 / span 10;
     grid-row: 4/ span 3;
+}
+
+.grid_container__TTTTT {
+    overflow: auto;
+    height: 100%;
 }
