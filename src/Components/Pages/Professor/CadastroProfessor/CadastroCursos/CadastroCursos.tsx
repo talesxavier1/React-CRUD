@@ -1,21 +1,26 @@
 import styles from "./CadastroCursos.module.css"
 import ButtonComponent from "../../../../Components/Button/ButtonComponent"
-import { MutableRefObject, useMemo, useState } from "react";
+import { MutableRefObject, useContext, useMemo, useState } from "react";
 import ModalComponent from "../../../../Components/Modal/ModalComponent";
 import TextFieldComponent from "../../../../Components/TextField/TextFieldComponent";
 import DateField from "../../../../Components/DateField/DateField";
 import SelectComponent from "../../../../Components/Select/SelectComponent";
 import CursoModel from "../../../../../Models/Objects/CursoModel";
 import Grid from "../../../../Components/Grid/Grid";
-import { GridColDef } from "@mui/x-data-grid";
+import { GridColDef, GridSelectionModel } from "@mui/x-data-grid";
 import DateFormat from "../../../../../utils/DateFormat";
 import RefFormatter from "../../../../../utils/RefFormatter";
+import { ProfessorContext } from "../../ProfessorContext";
+import { useQuery } from "react-query";
+import { GUID } from "../../../../../utils/GUID";
 
 interface ICadastroCursos {
     id: string
 }
 
 const CadastroCursos = (props: ICadastroCursos) => {
+    const professorContext = useContext(ProfessorContext);
+    const [selectedRows, setSelectedRows] = useState<GridSelectionModel>([]);
     const [modalProps, setModalProps] = useState<{ isOpen: boolean, content?: CursoModel }>({ isOpen: false, content: undefined });
     const [gridPage, setGridPage] = useState<number>(0);
 
@@ -51,6 +56,22 @@ const CadastroCursos = (props: ICadastroCursos) => {
         ];
     }, []);
     let refsMap = RefFormatter.generateObjectRefs(new CursoModel(), ["codigoRef"]);
+
+    const { isFetching: cusrosIsFetching, refetch: cursosRefetch } = useQuery(
+        ["cursos", professorContext?.professor?.codigo, gridPage],
+        (async () => {
+            let result = await professorContext?.getCursos(gridPage * 5, 5, professorContext?.professor?.codigo);
+            let resultCount = await professorContext?.countCursos(professorContext?.professor?.codigo);
+
+            professorContext?.setCursos({
+                count: resultCount ?? 0,
+                cursos: result ?? []
+            });
+            return
+        }),
+        { refetchOnWindowFocus: false, cacheTime: 0, enabled: !!professorContext?.professor?.codigo }
+    );
+
 
     return (
         <div className={styles["container"]} id={props.id}>
@@ -94,11 +115,11 @@ const CadastroCursos = (props: ICadastroCursos) => {
             </div>
             <div className={styles["grid_container__TTTTT"]}>
                 <Grid
-                    loading={false}
-                    linhasGrid={[]}
+                    loading={cusrosIsFetching}
+                    linhasGrid={professorContext?.cursos?.cursos ?? []}
                     propriedadesColunas={propriedadesColunas}
-                    setSelectedRows={() => { }}
-                    gridSizePage={0}
+                    setSelectedRows={setSelectedRows}
+                    gridSizePage={professorContext?.cursos?.count ?? 0}
                     pageChange={setGridPage}
                     currentPage={gridPage}
                 />
@@ -113,27 +134,28 @@ const Content = (props: { curso?: CursoModel, refsMap: Map<string, MutableRefObj
             <><TextFieldComponent label='Código'
                 readonly
                 inputRef={props.refsMap.get("codigo")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
+                value={props.curso?.codigo ?? GUID.getGUID()}
                 id={styles["codigo"]}
                 sx={{ width: "330px" }}
             />
             </>
             <><TextFieldComponent label='Nome do Curso'
                 inputRef={props.refsMap.get("courseName")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
+                value={props.curso?.courseName ?? ""}
                 id={styles["nome_do_curso"]}
                 sx={{ width: "100%" }}
             />
             </>
             <><TextFieldComponent label='Instituição de Ensino'
                 inputRef={props.refsMap.get("educationalInstitution")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
+                value={props.curso?.educationalInstitution ?? ""}
                 id={styles["instituicao_de_ensino"]}
                 sx={{ width: "100%" }}
             />
             </>
             <><TextFieldComponent label='Carga Horária'
                 inputRef={props.refsMap.get("courseLoad")}
+                value={props.curso?.courseLoad ?? 0}
                 id={styles["carga_horaria"]}
                 sx={{ width: "100%" }}
                 type="number"
@@ -141,21 +163,29 @@ const Content = (props: { curso?: CursoModel, refsMap: Map<string, MutableRefObj
             </>
             <><DateField label='Data de Início'
                 inputRef={props.refsMap.get("startDate")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
+                value={props.curso?.startDate ?? ""}
                 id={styles["data_de_inicio"]}
                 sx={{ width: "100%" }}
             />
             </>
             <><DateField label='Data de Fim'
                 inputRef={props.refsMap.get("endDate")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
+                value={props.curso?.endDate ?? ""}
                 id={styles["data_de_fim"]}
                 sx={{ width: "100%" }}
             />
             </>
             <><SelectComponent inputLabel='Modalidade do Curso'
                 inputRefDesc={props.refsMap.get("modality")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
+                defaulOption={(() => {
+                    let value = props.curso?.modality;
+                    if (value) {
+                        return [{
+                            "desc": value,
+                            "id": value
+                        }]
+                    }
+                })()}
                 id={styles["modalidade_do_curso"]}
                 sx={{ width: "100%" }}
                 asyncOptions={false}
@@ -163,13 +193,12 @@ const Content = (props: { curso?: CursoModel, refsMap: Map<string, MutableRefObj
                     { "desc": "Presencial", "id": "Presencial" },
                     { "desc": "Semipresencial", "id": "Semipresencial" },
                     { "desc": "Ensino a Distância", "id": "Ensino a Distância" },
-
                 ]}
             />
             </>
             <><TextFieldComponent label='Investimento Financeiro'
                 inputRef={props.refsMap.get("financialInvestment")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
+                value={props.curso?.financialInvestment ?? 0}
                 id={styles["investimento_financeiro"]}
                 sx={{ width: "100%" }}
                 type="monetary"
@@ -177,7 +206,7 @@ const Content = (props: { curso?: CursoModel, refsMap: Map<string, MutableRefObj
             </>
             <><TextFieldComponent label='Descrição do Curso'
                 inputRef={props.refsMap.get("descriptions")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
+                value={props.curso?.descriptions ?? ""}
                 id={styles["descricao_do_curso"]}
                 sx={{ width: "100%" }}
                 multiline={{ rows: 4 }}
