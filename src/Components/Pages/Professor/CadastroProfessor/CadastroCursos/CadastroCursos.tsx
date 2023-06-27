@@ -28,8 +28,8 @@ const CadastroCursos = (props: ICadastroCursos) => {
         return [
             { field: 'codigo', type: 'string', headerName: 'Código', width: 300, sortable: false },
             { field: 'courseName', headerName: 'Nome do Curso', width: 300, sortable: false },
-            { field: 'educationalInstitution', headerName: 'Instituição de Ensino', width: 250, sortable: false },
-            { field: 'courseLoad', headerName: 'Carga Horária', width: 150, sortable: false },
+            { field: 'educationalInstitution', headerName: 'Instituição de Ensino', width: 250, sortable: false, filterable: true },
+            { field: 'courseLoad', headerName: 'Carga Horária', width: 150, sortable: false, filterable: true },
             {
                 field: 'startDate',
                 headerName: 'Data de Início',
@@ -52,7 +52,7 @@ const CadastroCursos = (props: ICadastroCursos) => {
                 }
             },
             { field: 'modality', headerName: 'Modalidade', width: 150, sortable: false },
-            { field: 'financialInvestment', headerName: 'Investimento', width: 150, sortable: false }
+            { field: 'financialInvestment', headerName: 'Investimento R$', width: 150, sortable: false }
         ];
     }, []);
     let refsMap = RefFormatter.generateObjectRefs(new CursoModel(), ["codigoRef"]);
@@ -71,7 +71,6 @@ const CadastroCursos = (props: ICadastroCursos) => {
         }),
         { refetchOnWindowFocus: false, cacheTime: 0, enabled: !!professorContext?.professor?.codigo }
     );
-
 
     return (
         <div className={styles["container"]} id={props.id}>
@@ -96,9 +95,9 @@ const CadastroCursos = (props: ICadastroCursos) => {
                     variant='outlined'
                     style={{
                         color: '#222834',
-                        // backgroundColor: `${selectedRows.length == 1 ? "#6C757D" : ""}`
+                        backgroundColor: `${selectedRows.length == 1 ? "#6C757D" : ""}`
                     }}
-                // onClick={() => { setModalAdicionar({ modalaberto: true, conteudoModal: (pessoaContext?.enderecos ?? []).find(VALUE => VALUE.codigo == selectedRows[0]) }) }}
+                    onClick={() => { setModalProps({ isOpen: true, content: (professorContext?.cursos?.cursos ?? []).find(VALUE => VALUE.codigo == selectedRows[0]) }) }}
                 // disabled={selectedRows.length != 1}
                 />
                 </>
@@ -125,7 +124,7 @@ const CadastroCursos = (props: ICadastroCursos) => {
                 />
             </div>
         </div>
-    )
+    );
 }
 
 const Content = (props: { curso?: CursoModel, refsMap: Map<string, MutableRefObject<any>> }) => {
