@@ -13,6 +13,7 @@ import RefFormatter from "../../../../../utils/RefFormatter";
 import { ProfessorContext } from "../../ProfessorContext";
 import { useQuery } from "react-query";
 import { GUID } from "../../../../../utils/GUID";
+import Swal from "sweetalert2";
 
 interface ICadastroCursos {
     id: string
@@ -72,6 +73,38 @@ const CadastroCursos = (props: ICadastroCursos) => {
         { refetchOnWindowFocus: false, cacheTime: 0, enabled: !!professorContext?.professor?.codigo }
     );
 
+    const saveCurso = async () => {
+        let curso: CursoModel = RefFormatter.getObjectFromRefs(new CursoModel(), refsMap);
+
+        curso.codigoRef = professorContext?.professor?.codigo ?? "";
+        curso.courseLoad = curso.courseLoad ? Number(curso.courseLoad) : 0;
+        curso.endDate = curso.endDate ? DateFormat.getISODateFromBRDate(curso.endDate) : null;
+        curso.startDate = curso.startDate ? DateFormat.getISODateFromBRDate(curso.startDate) : null;
+        curso.financialInvestment = curso.financialInvestment ? Number(curso.financialInvestment) : 0;
+
+        let result;
+        if (professorContext?.cursos?.cursos.find(VALUE => VALUE.codigo == curso.codigo)) {
+            result = await professorContext?.alterarCurso(curso);
+        } else {
+            result = await professorContext?.addCurso(curso);
+        }
+
+        if (result) {
+            Swal.fire({
+                icon: 'success',
+                text: 'Salvo com sucesso!',
+            }).then(() => {
+                setModalProps({ isOpen: false, content: undefined });
+                cursosRefetch();
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                text: 'Não foi possível salvar!',
+            });
+        }
+    };
+
     return (
         <div className={styles["container"]} id={props.id}>
             <div className={styles["buttons-container"]}>
@@ -79,7 +112,7 @@ const CadastroCursos = (props: ICadastroCursos) => {
                     modalAberto={modalProps.isOpen}
                     closeOpenModal={() => { setModalProps({ isOpen: false, content: undefined }) }}
                     content={<Content refsMap={refsMap} curso={modalProps.content} />}
-                    btnSaveAction={() => { }}
+                    btnSaveAction={saveCurso}
                 />
                 </>
                 <><ButtonComponent value='Adicionar'
@@ -98,7 +131,7 @@ const CadastroCursos = (props: ICadastroCursos) => {
                         backgroundColor: `${selectedRows.length == 1 ? "#6C757D" : ""}`
                     }}
                     onClick={() => { setModalProps({ isOpen: true, content: (professorContext?.cursos?.cursos ?? []).find(VALUE => VALUE.codigo == selectedRows[0]) }) }}
-                // disabled={selectedRows.length != 1}
+                    disabled={selectedRows.length != 1}
                 />
                 </>
                 <><ButtonComponent value='Excluir'
