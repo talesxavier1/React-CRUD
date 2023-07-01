@@ -1,10 +1,6 @@
 .pessoa-cadastro-container {
     display: flex;
     flex-direction: column;
-    background-color: antiquewhite;
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
 }
 
 #foto {
@@ -14,7 +10,7 @@
 .fields-container {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(14, 1fr);
+    grid-template-rows: repeat(15, 1fr);
 }
 
 #codigo {
@@ -103,35 +99,29 @@
 }
 
 #contatos_enderecos_tabs {
+    margin-left: 10px;
     grid-column: 1/ span 10;
     grid-row: 6
 }
 
-#contatos_container {
-    margin: 10px 5px 5px 5px;
+#tab_container {
     grid-column: 1/ span 10;
     grid-row: 7/ span 7;
-}
-
-#enderecos_container {
-    margin: 10px 5px 5px 5px;
-    grid-column: 1/ span 10;
-    grid-row: 7/ span 7;
+    margin-left: 10px;
 }
 
 #contatos_enderecos_tabs>.MuiTabs-root>.MuiTabs-scroller {
     height: 40px;
 }
 
-#btn_voltar {
-    grid-column: 9/ span 2;
-    grid-row: 14;
-    margin-left: 100px;
-
+#btn_salvar {
+    grid-column: 10;
+    grid-row: 15;
+    margin-left: 200px;
 }
 
-#btn_salvar {
-    grid-column: 9/ span 2;
-    grid-row: 14;
-    margin-left: 200px;
+#btn_voltar {
+    grid-column: 10;
+    grid-row: 15;
+    margin-left: 100px;
 }
