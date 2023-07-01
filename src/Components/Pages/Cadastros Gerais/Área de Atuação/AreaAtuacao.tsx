@@ -12,17 +12,10 @@ import { useQuery } from "react-query";
 import AreaAtuacaoRepository from "../../../../Repository/Implementations/AreaAtuacaoRepository";
 import Swal from "sweetalert2";
 
-interface ImodalProps {
-    modalAberto: boolean
-    content?: AreaAtuacaoModel
-}
 
 const AreaAtuacao = () => {
 
-    const [modalProps, setModalProps] = useState<ImodalProps>({
-        "modalAberto": false,
-        "content": undefined
-    });
+
 
     const [selectedRows, setSelectedRows] = useState<GridSelectionModel>([]);
     const [gridPage, setGridPage] = useState<number>(0);
@@ -30,23 +23,7 @@ const AreaAtuacao = () => {
     let refsMap = RefFormatter.generateObjectRefs(new AreaAtuacaoModel(), []);
     const userToken = sessionStorage.getItem("userToken") ?? "";
 
-    const callBackModal = () => {
-        if (modalProps.modalAberto) {
-            setModalProps({
-                modalAberto: false,
-                content: undefined
-            });
-        } else {
-            setModalProps({
-                modalAberto: true,
-                content: (() => {
-                    if (selectedRows.length == 1) {
-                        return areasAtuacao.find(VALUE => VALUE.codigo == selectedRows[0]);
-                    }
-                })()
-            });
-        }
-    };
+    const [modalProps, setModalProps] = useState<{ isOpen: boolean, content?: AreaAtuacaoModel }>({ isOpen: false, content: undefined });
 
     const propriedadesColunas: GridColDef[] = [
         { field: 'codigo', type: 'string', headerName: 'Código', width: 300, sortable: false },
@@ -86,7 +63,7 @@ const AreaAtuacao = () => {
                 icon: 'success',
                 text: 'Salvo com sucesso!',
             }).then(() => {
-                callBackModal();
+                setModalProps({ isOpen: false, content: undefined });
                 areasAtuacaoRefetch();
                 areaAtuacaoCountRefetc();
             });
@@ -133,8 +110,8 @@ const AreaAtuacao = () => {
         <>
             <ModalComponent
                 btnSaveAction={saveAreaAtuacao}
-                modalAberto={modalProps.modalAberto}
-                closeOpenModal={callBackModal}
+                modalAberto={modalProps.isOpen}
+                closeOpenModal={() => { setModalProps({ isOpen: false, content: undefined }) }}
                 content={<AreaAtuacaoContent refs={refsMap} content={modalProps.content} />}
             />
             <div className={styles["buttons_area"]}>
@@ -143,7 +120,7 @@ const AreaAtuacao = () => {
                     variant='outlined'
                     style={{ color: '#222834', backgroundColor: '#539553' }}
                     onClick={() => {
-                        setModalProps({ modalAberto: true, content: undefined })
+                        setModalProps({ isOpen: true, content: undefined })
                     }}
                 />
                 <ButtonComponent
@@ -153,7 +130,7 @@ const AreaAtuacao = () => {
                         color: '#222834',
                         backgroundColor: `${selectedRows.length == 1 ? "#6C757D" : ""}`
                     }}
-                    onClick={callBackModal}
+                    onClick={() => { setModalProps({ isOpen: true, content: areasAtuacao.find(VALUE => VALUE.codigo == selectedRows[0]) }) }}
                     disabled={selectedRows.length != 1}
                 />
                 <ButtonComponent
