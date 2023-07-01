@@ -91,6 +91,7 @@ const CadastroProfessor = () => {
                         <><TextFieldComponent label='Código'
                             id={styles["codigo"]}
                             sx={{ width: "330px" }}
+                            readonly
                             inputRef={refsMap.get("codigo")}
                             value={professorContext?.professor?.codigo}
                         />

@@ -1,36 +1,55 @@
 import styles from "./CadastroIdiomas.module.css"
 import ButtonComponent from "../../../../Components/Button/ButtonComponent"
 import ModalComponent from "../../../../Components/Modal/ModalComponent"
-import { useState } from "react"
+import { useContext, useMemo, useState } from "react"
 import TextFieldComponent from "../../../../Components/TextField/TextFieldComponent"
 import SelectComponent from "../../../../Components/Select/SelectComponent"
+import LinguasFaladasModel from "../../../../../Models/Objects/LinguasFaladasModel"
+import { ProfessorContext } from "../../ProfessorContext"
+import { GridColDef, GridSelectionModel } from "@mui/x-data-grid"
+import { useQuery } from "react-query"
+import DateFormat from "../../../../../utils/DateFormat"
+import Grid from "../../../../Components/Grid/Grid"
 
 interface ICadastroIdiomas {
     id: string
 }
 
 const CadastroIdiomas = (props: ICadastroIdiomas) => {
+    const professorContext = useContext(ProfessorContext);
+    const [selectedRows, setSelectedRows] = useState<GridSelectionModel>([]);
+    const [modalProps, setModalProps] = useState<{ isOpen: boolean, content?: LinguasFaladasModel }>({ isOpen: false, content: undefined });
+    const [gridPage, setGridPage] = useState<number>(0);
 
-    const [modalAdicionar, setModalAdicionar] = useState<{ modalaberto: boolean /* , conteudoModal?: IEnderecoModel*/ }>({ modalaberto: false });
-    const callBackcloseOpenModal = () => {
-        if (modalAdicionar.modalaberto) {
-            setModalAdicionar({
-                modalaberto: false,
-                /*  conteudoModal: undefined*/
+    const { isFetching: idiomasIsFetching, refetch: idiomasRefetch } = useQuery(
+        ["idiomas", professorContext?.professor?.codigo, gridPage],
+        (async () => {
+            let result = await professorContext?.getIdiomas(gridPage * 5, 5, professorContext?.professor?.codigo);
+            let resultCount = await professorContext?.countIdioma(professorContext?.professor?.codigo);
+
+            professorContext?.setIdiomas({
+                count: resultCount ?? 0,
+                idiomas: result ?? []
             });
-        } else {
-            setModalAdicionar({
-                modalaberto: true
-            });
-        }
-    };
+            return
+        }),
+        { refetchOnWindowFocus: false, cacheTime: 0, enabled: !!professorContext?.professor?.codigo }
+    );
+
+    const propriedadesColunas: GridColDef[] = useMemo((): GridColDef[] => {
+        return [
+            { field: 'codigo', type: 'string', headerName: 'Código', width: 300, sortable: false },
+            { field: 'languageName', headerName: 'Idioma', width: 200, sortable: false },
+            { field: 'proficiencyLevel', headerName: 'Nível de Proficiência', width: 200, sortable: false, filterable: true },
+        ];
+    }, []);
 
     return (
         <div className={styles["container"]} id={props.id}>
             <div className={styles["buttons-container"]}>
                 <><ModalComponent
-                    modalAberto={modalAdicionar.modalaberto}
-                    closeOpenModal={callBackcloseOpenModal}
+                    modalAberto={modalProps.isOpen}
+                    closeOpenModal={() => { setModalProps({ isOpen: false, content: undefined }) }}
                     content={<Content />}
                     btnSaveAction={() => { }}
                 />
@@ -41,7 +60,7 @@ const CadastroIdiomas = (props: ICadastroIdiomas) => {
                         color: '#222834',
                         backgroundColor: '#539553'
                     }}
-                    onClick={callBackcloseOpenModal} />
+                    onClick={() => { setModalProps({ isOpen: true, content: undefined }) }} />
                 </>
                 <><ButtonComponent value='Editar'
                     variant='outlined'
@@ -63,6 +82,17 @@ const CadastroIdiomas = (props: ICadastroIdiomas) => {
                 // onClick={() => { deleteEndereco() }}
                 />
                 </>
+            </div>
+            <div className={styles["grid_container"]}>
+                <Grid
+                    loading={idiomasIsFetching}
+                    linhasGrid={professorContext?.idiomas?.idiomas ?? []}
+                    propriedadesColunas={propriedadesColunas}
+                    setSelectedRows={setSelectedRows}
+                    gridSizePage={professorContext?.idiomas?.count ?? 0}
+                    pageChange={setGridPage}
+                    currentPage={gridPage}
+                />
             </div>
         </div>
     )
@@ -105,6 +135,7 @@ const Content = () => {
                 // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["aplicacoes_praticas"]}
                 sx={{ width: "100%" }}
+                multiline={{ rows: 3 }}
             />
             </>
         </div>

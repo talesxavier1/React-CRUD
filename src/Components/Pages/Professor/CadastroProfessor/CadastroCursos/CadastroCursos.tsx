@@ -105,6 +105,37 @@ const CadastroCursos = (props: ICadastroCursos) => {
         }
     };
 
+    const deleteCurso = async () => {
+        let results = [];
+        for (let VALUE of selectedRows) {
+            let result = await professorContext?.deleteCurso(VALUE.toString());
+            results.push({ "result": result, "id": VALUE.toString() });
+        }
+
+        Swal.fire({
+            icon: 'success',
+            html: (() => {
+                let result = [];
+
+                let comSucesso = results.filter(VALUE => VALUE.result);
+                if (comSucesso.length > 0) {
+                    result.push("Registros apagados:");
+                    result.push(comSucesso.map(VALUE => `   ${VALUE.id}<br/>`).join(""));
+                }
+
+                let semSucesso = results.filter(VALUE => !VALUE.result);
+                if (semSucesso.length > 0) {
+                    result.push("Registros não apagados:");
+                    result.push(semSucesso.map(VALUE => `   ${VALUE.id}<br/>`).join(""));
+                }
+
+                return result.join("<br/>")
+            })(),
+        }).then(() => {
+            cursosRefetch();
+        });
+    }
+
     return (
         <div className={styles["container"]} id={props.id}>
             <div className={styles["buttons-container"]}>
@@ -138,14 +169,14 @@ const CadastroCursos = (props: ICadastroCursos) => {
                     variant='outlined'
                     style={{
                         color: '#222834',
-                        // backgroundColor: `${selectedRows.length > 0 ? "#ff6868" : ""}`
+                        backgroundColor: `${selectedRows.length > 0 ? "#ff6868" : ""}`
                     }}
-                // disabled={selectedRows.length == 0}
-                // onClick={() => { deleteEndereco() }}
+                    disabled={selectedRows.length == 0}
+                    onClick={deleteCurso}
                 />
                 </>
             </div>
-            <div className={styles["grid_container__TTTTT"]}>
+            <div className={styles["grid_container"]}>
                 <Grid
                     loading={cusrosIsFetching}
                     linhasGrid={professorContext?.cursos?.cursos ?? []}

@@ -350,13 +350,13 @@ const TabsContatosEnderecos = () => {
                 (() => {
                     if (tabShow == 0) {
                         return (
-                            <div id={styles[`contatos_container`]} >
+                            <div id={styles[`tab_container`]} >
                                 <CadastroContatos />
                             </div>
                         )
                     } else if (tabShow == 1) {
                         return (
-                            <div id={styles[`enderecos_container`]}>
+                            <div id={styles[`tab_container`]}>
                                 <CadastroEndereco />
                             </div>
                         )
