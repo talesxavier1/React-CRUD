@@ -58,8 +58,8 @@ interface IProfessorContext {
     cursos: { cursos: CursoModel[]; count: number; } | undefined
     setCursos: (prop: { cursos: CursoModel[]; count: number; } | undefined) => void;
 
-    idiomas: { cursos: LinguasFaladasModel[]; count: number; } | undefined
-    setIdiomas: (prop: { cursos: LinguasFaladasModel[]; count: number; } | undefined) => void;
+    idiomas: { idiomas: LinguasFaladasModel[]; count: number; } | undefined
+    setIdiomas: (prop: { idiomas: LinguasFaladasModel[]; count: number; } | undefined) => void;
 };
 
 export const ProfessorContext = createContext<IProfessorContext | undefined>(undefined);
@@ -69,7 +69,7 @@ const ProfessorContextProvider = (props: any) => {
     const [professor, setProfessor] = useState<ProfessorModel | undefined>();
     const [experiencias, setExperiencias] = useState<{ experiencias: ExperienciaDeTrabalhoModel[], count: number } | undefined>();
     const [cursos, setCursos] = useState<{ cursos: CursoModel[], count: number } | undefined>();
-    const [idiomas, setIdiomas] = useState<{ cursos: LinguasFaladasModel[], count: number } | undefined>();
+    const [idiomas, setIdiomas] = useState<{ idiomas: LinguasFaladasModel[], count: number } | undefined>();
 
 
     /* ------------------------------------------ Pessoa ------------------------------------------  */
