@@ -1,7 +1,7 @@
 import styles from "./CadastroIdiomas.module.css"
 import ButtonComponent from "../../../../Components/Button/ButtonComponent"
 import ModalComponent from "../../../../Components/Modal/ModalComponent"
-import { useContext, useMemo, useState } from "react"
+import { MutableRefObject, useContext, useMemo, useState } from "react"
 import TextFieldComponent from "../../../../Components/TextField/TextFieldComponent"
 import SelectComponent from "../../../../Components/Select/SelectComponent"
 import LinguasFaladasModel from "../../../../../Models/Objects/LinguasFaladasModel"
@@ -10,6 +10,7 @@ import { GridColDef, GridSelectionModel } from "@mui/x-data-grid"
 import { useQuery } from "react-query"
 import DateFormat from "../../../../../utils/DateFormat"
 import Grid from "../../../../Components/Grid/Grid"
+import RefFormatter from "../../../../../utils/RefFormatter"
 
 interface ICadastroIdiomas {
     id: string
@@ -44,13 +45,15 @@ const CadastroIdiomas = (props: ICadastroIdiomas) => {
         ];
     }, []);
 
+    let idiomasRefs = RefFormatter.generateObjectRefs(new LinguasFaladasModel(), ["codigoRef"]);
+
     return (
         <div className={styles["container"]} id={props.id}>
             <div className={styles["buttons-container"]}>
                 <><ModalComponent
                     modalAberto={modalProps.isOpen}
                     closeOpenModal={() => { setModalProps({ isOpen: false, content: undefined }) }}
-                    content={<Content />}
+                    content={<Content idioma={modalProps.content} refsMap={idiomasRefs} />}
                     btnSaveAction={() => { }}
                 />
                 </>
@@ -98,26 +101,26 @@ const CadastroIdiomas = (props: ICadastroIdiomas) => {
     )
 }
 
-const Content = () => {
+const Content = (props: { idioma?: LinguasFaladasModel, refsMap: Map<string, MutableRefObject<any>> }) => {
     return (
         <div className={styles["content_container"]}>
             <><TextFieldComponent label='Código'
                 readonly
-                // inputRef={refsMap.get("codigo")}
+                inputRef={props.refsMap.get("codigo")}
                 // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["codigo"]}
                 sx={{ width: "330px" }}
             />
             </>
             <><TextFieldComponent label='Idioma'
-                // inputRef={refsMap.get("codigo")}
+                inputRef={props.refsMap.get("languageName")}
                 // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["idioma"]}
                 sx={{ width: "100%" }}
             />
             </>
             <><SelectComponent inputLabel='Nível de Proficiência'
-                // inputRef={refsMap.get("codigo")}
+                inputRefID={props.refsMap.get("proficiencyLevel")}
                 // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["nivel_de_proficiencia"]}
                 sx={{ width: "100%" }}
@@ -131,7 +134,7 @@ const Content = () => {
             />
             </>
             <><TextFieldComponent label='Aplicações Práticas'
-                // inputRef={refsMap.get("codigo")}
+                inputRef={props.refsMap.get("practicalApplications")}
                 // value={pessoaContext?.pessoa?.codigo ?? ""}
                 id={styles["aplicacoes_praticas"]}
                 sx={{ width: "100%" }}
