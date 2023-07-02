@@ -11,6 +11,7 @@ import { useQuery } from "react-query"
 import DateFormat from "../../../../../utils/DateFormat"
 import Grid from "../../../../Components/Grid/Grid"
 import RefFormatter from "../../../../../utils/RefFormatter"
+import { GUID } from "../../../../../utils/GUID"
 
 interface ICadastroIdiomas {
     id: string
@@ -69,10 +70,10 @@ const CadastroIdiomas = (props: ICadastroIdiomas) => {
                     variant='outlined'
                     style={{
                         color: '#222834',
-                        // backgroundColor: `${selectedRows.length == 1 ? "#6C757D" : ""}`
+                        backgroundColor: `${selectedRows.length == 1 ? "#6C757D" : ""}`
                     }}
-                // onClick={() => { setModalAdicionar({ modalaberto: true, conteudoModal: (pessoaContext?.enderecos ?? []).find(VALUE => VALUE.codigo == selectedRows[0]) }) }}
-                // disabled={selectedRows.length != 1}
+                    onClick={() => { setModalProps({ isOpen: true, content: (professorContext?.idiomas?.idiomas ?? []).find(VALUE => VALUE.codigo == selectedRows[0]) }) }}
+                    disabled={selectedRows.length != 1}
                 />
                 </>
                 <><ButtonComponent value='Excluir'
@@ -107,21 +108,26 @@ const Content = (props: { idioma?: LinguasFaladasModel, refsMap: Map<string, Mut
             <><TextFieldComponent label='Código'
                 readonly
                 inputRef={props.refsMap.get("codigo")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
+                value={props.idioma?.codigo ?? GUID.getGUID()}
                 id={styles["codigo"]}
                 sx={{ width: "330px" }}
             />
             </>
             <><TextFieldComponent label='Idioma'
                 inputRef={props.refsMap.get("languageName")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
+                value={props.idioma?.languageName ?? ""}
                 id={styles["idioma"]}
                 sx={{ width: "100%" }}
             />
             </>
             <><SelectComponent inputLabel='Nível de Proficiência'
                 inputRefID={props.refsMap.get("proficiencyLevel")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
+                defaulOption={(() => {
+                    let value = props.idioma?.proficiencyLevel ?? "";
+                    if (value) {
+                        return [{ "desc": value, "id": value }]
+                    }
+                })()}
                 id={styles["nivel_de_proficiencia"]}
                 sx={{ width: "100%" }}
                 asyncOptions={false}
@@ -135,7 +141,7 @@ const Content = (props: { idioma?: LinguasFaladasModel, refsMap: Map<string, Mut
             </>
             <><TextFieldComponent label='Aplicações Práticas'
                 inputRef={props.refsMap.get("practicalApplications")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
+                value={props.idioma?.practicalApplications ?? ""}
                 id={styles["aplicacoes_praticas"]}
                 sx={{ width: "100%" }}
                 multiline={{ rows: 3 }}
