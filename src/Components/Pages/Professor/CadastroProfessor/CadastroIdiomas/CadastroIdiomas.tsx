@@ -1,7 +1,7 @@
 import styles from "./CadastroIdiomas.module.css"
 import ButtonComponent from "../../../../Components/Button/ButtonComponent"
 import ModalComponent from "../../../../Components/Modal/ModalComponent"
-import { MutableRefObject, useContext, useMemo, useState } from "react"
+import { MutableRefObject, useCallback, useContext, useMemo, useState } from "react"
 import TextFieldComponent from "../../../../Components/TextField/TextFieldComponent"
 import SelectComponent from "../../../../Components/Select/SelectComponent"
 import LinguasFaladasModel from "../../../../../Models/Objects/LinguasFaladasModel"
@@ -11,6 +11,7 @@ import { useQuery } from "react-query"
 import Grid from "../../../../Components/Grid/Grid"
 import RefFormatter from "../../../../../utils/RefFormatter"
 import { GUID } from "../../../../../utils/GUID"
+import Swal from "sweetalert2"
 
 interface ICadastroIdiomas {
     id: string
@@ -47,6 +48,33 @@ const CadastroIdiomas = (props: ICadastroIdiomas) => {
 
     let idiomasRefs = RefFormatter.generateObjectRefs(new LinguasFaladasModel(), ["codigoRef"]);
 
+    const saveIdioma = useCallback(async () => {
+        const idioma: LinguasFaladasModel = RefFormatter.getObjectFromRefs(new LinguasFaladasModel(), idiomasRefs);
+        idioma.codigoRef = professorContext?.professor?.codigo ?? "";
+
+        let result;
+        if (professorContext?.idiomas?.idiomas.find(VALUE => VALUE.codigo == idioma.codigo)) {
+            result = await professorContext?.alterarIdioma(idioma);
+        } else {
+            result = await professorContext?.addIdioma(idioma);
+        }
+
+        if (result) {
+            Swal.fire({
+                icon: 'success',
+                text: 'Salvo com sucesso!',
+            }).then(() => {
+                setModalProps({ isOpen: false, content: undefined });
+                idiomasRefetch();
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                text: 'Não foi possível salvar!',
+            });
+        }
+    }, [idiomasRefs, professorContext]);
+
     return (
         <div className={styles["container"]} id={props.id}>
             <div className={styles["buttons-container"]}>
@@ -54,7 +82,7 @@ const CadastroIdiomas = (props: ICadastroIdiomas) => {
                     modalAberto={modalProps.isOpen}
                     closeOpenModal={() => { setModalProps({ isOpen: false, content: undefined }) }}
                     content={<Content idioma={modalProps.content} refsMap={idiomasRefs} />}
-                    btnSaveAction={() => { }}
+                    btnSaveAction={saveIdioma}
                 />
                 </>
                 <><ButtonComponent value='Adicionar'
