@@ -1,6 +1,6 @@
 import styles from "./CadastroCursos.module.css"
 import ButtonComponent from "../../../../Components/Button/ButtonComponent"
-import { MutableRefObject, useContext, useMemo, useState } from "react";
+import { MutableRefObject, useCallback, useContext, useMemo, useState } from "react";
 import ModalComponent from "../../../../Components/Modal/ModalComponent";
 import TextFieldComponent from "../../../../Components/TextField/TextFieldComponent";
 import DateField from "../../../../Components/DateField/DateField";
@@ -73,7 +73,7 @@ const CadastroCursos = (props: ICadastroCursos) => {
         { refetchOnWindowFocus: false, cacheTime: 0, enabled: !!professorContext?.professor?.codigo }
     );
 
-    const saveCurso = async () => {
+    const saveCurso = useCallback(async () => {
         let curso: CursoModel = RefFormatter.getObjectFromRefs(new CursoModel(), refsMap);
 
         curso.codigoRef = professorContext?.professor?.codigo ?? "";
@@ -103,9 +103,9 @@ const CadastroCursos = (props: ICadastroCursos) => {
                 text: 'Não foi possível salvar!',
             });
         }
-    };
+    }, [refsMap, professorContext]);
 
-    const deleteCurso = async () => {
+    const deleteCurso = useCallback(async () => {
         let results = [];
         for (let VALUE of selectedRows) {
             let result = await professorContext?.deleteCurso(VALUE.toString());
@@ -134,7 +134,7 @@ const CadastroCursos = (props: ICadastroCursos) => {
         }).then(() => {
             cursosRefetch();
         });
-    }
+    }, [professorContext, selectedRows]);
 
     return (
         <div className={styles["container"]} id={props.id}>
