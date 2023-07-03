@@ -75,7 +75,7 @@ const CadastroExperiencias = (props: ICadastroExperiencias) => {
 
     let experienciaRefs = RefFormatter.generateObjectRefs(new ExperienciaDeTrabalhoModel(), ["codigoRef"]);
 
-    const saveExperiencias = useCallback(() => {
+    const saveExperiencias = useCallback(async () => {
         let experiencia: ExperienciaDeTrabalhoModel = RefFormatter.getObjectFromRefs(new ExperienciaDeTrabalhoModel, experienciaRefs);
 
         experiencia.codigoRef = professorContext?.professor?.codigo ?? "";
@@ -86,9 +86,9 @@ const CadastroExperiencias = (props: ICadastroExperiencias) => {
 
         let result;
         if (professorContext?.experiencias?.experiencias.find(VALUE => VALUE.codigo == experiencia.codigo)) {
-            result = professorContext?.alterarExperiencia(experiencia);
+            result = await professorContext?.alterarExperiencia(experiencia);
         } else {
-            result = professorContext?.addExperiencia(experiencia);
+            result = await professorContext?.addExperiencia(experiencia);
         }
 
         if (result) {
