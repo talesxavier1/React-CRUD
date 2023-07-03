@@ -1,15 +1,17 @@
 import styles from "./CadastroIdiomas.module.css"
 import ButtonComponent from "../../../../Components/Button/ButtonComponent"
 import ModalComponent from "../../../../Components/Modal/ModalComponent"
-import { useContext, useMemo, useState } from "react"
+import { MutableRefObject, useCallback, useContext, useMemo, useState } from "react"
 import TextFieldComponent from "../../../../Components/TextField/TextFieldComponent"
 import SelectComponent from "../../../../Components/Select/SelectComponent"
 import LinguasFaladasModel from "../../../../../Models/Objects/LinguasFaladasModel"
 import { ProfessorContext } from "../../ProfessorContext"
 import { GridColDef, GridSelectionModel } from "@mui/x-data-grid"
 import { useQuery } from "react-query"
-import DateFormat from "../../../../../utils/DateFormat"
 import Grid from "../../../../Components/Grid/Grid"
+import RefFormatter from "../../../../../utils/RefFormatter"
+import { GUID } from "../../../../../utils/GUID"
+import Swal from "sweetalert2"
 
 interface ICadastroIdiomas {
     id: string
@@ -44,14 +46,43 @@ const CadastroIdiomas = (props: ICadastroIdiomas) => {
         ];
     }, []);
 
+    let idiomasRefs = RefFormatter.generateObjectRefs(new LinguasFaladasModel(), ["codigoRef"]);
+
+    const saveIdioma = useCallback(async () => {
+        const idioma: LinguasFaladasModel = RefFormatter.getObjectFromRefs(new LinguasFaladasModel(), idiomasRefs);
+        idioma.codigoRef = professorContext?.professor?.codigo ?? "";
+
+        let result;
+        if (professorContext?.idiomas?.idiomas.find(VALUE => VALUE.codigo == idioma.codigo)) {
+            result = await professorContext?.alterarIdioma(idioma);
+        } else {
+            result = await professorContext?.addIdioma(idioma);
+        }
+
+        if (result) {
+            Swal.fire({
+                icon: 'success',
+                text: 'Salvo com sucesso!',
+            }).then(() => {
+                setModalProps({ isOpen: false, content: undefined });
+                idiomasRefetch();
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                text: 'Não foi possível salvar!',
+            });
+        }
+    }, [idiomasRefs, professorContext]);
+
     return (
         <div className={styles["container"]} id={props.id}>
             <div className={styles["buttons-container"]}>
                 <><ModalComponent
                     modalAberto={modalProps.isOpen}
                     closeOpenModal={() => { setModalProps({ isOpen: false, content: undefined }) }}
-                    content={<Content />}
-                    btnSaveAction={() => { }}
+                    content={<Content idioma={modalProps.content} refsMap={idiomasRefs} />}
+                    btnSaveAction={saveIdioma}
                 />
                 </>
                 <><ButtonComponent value='Adicionar'
@@ -66,10 +97,10 @@ const CadastroIdiomas = (props: ICadastroIdiomas) => {
                     variant='outlined'
                     style={{
                         color: '#222834',
-                        // backgroundColor: `${selectedRows.length == 1 ? "#6C757D" : ""}`
+                        backgroundColor: `${selectedRows.length == 1 ? "#6C757D" : ""}`
                     }}
-                // onClick={() => { setModalAdicionar({ modalaberto: true, conteudoModal: (pessoaContext?.enderecos ?? []).find(VALUE => VALUE.codigo == selectedRows[0]) }) }}
-                // disabled={selectedRows.length != 1}
+                    onClick={() => { setModalProps({ isOpen: true, content: (professorContext?.idiomas?.idiomas ?? []).find(VALUE => VALUE.codigo == selectedRows[0]) }) }}
+                    disabled={selectedRows.length != 1}
                 />
                 </>
                 <><ButtonComponent value='Excluir'
@@ -98,27 +129,32 @@ const CadastroIdiomas = (props: ICadastroIdiomas) => {
     )
 }
 
-const Content = () => {
+const Content = (props: { idioma?: LinguasFaladasModel, refsMap: Map<string, MutableRefObject<any>> }) => {
     return (
         <div className={styles["content_container"]}>
             <><TextFieldComponent label='Código'
                 readonly
-                // inputRef={refsMap.get("codigo")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
+                inputRef={props.refsMap.get("codigo")}
+                value={props.idioma?.codigo ?? GUID.getGUID()}
                 id={styles["codigo"]}
                 sx={{ width: "330px" }}
             />
             </>
             <><TextFieldComponent label='Idioma'
-                // inputRef={refsMap.get("codigo")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
+                inputRef={props.refsMap.get("languageName")}
+                value={props.idioma?.languageName ?? ""}
                 id={styles["idioma"]}
                 sx={{ width: "100%" }}
             />
             </>
             <><SelectComponent inputLabel='Nível de Proficiência'
-                // inputRef={refsMap.get("codigo")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
+                inputRefID={props.refsMap.get("proficiencyLevel")}
+                defaulOption={(() => {
+                    let value = props.idioma?.proficiencyLevel ?? "";
+                    if (value) {
+                        return [{ "desc": value, "id": value }]
+                    }
+                })()}
                 id={styles["nivel_de_proficiencia"]}
                 sx={{ width: "100%" }}
                 asyncOptions={false}
@@ -131,8 +167,8 @@ const Content = () => {
             />
             </>
             <><TextFieldComponent label='Aplicações Práticas'
-                // inputRef={refsMap.get("codigo")}
-                // value={pessoaContext?.pessoa?.codigo ?? ""}
+                inputRef={props.refsMap.get("practicalApplications")}
+                value={props.idioma?.practicalApplications ?? ""}
                 id={styles["aplicacoes_praticas"]}
                 sx={{ width: "100%" }}
                 multiline={{ rows: 3 }}

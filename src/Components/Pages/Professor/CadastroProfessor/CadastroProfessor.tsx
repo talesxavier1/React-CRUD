@@ -48,7 +48,7 @@ const CadastroProfessor = () => {
         { refetchOnWindowFocus: false, cacheTime: 0 }
     );
 
-    const saveProfessor = useCallback(() => {
+    const saveProfessor = useCallback(async () => {
         let professor: ProfessorModel = RefFormatter.getObjectFromRefs(new ProfessorModel(), refsMap);
 
         professor.cargaHoraria = professor.cargaHoraria ? Number(professor.cargaHoraria) : 0;
@@ -58,9 +58,9 @@ const CadastroProfessor = () => {
 
         let result;
         if (professorID) {
-            result = professorContext?.alterarProfessor(professor);
+            result = await professorContext?.alterarProfessor(professor);
         } else {
-            result = professorContext?.addProfessor(professor);
+            result = await professorContext?.addProfessor(professor);
         }
 
         if (result) {
