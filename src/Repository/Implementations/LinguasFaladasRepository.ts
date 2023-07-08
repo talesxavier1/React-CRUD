@@ -59,7 +59,7 @@ export default class LinguasFaladasRepository implements ILinguasFaladasReposito
     }
 
     countLingua = async (userToken: string, codigoRef?: string | undefined) => {
-        let url = `${import.meta.env.VITE_REACT_APP_API}/SpokenLanguage/countSpokenLanguage`
+        let url = `${import.meta.env.VITE_REACT_APP_API}/SpokenLanguage/countSpokenLanguage{0}`
             .replace("{0}", codigoRef ? `?codigoRef=${codigoRef}` : "");
         let response: any = await RequestModel().request(url, "GET", null, { "userToken": userToken }, false);
         if (response?.oparationStatus == 0) {
