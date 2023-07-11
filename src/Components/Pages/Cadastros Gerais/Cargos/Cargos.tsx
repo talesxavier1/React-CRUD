@@ -12,41 +12,14 @@ import CargoRepository from "../../../../Repository/Implementations/CargoReposit
 import { useQuery } from "react-query"
 import Swal from "sweetalert2"
 
-interface ImodalProps {
-    modalAberto: boolean
-    content?: CargosModel
-}
-
 const Cargos = () => {
-
-    const [modalProps, setModalProps] = useState<ImodalProps>({
-        "modalAberto": false,
-        "content": undefined
-    });
 
     const [selectedRows, setSelectedRows] = useState<GridSelectionModel>([]);
     const [gridPage, setGridPage] = useState<number>(0);
     const [cargos, setCargos] = useState<CargosModel[]>([]);
     const userToken = sessionStorage.getItem("userToken") ?? "";
     let refsMap = RefFormatter.generateObjectRefs(new CargosModel(), []);
-
-    const callBackModal = () => {
-        if (modalProps.modalAberto) {
-            setModalProps({
-                modalAberto: false,
-                content: undefined
-            });
-        } else {
-            setModalProps({
-                modalAberto: true,
-                content: (() => {
-                    if (selectedRows.length == 1) {
-                        return cargos.find(VALUE => VALUE.codigo == selectedRows[0]);
-                    }
-                })()
-            });
-        }
-    };
+    const [modalProps, setModalProps] = useState<{ isOpen: boolean, content?: CargosModel }>({ isOpen: false, content: undefined });
 
     const propriedadesColunas: GridColDef[] = [
         { field: 'codigo', type: 'string', headerName: 'Código', width: 300, sortable: false },
@@ -86,7 +59,7 @@ const Cargos = () => {
                 icon: 'success',
                 text: 'Salvo com sucesso!',
             }).then(() => {
-                callBackModal();
+                setModalProps({ isOpen: false, content: undefined });
                 cargosAtuacaoRefetch();
                 cargosAtuacaoCountRefetc();
             });
@@ -133,8 +106,8 @@ const Cargos = () => {
         <>
             <ModalComponent
                 btnSaveAction={saveCargo}
-                modalAberto={modalProps.modalAberto}
-                closeOpenModal={callBackModal}
+                modalAberto={modalProps.isOpen}
+                closeOpenModal={() => { setModalProps({ isOpen: false, content: undefined }) }}
                 content={<CargoContent refs={refsMap} content={modalProps.content} />}
             />
             <div className={styles["buttons_area"]}>
@@ -142,9 +115,7 @@ const Cargos = () => {
                     value='Adicionar'
                     variant='outlined'
                     style={{ color: '#222834', backgroundColor: '#539553' }}
-                    onClick={() => {
-                        setModalProps({ modalAberto: true, content: undefined })
-                    }}
+                    onClick={() => { setModalProps({ isOpen: true, content: undefined }) }}
                 />
                 <ButtonComponent
                     value='Editar'
@@ -153,7 +124,7 @@ const Cargos = () => {
                         color: '#222834',
                         backgroundColor: `${selectedRows.length == 1 ? "#6C757D" : ""}`
                     }}
-                    onClick={callBackModal}
+                    onClick={() => { setModalProps({ isOpen: true, content: cargos.find(VALUE => VALUE.codigo == selectedRows[0]) }) }}
                     disabled={selectedRows.length != 1}
                 />
                 <ButtonComponent
