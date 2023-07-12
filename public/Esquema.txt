@@ -1,181 +1,47 @@
-- Formação acadêmica (curso, instituição, ano de conclusão)
-	* Graduação em Letras
-	* Graduação em Matemática
-	* Graduação em Ciências Biológicas
-	* Graduação em Educação Física
-	* Graduação em História
-	* Graduação em Geografia
-	* Graduação em Física
-	* Graduação em Química
-	* Graduação em Pedagogia
-	* Graduação em Filosofia
-	* Graduação em Artes
-	* Graduação em Engenharia
-	* Mestrado em Educação
-	* Mestrado em Linguística
-	* Mestrado em Matemática
-	* Mestrado em Biologia
-	* Mestrado em História
-	* Mestrado em Geografia
-	* Mestrado em Física
-	* Mestrado em Química
-	* Doutorado em Educação
-	* Doutorado em Linguística
-	* Doutorado em Matemática
-	* Doutorado em Biologia
-	* Doutorado em História
-	* Doutorado em Geografia
-	* Doutorado em Física
-	* Doutorado em Química
+ ========== TURMA ===============
+Código da Turma.
+Ano Letivo.
+Status da Turma.
+     - Aberta
+     - Fechada
+Nível da Turma.
+     - Berçário
+     - Maternal
+     - Jardim de Infância
+     - 1º ano Ensino Fundamental
+     - 2º ano Ensino Fundamental
+     - 3º ano Ensino Fundamental
+     - 4º ano Ensino Fundamental
+     - 5º ano Ensino Fundamental
+     - 6º ano Ensino Fundamental
+     - 7º ano Ensino Fundamental
+     - 8º ano Ensino Fundamental
+     - 9º ano Ensino Fundamental
+     - 1º ano do Ensino Médio
+     - 2º ano do Ensino Médio
+     - 3º ano do Ensino Médio
+Turno
+     - Manhã
+     - Tarde
+     - Noite
+Professor responsável.
+Observações.
+Data de Início da Turma
+Data de Fim da Turma
+Carga Horária Total
+Carga Horária Complementar
+ ===============================
 
-- Área de atuação
-	Língua Portuguesa
-	Língua Inglesa
-	Matemática
-	Biologia
-	Física
-	Química
-	Geografia
-	História
-	Sociologia
-	Filosofia
-	Artes
-	Educação Física
-	Pedagogia
-	Informática
-	Engenharia
-	Medicina
-	Psicologia
-	Direito
-	Administração
-	Contabilidade
-	Marketing
-	Finanças
-	Recursos Humanos
-	Relações Públicas
-	Comunicação Social
-	Design
-	Moda
-	Gastronomia
-	Turismo
-	Hotelaria
-	Outros
+========== GRADE CURRICULAR ===============
+Componente Complementar
+Area de Conhecimento
+Componente Curicular
+Aulas Semanais
+Aulas Anuais
+Carga Horária
 
-- Experiência profissional (instituição, cargo, período)
-	- Nome da instituição
-	- Cargo ocupado
-		Analista
-		Coordenador
-		Gerente
-		Diretor
-		Supervisor
-		Consultor
-		Especialista
-		Desenvolvedor
-		Programador
-		Designer
-		Professor
-		Pesquisador
-		Técnico
-		Auxiliar
-		Estagiário
-		Trainee
-		Outros
-	- Área de atuação
-		Língua Portuguesa
-		Língua Inglesa
-		Matemática
-		Biologia
-		Física
-		Química
-		Geografia
-		História
-		Sociologia
-		Filosofia
-		Artes
-		Educação Física
-		Pedagogia
-		Informática
-		Engenharia
-		Medicina
-		Psicologia
-		Direito
-		Administração
-		Contabilidade
-		Marketing
-		Finanças
-		Recursos Humanos
-		Relações Públicas
-		Comunicação Social
-		Design
-		Moda
-		Gastronomia
-		Turismo
-		Hotelaria
-		Administração
-		Finanças
-		Recursos Humanos
-		Marketing
-		Vendas
-		Tecnologia da Informação
-		Design
-		Engenharia
-		Educação
-		Saúde
-		Direito
-		Comunicação
-		Meio Ambiente
-		Logística
-		Produção
-		Consultoria
-		Turismo
-		Serviços
-		Arte e Cultura
-		Agricultura e Agropecuária
-		Outros
+=======================================
 
-	- Data de início e fim do trabalho
-	- Descrição das atividades realizadas
-	- Regime de contratação (CLT, PJ, estágio, entre outros)
-		CLT
-		PJ
-		Estágio
-		Outros
-	- Carga horária semanal
-	- Salário ou remuneração recebida
-
-
-- Cursos realizados (nome do curso, instituição, período)
-	- Nome do curso
-	- Instituição de ensino
-	- Carga horária
-	- Data de início e fim do curso
-	- Descrição do curso (objetivos, conteúdo programático)
-	- Certificado ou diploma obtido
-	- Área de atuação relacionada ao curso
-	- Investimento financeiro
-	- Modalidade do curso (presencial, à distância, semipresencial)
-
-
-- Idiomas que fala
-	* Idioma
-	* Nível de Proficiência
-		 básico
-		 intermediário
-		 avançado
-		 nativo
-	* Aplicações Práticas
-
-- Nível de ensino que ministra
-	Educação infantil (creche e pré-escola)
-	Ensino fundamental I (1º ao 5º ano)
-	Ensino fundamental II (6º ao 9º ano)
-	Ensino médio (1º ao 3º ano)
-	Ensino técnico
-	Ensino superior (graduação)
-	Pós-graduação (especialização, mestrado, doutorado)
-
-- Carga horária
-
-- Valor da hora-aula ou salário
-
+(Capacidade da turma: Informe a quantidade máxima de alunos que podem ser matriculados na turma. Isso ajuda a controlar o número de vagas disponíveis.)
+(Horário das aulas: Forneça os dias da semana e os horários em que as aulas da turma serão realizadas. Isso permite que os alunos e os professores tenham conhecimento do cronograma de aulas.) Kambam
+(Localização: Se necessário, especifique a sala de aula ou espaço físico onde as aulas da turma serão ministradas.)
