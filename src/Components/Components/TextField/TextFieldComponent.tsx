@@ -14,6 +14,7 @@ interface props {
     value?: any
     inputRef?: MutableRefObject<any>
     readonly?: boolean
+    required?: boolean
     multiline?: {
         rows: number
     }
@@ -30,7 +31,7 @@ const TextFieldComponent = (props: props) => {
     return (
         <div id={props.id} className='textFieldComponet-bdc8183e'>
             <TextField
-
+                required={props.required}
                 inputRef={props.inputRef}
                 sx={props.sx}
                 type={(() => {
