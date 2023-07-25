@@ -15,9 +15,9 @@ import CadastroProfessor from "../Components/Pages/Professor/CadastroProfessor/C
 import Professor from "../Components/Pages/Professor/Professor";
 import AuthProvider from "../Contexts/Auth";
 import RouterGuard from "./RouterGuard";
-import FormacaoAcademica from "../Components/Pages/Cadastros Gerais/Formação Acadêmica/FormacaoAcademica";
-import AreaAtuacao from "../Components/Pages/Cadastros Gerais/Área de Atuação/AreaAtuacao";
-import Cargos from "../Components/Pages/Cadastros Gerais/Cargos/Cargos";
+import FormacaoAcademica from "../Components/Pages/Cadastros Gerais/Professor/Formação Acadêmica/FormacaoAcademica";
+import AreaAtuacao from "../Components/Pages/Cadastros Gerais/Professor/Área de Atuação/AreaAtuacao";
+import Cargos from "../Components/Pages/Cadastros Gerais/Professor/Cargos/Cargos";
 import ProfessorContextProvider from "../Components/Pages/Professor/ProfessorContext";
 
 const Rotas = () => {
