@@ -105,6 +105,37 @@ const Nav = () => {
                             </List>
                         </Collapse>
                     </List>
+
+                    <List component="div" disablePadding>
+                        {/* Turma */}
+                        <ListItemButton sx={{ pl: 4 }} onClick={() => { subItemHandleClick("turma_subItens") }}>
+                            <ListItemIcon>
+                                <Fontawesome iconClass='fa-solid fa-folder' />
+                            </ListItemIcon>
+                            <ListItemText primary="Turma" />
+                            {showSubItens == "turma_subItens" ? <ExpandLess /> : <ExpandMore />}
+                        </ListItemButton>
+
+                        <Collapse in={showSubItens == "turma_subItens"} timeout="auto" unmountOnExit>
+                            {/* Áreas de conhecimento */}
+                            <List component="div" disablePadding>
+                                <ListItemButton sx={{ pl: 6 }} onClick={() => { navigate("/main/areaDeConhecimento") }}>
+                                    <ListItemIcon>
+                                    </ListItemIcon>
+                                    <ListItemText primary="Área de conhecimento" />
+                                </ListItemButton>
+                            </List>
+                            {/* Componentes Curiculares */}
+                            <List component="div" disablePadding>
+                                <ListItemButton sx={{ pl: 6 }} onClick={() => { navigate("/main/ComponentesCuriculares") }}>
+                                    <ListItemIcon>
+                                    </ListItemIcon>
+                                    <ListItemText primary="Componentes Curiculares" />
+                                </ListItemButton>
+                            </List>
+                        </Collapse>
+                    </List>
+
                 </Collapse>
             </>
 
