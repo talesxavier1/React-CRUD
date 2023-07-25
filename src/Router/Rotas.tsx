@@ -19,6 +19,8 @@ import FormacaoAcademica from "../Components/Pages/Cadastros Gerais/Professor/Fo
 import AreaAtuacao from "../Components/Pages/Cadastros Gerais/Professor/Área de Atuação/AreaAtuacao";
 import Cargos from "../Components/Pages/Cadastros Gerais/Professor/Cargos/Cargos";
 import ProfessorContextProvider from "../Components/Pages/Professor/ProfessorContext";
+import AreaConhecimento from "../Components/Pages/Cadastros Gerais/Turma/Grade Curricular/Área de Conhecimento/AreaConhecimento";
+import ComponentesCurriculares from "../Components/Pages/Cadastros Gerais/Turma/Grade Curricular/Componentes Curriculares/ComponentesCurriculares";
 
 const Rotas = () => {
     return (
@@ -159,6 +161,22 @@ const Rotas = () => {
                             <App wrapperShow={
                                 <RouterGuard>
                                     <Cargos />
+                                </RouterGuard>
+                            } />
+                        } />
+
+                        <Route path="/main/areaDeConhecimento" element={
+                            <App wrapperShow={
+                                <RouterGuard>
+                                    <AreaConhecimento />
+                                </RouterGuard>
+                            } />
+                        } />
+
+                        <Route path="/main/ComponentesCurriculares" element={
+                            <App wrapperShow={
+                                <RouterGuard>
+                                    <ComponentesCurriculares />
                                 </RouterGuard>
                             } />
                         } />
