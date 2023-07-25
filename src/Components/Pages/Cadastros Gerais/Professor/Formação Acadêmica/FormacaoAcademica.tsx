@@ -1,15 +1,15 @@
 import styles from './FormacaoAcademica.module.css'
-import TextFieldComponent from "../../../Components/TextField/TextFieldComponent";
-import ButtonComponent from "../../../Components/Button/ButtonComponent";
-import ModalComponent from "../../../Components/Modal/ModalComponent";
+import TextFieldComponent from "../../../../Components/TextField/TextFieldComponent";
+import ButtonComponent from "../../../../Components/Button/ButtonComponent";
+import ModalComponent from "../../../../Components/Modal/ModalComponent";
 import { useState } from "react";
 import { GridColDef, GridSelectionModel } from "@mui/x-data-grid";
-import Grid from "../../../Components/Grid/Grid";
-import FormacaoModel from "../../../../Models/Objects/FormacaoModel";
-import { GUID } from "../../../../utils/GUID";
-import RefFormatter from "../../../../utils/RefFormatter";
+import Grid from "../../../../Components/Grid/Grid";
+import FormacaoModel from "../../../../../Models/Objects/FormacaoModel";
+import { GUID } from "../../../../../utils/GUID";
+import RefFormatter from "../../../../../utils/RefFormatter";
 import { useQuery } from 'react-query';
-import FormacaoAcademicaRepository from '../../../../Repository/Implementations/FormacaoAcademicaRepository';
+import FormacaoAcademicaRepository from '../../../../../Repository/Implementations/FormacaoAcademicaRepository';
 import Swal from 'sweetalert2';
 
 

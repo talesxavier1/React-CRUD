@@ -141,6 +141,7 @@ const CadastroPessoa = () => {
                         value={pessoaContext?.pessoa?.nome ?? ""}
                         id={styles["nome"]}
                         sx={{ width: "100%" }}
+                        required
                     />
                     </>
                     <><TextFieldComponent label='CPF'
@@ -148,6 +149,7 @@ const CadastroPessoa = () => {
                         value={pessoaContext?.pessoa?.cpf ?? ""}
                         id={styles["cpf"]} sx={{ width: "100%" }}
                         mask='###.###.###-##'
+                        required
                     />
                     </>
                     <><TextFieldComponent label='RG'
@@ -162,6 +164,7 @@ const CadastroPessoa = () => {
                         value={pessoaContext?.pessoa?.dataNascimento ?? ""}
                         id={styles["dataNascimento"]}
                         sx={{ width: "100%" }}
+                        required
                     />
                     </>
                     <><SelectComponent inputLabel='Pais'

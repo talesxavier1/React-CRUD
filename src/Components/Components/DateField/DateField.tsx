@@ -15,6 +15,7 @@ interface props {
     sx?: SxProps<Theme>
     id?: string,
     value?: string
+    required?: boolean
     inputRef?: MutableRefObject<any>
 }
 
@@ -36,6 +37,7 @@ const DateField = (props: props) => {
                 localeText={ptBR.components.MuiLocalizationProvider.defaultProps.localeText}
             >
                 <DatePicker
+
                     inputFormat='DD/MM/YYYY'
                     inputRef={props.inputRef}
                     label={props.label}
@@ -43,7 +45,7 @@ const DateField = (props: props) => {
                     onChange={(newValue) => {
                         setValue(newValue);
                     }}
-                    renderInput={(params) => <TextField sx={props.sx}{...params} />}
+                    renderInput={(params) => <TextField required={props.required} sx={props.sx}{...params} />}
                 />
             </LocalizationProvider>
         </div>

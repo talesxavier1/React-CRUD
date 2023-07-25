@@ -1,21 +1,19 @@
 import { useState } from "react";
-import ButtonComponent from "../../../Components/Button/ButtonComponent";
 import styles from "./AreaAtuacao.module.css"
-import AreaAtuacaoModel from "../../../../Models/Objects/AreaAtuacaoModel";
+import AreaAtuacaoModel from "../../../../../Models/Objects/AreaAtuacaoModel";
 import { GridColDef, GridSelectionModel } from "@mui/x-data-grid";
-import ModalComponent from "../../../Components/Modal/ModalComponent";
-import Grid from "../../../Components/Grid/Grid";
-import TextFieldComponent from "../../../Components/TextField/TextFieldComponent";
-import RefFormatter from "../../../../utils/RefFormatter";
-import { GUID } from "../../../../utils/GUID";
+import ModalComponent from "../../../../Components/Modal/ModalComponent";
+import Grid from "../../../../Components/Grid/Grid";
+import TextFieldComponent from "../../../../Components/TextField/TextFieldComponent";
+import RefFormatter from "../../../../../utils/RefFormatter";
+import { GUID } from "../../../../../utils/GUID";
 import { useQuery } from "react-query";
-import AreaAtuacaoRepository from "../../../../Repository/Implementations/AreaAtuacaoRepository";
+import AreaAtuacaoRepository from "../../../../../Repository/Implementations/AreaAtuacaoRepository";
 import Swal from "sweetalert2";
+import ButtonComponent from "../../../../Components/Button/ButtonComponent";
 
 
 const AreaAtuacao = () => {
-
-
 
     const [selectedRows, setSelectedRows] = useState<GridSelectionModel>([]);
     const [gridPage, setGridPage] = useState<number>(0);
