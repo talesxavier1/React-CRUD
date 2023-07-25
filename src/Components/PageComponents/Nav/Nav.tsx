@@ -125,12 +125,12 @@ const Nav = () => {
                                     <ListItemText primary="Área de conhecimento" />
                                 </ListItemButton>
                             </List>
-                            {/* Componentes Curiculares */}
+                            {/* Componentes Curriculares */}
                             <List component="div" disablePadding>
-                                <ListItemButton sx={{ pl: 6 }} onClick={() => { navigate("/main/ComponentesCuriculares") }}>
+                                <ListItemButton sx={{ pl: 6 }} onClick={() => { navigate("/main/ComponentesCurriculares") }}>
                                     <ListItemIcon>
                                     </ListItemIcon>
-                                    <ListItemText primary="Componentes Curiculares" />
+                                    <ListItemText primary="Componentes Curriculares" />
                                 </ListItemButton>
                             </List>
                         </Collapse>
