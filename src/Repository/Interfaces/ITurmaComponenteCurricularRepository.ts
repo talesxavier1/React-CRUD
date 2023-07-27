@@ -1,5 +1,5 @@
 import AreaAtuacaoModel from "../../Models/Objects/AreaAtuacaoModel";
-import { TurmaComponenteCurricularModel } from "../../Models/Objects/TurmaComponenteCurricular";
+import { TurmaComponenteCurricularModel } from "../../Models/Objects/TurmaComponenteCurricularModel";
 
 export default interface ITurmaComponenteCurricularRepository {
     addCurricularComponent: (userToken: string, componenteCurricular: TurmaComponenteCurricularModel) => Promise<boolean>;
