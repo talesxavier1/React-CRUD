@@ -1,5 +1,5 @@
 import AreaAtuacaoModel from "../../Models/Objects/AreaAtuacaoModel";
-import { TurmaComponenteCurricularModel } from "../../Models/Objects/TurmaComponenteCurricular";
+import { TurmaComponenteCurricularModel } from "../../Models/Objects/TurmaComponenteCurricularModel";
 import { RequestModel } from "../../utils/Request";
 import ITurmaComponenteCurricularRepository from "../Interfaces/ITurmaComponenteCurricularRepository";
 
