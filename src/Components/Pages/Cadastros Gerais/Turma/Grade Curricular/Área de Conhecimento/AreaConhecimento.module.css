@@ -1,0 +1,10 @@
+.buttons_area {
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+}
+
+.grid_container {
+    margin: 10px;
+    height: 400px;
+}

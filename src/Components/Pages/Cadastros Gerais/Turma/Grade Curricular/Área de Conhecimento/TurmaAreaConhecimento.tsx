@@ -1,37 +1,38 @@
 import { GridColDef, GridSelectionModel } from "@mui/x-data-grid";
-import ButtonComponent from "../../../../../Components/Button/ButtonComponent"
-import Grid from "../../../../../Components/Grid/Grid";
-import styles from "./ComponentesCurriculares.module.css"
-import { useState } from "react";
-import { TurmaComponenteCurricularModel } from "../../../../../../Models/Objects/TurmaComponenteCurricularModel";
-import { useQuery } from "react-query";
-import { TurmaComponenteCurricularRepository } from "../../../../../../Repository/Implementations/TurmaComponenteCurricularRepository";
-import TextFieldComponent from "../../../../../Components/TextField/TextFieldComponent";
+import TurmaConhecimentoAreaModel from "../../../../../../Models/Objects/TurmaAreaConhecimento";
 import { GUID } from "../../../../../../utils/GUID";
+import ButtonComponent from "../../../../../Components/Button/ButtonComponent";
+import Grid from "../../../../../Components/Grid/Grid";
 import ModalComponent from "../../../../../Components/Modal/ModalComponent";
+import TextFieldComponent from "../../../../../Components/TextField/TextFieldComponent";
+import style from "./AreaConhecimento.module.css"
+import { useState } from "react";
+import TurmaAreaConhecimentoModel from "../../../../../../Models/Objects/TurmaAreaConhecimento";
 import RefFormatter from "../../../../../../utils/RefFormatter";
+import { useQuery } from "react-query";
+import TurmaAreaConhecimentoRepository from "../../../../../../Repository/Implementations/TurmaAreaConhecimentoRepository";
 import Swal from "sweetalert2";
 
 
-const ComponentesCurriculares = () => {
+const TurmaAreaConhecimento = () => {
     const [selectedRows, setSelectedRows] = useState<GridSelectionModel>([]);
     const [gridPage, setGridPage] = useState<number>(0);
-    const [componentes, SetComponentes] = useState<{ values: TurmaComponenteCurricularModel[], count: number }>({ values: [], count: 0 });
-    const [modalProps, setModalProps] = useState<{ isOpen: boolean, content?: TurmaComponenteCurricularModel }>({ isOpen: false, content: undefined });
-    let refsMap = RefFormatter.generateObjectRefs(new TurmaComponenteCurricularModel(), []);
+    const [areas, setAreas] = useState<{ values: TurmaAreaConhecimentoModel[], count: number }>({ values: [], count: 0 });
+    const [modalProps, setModalProps] = useState<{ isOpen: boolean, content?: TurmaAreaConhecimentoModel }>({ isOpen: false, content: undefined });
+    let refsMap = RefFormatter.generateObjectRefs(new TurmaAreaConhecimentoModel(), []);
     const userToken = sessionStorage.getItem("userToken") ?? "";
 
     const propriedadesColunas: GridColDef[] = [
         { field: 'codigo', type: 'string', headerName: 'Código', width: 300, sortable: false },
-        { field: 'component', headerName: 'Componente', width: 300, sortable: false },
+        { field: 'area', headerName: 'Área', width: 300, sortable: false },
     ];
 
-    const { isFetching: turmaComponentesIsFetching, refetch: turmaComponentesRefetch } = useQuery(
-        ["turma_componentes", gridPage],
+    const { isFetching, refetch } = useQuery(
+        ["turma_areas_conhecimento", gridPage],
         (async () => {
-            let values = await new TurmaComponenteCurricularRepository().getCurricularComponents(userToken, gridPage * 5, 5);
-            let count = await new TurmaComponenteCurricularRepository().countCurricularComponents(userToken);
-            SetComponentes({
+            let values = await new TurmaAreaConhecimentoRepository().getClassKnowledgeAreas(userToken, gridPage * 5, 5);
+            let count = await new TurmaAreaConhecimentoRepository().countClassKnowledgeAreas(userToken);
+            setAreas({
                 values: values,
                 count: count
             });
@@ -39,14 +40,14 @@ const ComponentesCurriculares = () => {
         { refetchOnWindowFocus: false }
     );
 
-    const saveComponente = async () => {
-        let componente = RefFormatter.getObjectFromRefs(new TurmaComponenteCurricularModel, refsMap);
+    const saveArea = async () => {
+        let componente = RefFormatter.getObjectFromRefs(new TurmaAreaConhecimentoModel, refsMap);
 
         let result;
-        if (componentes.values.find(VALUE => VALUE.codigo == componente.codigo)) {
-            result = await new TurmaComponenteCurricularRepository().modifyCurricularComponent(userToken, componente);
+        if (areas.values.find(VALUE => VALUE.codigo == componente.codigo)) {
+            result = await new TurmaAreaConhecimentoRepository().modifyClassKnowledgeArea(userToken, componente);
         } else {
-            result = await new TurmaComponenteCurricularRepository().addCurricularComponent(userToken, componente);
+            result = await new TurmaAreaConhecimentoRepository().addClassKnowledgeArea(userToken, componente);
         }
 
         if (result) {
@@ -55,7 +56,7 @@ const ComponentesCurriculares = () => {
                 text: 'Salvo com sucesso!',
             }).then(() => {
                 setModalProps({ isOpen: false, content: undefined });
-                turmaComponentesRefetch();
+                refetch();
             });
         } else {
             Swal.fire({
@@ -68,7 +69,7 @@ const ComponentesCurriculares = () => {
     const deleteComponente = async () => {
         let results = [];
         for (let VALUE of selectedRows) {
-            let result = await new TurmaComponenteCurricularRepository().logicalDeleteCurricularComponent(userToken, VALUE.toString());
+            let result = await new TurmaAreaConhecimentoRepository().logicalDeleteClassKnowledgeArea(userToken, VALUE.toString());
             results.push({ "result": result, "id": VALUE.toString() });
         }
 
@@ -91,19 +92,19 @@ const ComponentesCurriculares = () => {
                 return result.join("<br/>")
             })(),
         }).then(() => {
-            turmaComponentesRefetch();
+            refetch();
         });
     }
 
     return (
         <>
             <ModalComponent
-                btnSaveAction={saveComponente}
+                btnSaveAction={saveArea}
                 modalAberto={modalProps.isOpen}
                 closeOpenModal={() => { setModalProps({ isOpen: false, content: undefined }) }}
                 content={<Content refs={refsMap} content={modalProps.content} />}
             />
-            <div className={styles["buttons_area"]}>
+            <div className={style["buttons_area"]}>
                 <ButtonComponent
                     value='Adicionar'
                     variant='outlined'
@@ -119,7 +120,7 @@ const ComponentesCurriculares = () => {
                         color: '#222834',
                         backgroundColor: `${selectedRows.length == 1 ? "#6C757D" : ""}`
                     }}
-                    onClick={() => { setModalProps({ isOpen: true, content: componentes.values.find(VALUE => VALUE.codigo == selectedRows[0]) }) }}
+                    onClick={() => { setModalProps({ isOpen: true, content: areas.values.find(VALUE => VALUE.codigo == selectedRows[0]) }) }}
                     disabled={selectedRows.length != 1}
                 />
                 <ButtonComponent
@@ -133,32 +134,29 @@ const ComponentesCurriculares = () => {
                     onClick={deleteComponente}
                 />
             </div >
-            <div className={styles["grid_container"]}>
+            <div className={style["grid_container"]}>
                 <Grid
-                    loading={turmaComponentesIsFetching}
-                    linhasGrid={componentes.values}
+                    loading={isFetching}
+                    linhasGrid={areas.values}
                     propriedadesColunas={propriedadesColunas}
                     setSelectedRows={setSelectedRows}
-                    gridSizePage={componentes.count}
+                    gridSizePage={areas.count}
                     pageChange={setGridPage}
                     currentPage={gridPage}
                 />
             </div>
         </>
     )
-
 }
 
-
-const Content = (props: { content?: TurmaComponenteCurricularModel, refs: Map<string, React.MutableRefObject<any>> }) => {
+const Content = (props: { content?: TurmaConhecimentoAreaModel, refs: Map<string, React.MutableRefObject<any>> }) => {
     return (
-        <div className={styles["fields-container"]}>
-            <TextFieldComponent readonly id={styles["codigo"]} value={props.content?.codigo ?? GUID.getGUID()} inputRef={props.refs.get("codigo")} sx={{ width: "330px" }} label='Código' />
-            <TextFieldComponent id={styles["area"]} inputRef={props.refs.get("component")} sx={{ width: "100%" }} value={props.content?.component ?? ""} label='Componente' />
+        <div className={style["fields-container"]}>
+            <TextFieldComponent readonly id={style["codigo"]} value={props.content?.codigo ?? GUID.getGUID()} inputRef={props.refs.get("codigo")} sx={{ width: "330px" }} label='Código' />
+            <TextFieldComponent id={style["area"]} inputRef={props.refs.get("area")} sx={{ width: "100%" }} value={props.content?.area ?? ""} label='Área' />
         </div>
     )
 }
 
-export default ComponentesCurriculares;
 
-
+export default TurmaAreaConhecimento;
