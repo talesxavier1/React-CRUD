@@ -16,9 +16,7 @@ import Swal from "sweetalert2";
 const ComponentesCurriculares = () => {
     const [selectedRows, setSelectedRows] = useState<GridSelectionModel>([]);
     const [gridPage, setGridPage] = useState<number>(0);
-
     const [componentes, SetComponentes] = useState<{ values: TurmaComponenteCurricularModel[], count: number }>({ values: [], count: 0 });
-
     const [modalProps, setModalProps] = useState<{ isOpen: boolean, content?: TurmaComponenteCurricularModel }>({ isOpen: false, content: undefined });
     let refsMap = RefFormatter.generateObjectRefs(new TurmaComponenteCurricularModel(), []);
     const userToken = sessionStorage.getItem("userToken") ?? "";
