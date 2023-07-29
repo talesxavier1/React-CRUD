@@ -19,7 +19,7 @@ import FormacaoAcademica from "../Components/Pages/Cadastros Gerais/Professor/Fo
 import AreaAtuacao from "../Components/Pages/Cadastros Gerais/Professor/Área de Atuação/AreaAtuacao";
 import Cargos from "../Components/Pages/Cadastros Gerais/Professor/Cargos/Cargos";
 import ProfessorContextProvider from "../Components/Pages/Professor/ProfessorContext";
-import AreaConhecimento from "../Components/Pages/Cadastros Gerais/Turma/Grade Curricular/Área de Conhecimento/AreaConhecimento";
+import AreaConhecimento from "../Components/Pages/Cadastros Gerais/Turma/Grade Curricular/Área de Conhecimento/TurmaAreaConhecimento";
 import ComponentesCurriculares from "../Components/Pages/Cadastros Gerais/Turma/Grade Curricular/Componentes Curriculares/ComponentesCurriculares";
 
 const Rotas = () => {
