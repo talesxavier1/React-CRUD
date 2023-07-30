@@ -118,7 +118,7 @@ const Rotas = () => {
                             } />
                         } />
 
-                        <Route path="/main/turma/page/:id?" element={
+                        <Route path="/main/turma/page/:codigo?" element={
                             <App wrapperShow={
                                 <RouterGuard>
                                     <TurmaContextProvider>
