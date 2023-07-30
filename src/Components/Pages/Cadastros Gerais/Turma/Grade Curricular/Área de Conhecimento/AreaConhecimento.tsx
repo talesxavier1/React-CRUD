@@ -1,5 +1,4 @@
 import { GridColDef, GridSelectionModel } from "@mui/x-data-grid";
-import TurmaConhecimentoAreaModel from "../../../../../../Models/Objects/TurmaAreaConhecimento";
 import { GUID } from "../../../../../../utils/GUID";
 import ButtonComponent from "../../../../../Components/Button/ButtonComponent";
 import Grid from "../../../../../Components/Grid/Grid";
@@ -7,19 +6,19 @@ import ModalComponent from "../../../../../Components/Modal/ModalComponent";
 import TextFieldComponent from "../../../../../Components/TextField/TextFieldComponent";
 import style from "./AreaConhecimento.module.css"
 import { useState } from "react";
-import TurmaAreaConhecimentoModel from "../../../../../../Models/Objects/TurmaAreaConhecimento";
+import AreaConhecimentoModel from "../../../../../../Models/Objects/AreaConhecimentoModel";
 import RefFormatter from "../../../../../../utils/RefFormatter";
 import { useQuery } from "react-query";
-import TurmaAreaConhecimentoRepository from "../../../../../../Repository/Implementations/TurmaAreaConhecimentoRepository";
+import AreaConhecimentoRepository from "../../../../../../Repository/Implementations/AreaConhecimentoRepository";
 import Swal from "sweetalert2";
 
 
-const TurmaAreaConhecimento = () => {
+const AreaConhecimento = () => {
     const [selectedRows, setSelectedRows] = useState<GridSelectionModel>([]);
     const [gridPage, setGridPage] = useState<number>(0);
-    const [areas, setAreas] = useState<{ values: TurmaAreaConhecimentoModel[], count: number }>({ values: [], count: 0 });
-    const [modalProps, setModalProps] = useState<{ isOpen: boolean, content?: TurmaAreaConhecimentoModel }>({ isOpen: false, content: undefined });
-    let refsMap = RefFormatter.generateObjectRefs(new TurmaAreaConhecimentoModel(), []);
+    const [areas, setAreas] = useState<{ values: AreaConhecimentoModel[], count: number }>({ values: [], count: 0 });
+    const [modalProps, setModalProps] = useState<{ isOpen: boolean, content?: AreaConhecimentoModel }>({ isOpen: false, content: undefined });
+    let refsMap = RefFormatter.generateObjectRefs(new AreaConhecimentoModel(), []);
     const userToken = sessionStorage.getItem("userToken") ?? "";
 
     const propriedadesColunas: GridColDef[] = [
@@ -28,10 +27,10 @@ const TurmaAreaConhecimento = () => {
     ];
 
     const { isFetching, refetch } = useQuery(
-        ["turma_areas_conhecimento", gridPage],
+        ["AreaConhecimento", gridPage],
         (async () => {
-            let values = await new TurmaAreaConhecimentoRepository().getClassKnowledgeAreas(userToken, gridPage * 5, 5);
-            let count = await new TurmaAreaConhecimentoRepository().countClassKnowledgeAreas(userToken);
+            let values = await new AreaConhecimentoRepository().getKnowledgeAreas(userToken, gridPage * 5, 5);
+            let count = await new AreaConhecimentoRepository().countKnowledgeAreas(userToken);
             setAreas({
                 values: values,
                 count: count
@@ -41,13 +40,13 @@ const TurmaAreaConhecimento = () => {
     );
 
     const saveArea = async () => {
-        let componente = RefFormatter.getObjectFromRefs(new TurmaAreaConhecimentoModel, refsMap);
+        let componente = RefFormatter.getObjectFromRefs(new AreaConhecimentoModel, refsMap);
 
         let result;
         if (areas.values.find(VALUE => VALUE.codigo == componente.codigo)) {
-            result = await new TurmaAreaConhecimentoRepository().modifyClassKnowledgeArea(userToken, componente);
+            result = await new AreaConhecimentoRepository().modifyKnowledgeArea(userToken, componente);
         } else {
-            result = await new TurmaAreaConhecimentoRepository().addClassKnowledgeArea(userToken, componente);
+            result = await new AreaConhecimentoRepository().addKnowledgeArea(userToken, componente);
         }
 
         if (result) {
@@ -69,7 +68,7 @@ const TurmaAreaConhecimento = () => {
     const deleteComponente = async () => {
         let results = [];
         for (let VALUE of selectedRows) {
-            let result = await new TurmaAreaConhecimentoRepository().logicalDeleteClassKnowledgeArea(userToken, VALUE.toString());
+            let result = await new AreaConhecimentoRepository().logicalDeleteKnowledgeArea(userToken, VALUE.toString());
             results.push({ "result": result, "id": VALUE.toString() });
         }
 
@@ -149,7 +148,7 @@ const TurmaAreaConhecimento = () => {
     )
 }
 
-const Content = (props: { content?: TurmaConhecimentoAreaModel, refs: Map<string, React.MutableRefObject<any>> }) => {
+const Content = (props: { content?: AreaConhecimentoModel, refs: Map<string, React.MutableRefObject<any>> }) => {
     return (
         <div className={style["fields-container"]}>
             <TextFieldComponent readonly id={style["codigo"]} value={props.content?.codigo ?? GUID.getGUID()} inputRef={props.refs.get("codigo")} sx={{ width: "330px" }} label='Código' />
@@ -159,4 +158,4 @@ const Content = (props: { content?: TurmaConhecimentoAreaModel, refs: Map<string
 }
 
 
-export default TurmaAreaConhecimento;
+export default AreaConhecimento;

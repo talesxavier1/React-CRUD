@@ -1,4 +1,4 @@
-import './CadastroCurso.css'
+import style from "./CadastroTurma.module.css"
 
 const CadastroCurso = () => {
 
