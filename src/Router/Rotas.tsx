@@ -21,6 +21,7 @@ import Cargos from "../Components/Pages/Cadastros Gerais/Professor/Cargos/Cargos
 import ProfessorContextProvider from "../Components/Pages/Professor/ProfessorContext";
 import AreaConhecimento from "../Components/Pages/Cadastros Gerais/Turma/Grade Curricular/Área de Conhecimento/AreaConhecimento";
 import ComponentesCurriculares from "../Components/Pages/Cadastros Gerais/Turma/Grade Curricular/Componentes Curriculares/ComponentesCurriculares";
+import { TurmaContextProvider } from "../Components/Pages/Turma/TurmaContext"
 
 const Rotas = () => {
     return (
@@ -94,7 +95,9 @@ const Rotas = () => {
                         <Route path="/main/turma" element={
                             <App wrapperShow={
                                 <RouterGuard>
-                                    <Turma />
+                                    <TurmaContextProvider>
+                                        <Turma />
+                                    </TurmaContextProvider>
                                 </RouterGuard>
                             } />
                         } />
@@ -118,7 +121,9 @@ const Rotas = () => {
                         <Route path="/main/turma/page" element={
                             <App wrapperShow={
                                 <RouterGuard>
-                                    <CadastroTurma />
+                                    <TurmaContextProvider>
+                                        <CadastroTurma />
+                                    </TurmaContextProvider>
                                 </RouterGuard>
                             } />
                         } />
