@@ -164,7 +164,7 @@ const Professor = () => {
                         color: '#222834',
                         backgroundColor: `${selectedRows.length == 1 ? "#6C757D" : ""}`
                     }}
-                    onClick={() => { navigate(`/main/professor/page?codigo=${selectedRows[0]}`) }}
+                    onClick={() => { navigate(`/main/professor/page/${selectedRows[0]}`) }}
                     disabled={selectedRows.length != 1}
                 />
                 </>
