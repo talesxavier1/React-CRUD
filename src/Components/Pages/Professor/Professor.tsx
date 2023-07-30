@@ -17,21 +17,15 @@ const Professor = () => {
     const [gridPage, setGridPage] = useState<number>(0);
     const professorContext = useContext(ProfessorContext);
 
-    const { data: professores, isFetching: professoresIsFetching, refetch: professoresRefetch } = useQuery(
+    const { data, isFetching, refetch } = useQuery(
         ["professores", gridPage],
         (async () => {
-            let result = await professorContext?.getProfessores(gridPage * 5, 5);
-            if (result) { return result; }
-            return [];
-        }),
-        { refetchOnWindowFocus: false, cacheTime: 2000 }
-    );
-
-    const { data: professoresCount, refetch: professoresCountRefetch } = useQuery(
-        ["professoresCount"],
-        (async () => {
-            let result = await professorContext?.conutProfessores();
-            return result ?? 0;
+            let values = await professorContext?.getProfessores(gridPage * 5, 5);
+            let count = await professorContext?.conutProfessores();
+            return {
+                values: values ?? [],
+                count: count ?? 0
+            };
         }),
         { refetchOnWindowFocus: false, cacheTime: 2000 }
     );
@@ -43,7 +37,7 @@ const Professor = () => {
                 field: 'pessoa',
                 headerName: 'Pessoa',
                 width: (() => {
-                    let mapLength = professores?.map(VALUE => VALUE.pessoa.length) ?? [];
+                    let mapLength = data?.values?.map(VALUE => VALUE.pessoa.length) ?? [];
                     return mapLength.length > 0 ? mapLength.sort((a, b) => b - a)[0] * 8 : 250;
                 })(),
                 sortable: false,
@@ -64,7 +58,7 @@ const Professor = () => {
                 field: 'formacaoAcademica',
                 headerName: 'Formação Acadêmica',
                 width: (() => {
-                    let mapLength = professores?.map(VALUE => VALUE.formacaoAcademica.length) ?? [];
+                    let mapLength = data?.values?.map(VALUE => VALUE.formacaoAcademica.length) ?? [];
                     return mapLength.length > 0 ? mapLength.sort((a, b) => b - a)[0] * 8 : 250;
                 })(),
                 sortable: false,
@@ -86,7 +80,7 @@ const Professor = () => {
                 field: 'nivelEnsinoQueMinistra',
                 headerName: 'Nível de Ensino que Ministra',
                 width: (() => {
-                    let mapLength = professores?.map(VALUE => VALUE.nivelEnsinoQueMinistra.length) ?? [];
+                    let mapLength = data?.values?.map(VALUE => VALUE.nivelEnsinoQueMinistra.length) ?? [];
                     return mapLength.length > 0 ? mapLength.sort((a, b) => b - a)[0] * 8 : 250;
                 })(),
                 sortable: false,
@@ -100,7 +94,7 @@ const Professor = () => {
                 field: 'areaAtuacao',
                 headerName: 'Área de Atuação',
                 width: (() => {
-                    let mapLength = professores?.map(VALUE => VALUE.areaAtuacao.length) ?? [];
+                    let mapLength = data?.values?.map(VALUE => VALUE.areaAtuacao.length) ?? [];
                     return mapLength.length > 0 ? mapLength.sort((a, b) => b - a)[0] * 8 : 250;
                 })(),
                 sortable: false,
@@ -111,7 +105,7 @@ const Professor = () => {
             },
             { field: 'valorHoraAula', headerName: 'Valor Hora Aula', width: 150, sortable: false }
         ];
-    }, [professores])
+    }, [data])
 
     const deleteProfessor = useCallback(async () => {
         let results = [];
@@ -140,8 +134,7 @@ const Professor = () => {
                 return result.join("<br/>")
             })(),
         }).then(() => {
-            professoresRefetch();
-            professoresCountRefetch();
+            refetch();
         });
 
     }, [selectedRows]);
@@ -181,11 +174,11 @@ const Professor = () => {
             </div>
             <div className={style['grid-container']}>
                 <Grid
-                    loading={professoresIsFetching}
-                    linhasGrid={professores ?? []}
+                    loading={isFetching}
+                    linhasGrid={data?.values ?? []}
                     propriedadesColunas={propriedadesColunas}
                     setSelectedRows={setSelectedRows}
-                    gridSizePage={professoresCount}
+                    gridSizePage={data?.count ?? 0}
                     pageChange={setGridPage}
                     currentPage={gridPage}
                 />
