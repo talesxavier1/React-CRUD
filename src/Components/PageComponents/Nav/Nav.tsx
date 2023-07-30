@@ -176,12 +176,12 @@ const Nav = () => {
                             <ListItemText primary="Professor" />
                         </ListItemButton>
 
-                        {/* Cursos*/}
-                        <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/main/curso") }}>
+                        {/* Truma */}
+                        <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/main/turma") }}>
                             <ListItemIcon>
                                 <Fontawesome iconClass='fa-solid fa-chalkboard' />
                             </ListItemIcon>
-                            <ListItemText primary="Cursos" />
+                            <ListItemText primary="Turma" />
                         </ListItemButton>
 
                         {/* Disciplinas*/}

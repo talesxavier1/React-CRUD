@@ -1,22 +1,19 @@
 import { useNavigate } from 'react-router-dom';
-import style from './Curso.module.css'
+import style from './Turma.module.css'
 
-const Curso = () => {
+const Turma = () => {
     const navigate = useNavigate();
 
     return (
         <div className={style['content-container']}>
-            <div className={style['filtro-container']}>
-                <p>FILTROS CURSO</p>
-            </div>
             <div className={style['buttons-grid-container']}>
-                <button onClick={() => navigate("/main/curso/page")}>ADCIONAR</button>
+                <button onClick={() => navigate("/main/turma/page")}>ADCIONAR</button>
             </div>
             <div className={style['grid-container']}>
-                <p>GRID CURSO</p>
+                <p>GRID Turma</p>
             </div>
         </div >
     );
 }
 
-export default Curso;
+export default Turma;

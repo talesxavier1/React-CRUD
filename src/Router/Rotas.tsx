@@ -2,8 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import App from "../App";
 import Aluno from "../Components/Pages/Aluno/Aluno";
 import CadastroAluno from "../Components/Pages/Aluno/CadastroAluno/CadastroAluno";
-import CadastroCurso from "../Components/Pages/Curso/CadastroCurso/CadastroCurso";
-import Curso from "../Components/Pages/Curso/Curso";
+import CadastroTurma from "../Components/Pages/Turma/CadastroTurma/CadastroTurma";
+import Turma from "../Components/Pages/Turma/Turma";
 import Dashboard from "../Components/Pages/Dashboard/Dashboard";
 import CadastroDisciplina from "../Components/Pages/Disciplina/CadastroDisciplina/CadastroDisciplina";
 import Disciplina from "../Components/Pages/Disciplina/Disciplina";
@@ -19,7 +19,7 @@ import FormacaoAcademica from "../Components/Pages/Cadastros Gerais/Professor/Fo
 import AreaAtuacao from "../Components/Pages/Cadastros Gerais/Professor/Área de Atuação/AreaAtuacao";
 import Cargos from "../Components/Pages/Cadastros Gerais/Professor/Cargos/Cargos";
 import ProfessorContextProvider from "../Components/Pages/Professor/ProfessorContext";
-import AreaConhecimento from "../Components/Pages/Cadastros Gerais/Turma/Grade Curricular/Área de Conhecimento/TurmaAreaConhecimento";
+import AreaConhecimento from "../Components/Pages/Cadastros Gerais/Turma/Grade Curricular/Área de Conhecimento/AreaConhecimento";
 import ComponentesCurriculares from "../Components/Pages/Cadastros Gerais/Turma/Grade Curricular/Componentes Curriculares/ComponentesCurriculares";
 
 const Rotas = () => {
@@ -91,10 +91,10 @@ const Rotas = () => {
                             } />
                         } />
 
-                        <Route path="/main/Curso" element={
+                        <Route path="/main/turma" element={
                             <App wrapperShow={
                                 <RouterGuard>
-                                    <Curso />
+                                    <Turma />
                                 </RouterGuard>
                             } />
                         } />
@@ -115,10 +115,10 @@ const Rotas = () => {
                             } />
                         } />
 
-                        <Route path="/main/curso/page" element={
+                        <Route path="/main/turma/page" element={
                             <App wrapperShow={
                                 <RouterGuard>
-                                    <CadastroCurso />
+                                    <CadastroTurma />
                                 </RouterGuard>
                             } />
                         } />
