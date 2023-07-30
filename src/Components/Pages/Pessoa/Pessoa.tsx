@@ -15,21 +15,16 @@ const Pessoa = () => {
     const [gridPage, setGridPage] = useState<number>(0);
     const pessoaContext = useContext(PessoaContext);
 
-    const { data: pessoas, isFetching: pessoasIsFetching, refetch: pessoasRefetch } = useQuery(
+    const { data, isFetching, refetch } = useQuery(
         ["pessoas", gridPage],
         (async () => {
-            let result = await pessoaContext?.buscarPessoas(gridPage * 5, 5);
-            if (result) { return result; }
-            return [];
-        }),
-        { refetchOnWindowFocus: false, cacheTime: 2000 }
-    );
+            let values = await pessoaContext?.buscarPessoas(gridPage * 5, 5);
+            let count = await pessoaContext?.countPessoas();
 
-    const { data: pessoasCount } = useQuery(
-        ["pessoasCount", gridPage],
-        (async () => {
-            let result = await pessoaContext?.countPessoas();
-            return (result ?? 0) as number;
+            return {
+                values: values,
+                count: count
+            };
         }),
         { refetchOnWindowFocus: false, cacheTime: 2000 }
     );
@@ -61,7 +56,7 @@ const Pessoa = () => {
                 return result.join("<br/>")
             })(),
         }).then(() => {
-            pessoasRefetch();
+            refetch();
         });
 
     }
@@ -132,7 +127,7 @@ const Pessoa = () => {
                         color: '#222834',
                         backgroundColor: `${selectedRows.length == 1 ? "#6C757D" : ""}`
                     }}
-                    onClick={() => { navigate(`/main/pessoa/page?codigo=${selectedRows[0]}`) }}
+                    onClick={() => { navigate(`/main/pessoa/page/${selectedRows[0]}`) }}
                     disabled={selectedRows.length != 1}
                 />
                 </>
@@ -149,11 +144,11 @@ const Pessoa = () => {
             </div>
             <div className={style['grid-container']}>
                 <Grid
-                    loading={pessoasIsFetching}
-                    linhasGrid={pessoas ?? []}
+                    loading={isFetching}
+                    linhasGrid={data?.values ?? []}
                     propriedadesColunas={propriedadesColunas}
                     setSelectedRows={setSelectedRows}
-                    gridSizePage={pessoasCount ?? 0}
+                    gridSizePage={data?.count ?? 0}
                     pageChange={setGridPage}
                     currentPage={gridPage}
                 />
