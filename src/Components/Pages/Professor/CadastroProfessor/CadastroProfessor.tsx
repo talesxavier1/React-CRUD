@@ -11,7 +11,7 @@ import SelectSearchComponent from '../../../Components/SelectSearch/SelectSearch
 import SelectComponent, { IOption } from '../../../Components/Select/SelectComponent';
 import DateField from '../../../Components/DateField/DateField';
 import ButtonComponent from '../../../Components/Button/ButtonComponent';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import RefFormatter from '../../../../utils/RefFormatter';
 import ProfessorModel from '../../../../Models/Objects/ProfessorModel';
 import { useQuery } from 'react-query';
@@ -27,16 +27,16 @@ const CadastroProfessor = () => {
     const navigate = useNavigate();
     const [professorValorSelecionado, setProfessorValorSelecionado] = useState<IOption[] | null | undefined>(undefined);
     let refsMap = RefFormatter.generateObjectRefs(new ProfessorModel(), ["codigoRef"]);
-    const professorID = new URLSearchParams(useLocation().search).get("codigo");
+    const { codigo } = useParams();
 
     const { isFetching: professorIsFetching } = useQuery(
-        ["professor", professorID],
+        ["professor", codigo],
         (async () => {
             let result;
-            if (!professorID) {
+            if (!codigo) {
                 result = ProfessorModel.constructorMethod(GUID.getGUID());
             } else {
-                result = await professorContext?.getProfessor(professorID);
+                result = await professorContext?.getProfessor(codigo);
             }
 
             if (result) {
@@ -57,7 +57,7 @@ const CadastroProfessor = () => {
         professor.pessoaCPF = professor.pessoaCPF ? professor.pessoaCPF.replace(/[^0-9]/g, "") : "";
 
         let result;
-        if (professorID) {
+        if (codigo) {
             result = await professorContext?.alterarProfessor(professor);
         } else {
             result = await professorContext?.addProfessor(professor);
