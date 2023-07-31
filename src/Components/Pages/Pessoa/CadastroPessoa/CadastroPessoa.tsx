@@ -8,7 +8,7 @@ import styles from './CadastroPessoa.module.css'
 import CadastroContatos from './CadastroContatos/CadastroContatos';
 import CadastroEndereco from './CadastroEndereco/CadastroEndereco';
 import ButtonComponent from '../../../Components/Button/ButtonComponent';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { PessoaContext } from '../PessoaContext';
 import { PessoaModel } from '../../../../Models/Objects/PessoaModel';
 import { GUID } from '../../../../utils/GUID';
@@ -27,16 +27,18 @@ import TryParse from '../../../../utils/TryParse';
 const CadastroPessoa = () => {
     const navigate = useNavigate();
     const pessoaContext = useContext(PessoaContext);
-    const pessoaID = new URLSearchParams(useLocation().search).get("codigo");
+    const { codigo } = useParams();
+    let refsMap = RefFormatter.generateObjectRefs(new PessoaModel(), ["codigoRef"]);
+    const userToken = sessionStorage.getItem("userToken") ?? "";
 
     const { isFetching } = useQuery(
-        ["pessoa", pessoaID],
+        ["pessoa", codigo],
         (async () => {
             let result;
-            if (!pessoaID) {
+            if (!codigo) {
                 result = PessoaModel.constructorMethod(GUID.getGUID());
             } else {
-                result = await pessoaContext?.buscarPessoa(pessoaID);
+                result = await pessoaContext?.buscarPessoa(codigo);
             }
 
             if (result) {
@@ -48,10 +50,6 @@ const CadastroPessoa = () => {
         }),
         { refetchOnWindowFocus: false, cacheTime: 0 }
     );
-
-    let refsMap = RefFormatter.generateObjectRefs(new PessoaModel(), ["codigoRef"]);
-
-    const userToken = sessionStorage.getItem("userToken") ?? "";
 
     const localidade = {
         buscarPaises: async (codigo?: string) => {
@@ -96,7 +94,7 @@ const CadastroPessoa = () => {
         pessoa.tituloEleitorZona = pessoa?.tituloEleitorZona ? pessoa.tituloEleitorZona.replace(/[^0-9]/g, '') : "";
 
         let result;
-        if (pessoaID) {
+        if (codigo) {
             result = await pessoaContext?.modificarPessoa(pessoa);
         } else {
             result = await pessoaContext?.addPessoa(pessoa);

@@ -57,7 +57,7 @@ const Rotas = () => {
                             } />
                         } />
 
-                        <Route path="/main/pessoa/page" element={
+                        <Route path="/main/pessoa/page/:codigo?" element={
                             <App wrapperShow={
                                 <RouterGuard>
                                     <PessoaContextProvider>
@@ -118,7 +118,7 @@ const Rotas = () => {
                             } />
                         } />
 
-                        <Route path="/main/turma/page" element={
+                        <Route path="/main/turma/page/:codigo?" element={
                             <App wrapperShow={
                                 <RouterGuard>
                                     <TurmaContextProvider>
@@ -136,7 +136,7 @@ const Rotas = () => {
                             } />
                         } />
 
-                        <Route path="/main/professor/page" element={
+                        <Route path="/main/professor/page/:codigo?" element={
                             <App wrapperShow={
                                 <RouterGuard>
                                     <ProfessorContextProvider>
