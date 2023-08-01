@@ -123,9 +123,14 @@ const CadastroPessoa = () => {
             <Backdrop sx={{ color: '#fff', zIndex: 10000 }} open={isFetching}>
                 <CircularProgress color="inherit" />
             </Backdrop>
-            <div className={styles["pessoa-cadastro-container"]}>
-                <Avatar id={styles["foto"]} sx={{ width: "110px", height: "110px" }} />
-                <div className={styles['fields-container']}>
+            <div className={styles["container"]}>
+                <div className={styles["header"]}>
+                    <h1>Pessoa</h1>
+                </div>
+                <div className={styles["content_wrapper"]}>
+                    <div className={styles["foto"]} id={styles["foto"]}>
+                        <Avatar sx={{ width: "110px", height: "110px" }} />
+                    </div>
                     <><TextFieldComponent label='Código'
                         readonly
                         inputRef={refsMap.get("codigo")}
@@ -305,6 +310,8 @@ const CadastroPessoa = () => {
                             return <TabsContatosEnderecos />
                         }, [])}
                     </>
+                </div>
+                <div className={styles["buttons"]}>
                     <><ButtonComponent value='Salvar'
                         id={styles["btn_salvar"]}
 
@@ -331,8 +338,9 @@ const CadastroPessoa = () => {
                     />
                     </>
                 </div>
-            </div>
+            </div >
         </>
+
     );
 }
 
