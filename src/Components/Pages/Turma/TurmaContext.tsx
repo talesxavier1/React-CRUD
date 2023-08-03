@@ -1,10 +1,13 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import TurmaModel from "../../../Models/Objects/TurmaModel";
 import { TurmaRepository } from "../../../Repository/Implementations/TurmaRepository";
+import { PessoaModel } from "../../../Models/Objects/PessoaModel";
+import PersonRepository from "../../../Repository/Implementations/PersonRepository";
 
 
 interface ITurmaContext {
     /* ============================ TURMA ============================ */
+
     addTurma: (turmaModel: TurmaModel) => Promise<boolean>;
     countTurma: (query?: string) => Promise<number>;
     getTurma: (codigo: string) => Promise<TurmaModel | null>
@@ -18,6 +21,15 @@ interface ITurmaContext {
     turmas: { values: TurmaModel[], count: number } | undefined;
     setTurmas: (values: TurmaModel[], count: number) => void
     /* =============================================================== */
+
+    /* ============================ PESSOA =========================== */
+    getPessoas: (skip: number, take: number, nomePessoa?: string) => Promise<PessoaModel[]>
+    countPessoa: (nomePessoa?: string) => Promise<number>
+    /* =============================================================== */
+
+
+
+
 }
 
 const TurmaContext = createContext<ITurmaContext | undefined>(undefined);
@@ -28,6 +40,7 @@ const TurmaContextProvider = ({ children }: { children: ReactNode }) => {
     const [turmas, setTurmas] = useState<{ values: TurmaModel[], count: number } | undefined>();
 
     const providerValues: ITurmaContext = {
+        /* ============================ TURMA ============================ */
         async addTurma(turmaModel: TurmaModel): Promise<boolean> {
             let result: boolean = await new TurmaRepository().addClass(userToken, turmaModel);
             return result;
@@ -75,8 +88,53 @@ const TurmaContextProvider = ({ children }: { children: ReactNode }) => {
 
         turmas: turmas,
         setTurmas(values: TurmaModel[], count: number): void {
-            setTurmas({ values: values, count: count })
+            setTurmas({ values: values, count: count });
+        },
+        /* =============================================================== */
+
+        /* ============================ PESSOA =========================== */
+        getPessoas: async function (skip: number, take: number, nomePessoa?: string): Promise<PessoaModel[]> {
+            let query = (() => {
+                if (nomePessoa) {
+                    return btoa(encodeURIComponent(JSON.stringify({
+                        "$or": [
+                            { "nome": { "$regex": `${nomePessoa}`, '$options': 'i' } },
+                        ]
+                    })));
+                }
+            })();
+
+            let result: PessoaModel[];
+            if (query) {
+                result = await new PersonRepository().getPersonsByStringQuery(userToken, query, skip, take);
+            } else {
+                result = await new PersonRepository().getPersonList(userToken, skip, take);
+            }
+            return result;
+        },
+
+        countPessoa: async function (nomePessoa?: string): Promise<number> {
+            let query = (() => {
+                if (nomePessoa) {
+                    return btoa(encodeURIComponent(JSON.stringify({
+                        "$or": [
+                            { "nome": { "$regex": `${nomePessoa}`, '$options': 'i' } },
+                        ]
+                    })));
+                }
+            })();
+
+            let result: number;
+            if (query) {
+                result = await new PersonRepository().countPersonsByQuery(userToken, query) as number;
+            } else {
+                result = await new PersonRepository().countPersons(userToken) as number;
+            }
+
+            return result;
         }
+        /* =============================================================== */
+
     }
 
     return (

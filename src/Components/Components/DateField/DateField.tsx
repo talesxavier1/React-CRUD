@@ -17,6 +17,7 @@ interface props {
     value?: string
     required?: boolean
     inputRef?: MutableRefObject<any>
+    inputDateFormat?: "DD" | "DD/MM" | "MM" | "MM/YYYY" | "YYYY" | "DD/MM/YYYY"
 }
 
 const DateField = (props: props) => {
@@ -37,8 +38,9 @@ const DateField = (props: props) => {
                 localeText={ptBR.components.MuiLocalizationProvider.defaultProps.localeText}
             >
                 <DatePicker
-
-                    inputFormat='DD/MM/YYYY'
+                    openTo='year'
+                    views={['year', 'month', 'day']}
+                    inputFormat={props.inputDateFormat ?? 'DD/MM/YYYY'}
                     inputRef={props.inputRef}
                     label={props.label}
                     value={value}
