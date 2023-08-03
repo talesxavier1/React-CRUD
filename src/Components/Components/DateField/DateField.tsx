@@ -39,7 +39,7 @@ const DateField = (props: props) => {
             >
                 <DatePicker
                     openTo='year'
-                    views={['year', 'month', 'day']}
+                    views={props.inputDateFormat == "YYYY" ? ["year"] : ['year', 'month', 'day']}
                     inputFormat={props.inputDateFormat ?? 'DD/MM/YYYY'}
                     inputRef={props.inputRef}
                     label={props.label}
