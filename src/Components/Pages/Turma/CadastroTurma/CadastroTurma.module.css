@@ -1,0 +1,98 @@
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    margin-left: 15px;
+    margin-right: 15px;
+    justify-content: center;
+    color: dimgray;
+    border-bottom: 3px solid rgb(219, 211, 202);
+}
+
+.abas {
+    margin: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgb(172, 161, 148);
+}
+
+.content_wrapper {
+    margin: 15px;
+    height: 85%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.buttons_container {
+    margin: 10px;
+    display: flex;
+    justify-content: end;
+}
+
+.cadastro_turma_content_container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+}
+
+#codigo {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+}
+
+#codigo_da_turma {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+}
+
+#ano_letivo {
+    grid-column: 3 / span 2;
+    grid-row: 2;
+}
+
+#status_da_turma {
+    grid-column: 5 / span 2;
+    grid-row: 2;
+}
+
+#nivel_da_turma {
+    grid-column: 7 / span 2;
+    grid-row: 2;
+}
+
+#turno {
+    grid-column: 9 / span 2;
+    grid-row: 2;
+}
+
+#professor_responsavel {
+    grid-column: 1 / span 4;
+    grid-row: 3;
+}
+
+#data_de_inicio_da_turma {
+    grid-column: 5 / span 2;
+    grid-row: 3;
+}
+
+#data_de_fim_da_turma {
+    grid-column: 7 / span 2;
+    grid-row: 3;
+}
+
+#carga_horaria_total {
+    grid-column: 9 / span 2;
+    grid-row: 3;
+}
+
+#carga_horaria_complementar {
+    grid-column: 1 / span 2;
+    grid-row: 4;
+}
+
+#observacoes {
+    grid-column: 1 / span 10;
+    grid-row: 5/ span 3;
+}

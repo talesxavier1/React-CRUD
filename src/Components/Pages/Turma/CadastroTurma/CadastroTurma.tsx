@@ -193,7 +193,6 @@ const CadastroTurmaContent = () => {
                 id={style["carga_horaria_complementar"]}
                 sx={{ width: "100%" }}
                 type="number"
-
             />
             </>
             <><TextFieldComponent label='Observações'
