@@ -1,3 +1,4 @@
+import { GUID } from "../../utils/GUID";
 import ITurmaModel from "../Interfaces/ITurmaModel";
 
 export default class TurmaModel implements ITurmaModel {
@@ -14,4 +15,8 @@ export default class TurmaModel implements ITurmaModel {
     "classEndtDate"!: string
     "totalWorkload"!: number
     "supplementaryWorkload"!: number
+
+    constructor() {
+        this.codigo = GUID.getGUID();
+    }
 }
