@@ -1,7 +1,7 @@
 import { Backdrop, CircularProgress, Tab, Tabs } from "@mui/material";
 import style from "./CadastroTurma.module.css"
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ButtonComponent from "../../../Components/Button/ButtonComponent";
 import TextFieldComponent from "../../../Components/TextField/TextFieldComponent";
 import DateField from "../../../Components/DateField/DateField";
@@ -11,6 +11,8 @@ import { useTurmaContext } from "../TurmaContext";
 import TurmaModel from "../../../../Models/Objects/TurmaModel";
 import { useQuery } from "react-query";
 import RefFormatter from "../../../../utils/RefFormatter";
+import Swal from "sweetalert2";
+import DateFormat from "../../../../utils/DateFormat";
 
 
 
@@ -29,15 +31,55 @@ const CadastroTurma = () => {
                 let result = await context.getTurma(codigo);
                 if (!result) { navigate("/main/turma/page"); return; }
                 context.setTurma(result);
+            } else {
+                context.setTurma(new TurmaModel());
             }
-            context.setTurma(new TurmaModel());
         }),
         { refetchOnWindowFocus: false, cacheTime: 0 }
     );
 
     const save = async () => {
         let data = RefFormatter.getObjectFromRefs(new TurmaModel(), refsMap);
-        console.log(data);
+
+        /* - - - - - - Validação dos campos obrigatórios - - - - - - */
+        let camposObrigatorios = [
+            { "field": "classCode", "label": "Código da Turma" },
+            { "field": "schoolYear", "label": "Ano Letivo" },
+            { "field": "classStatus", "label": "Status da Turma" },
+            { "field": "responsibleTeacher", "label": "Professor Responsável" },
+            { "field": "classStartDate", "label": "Data de Início da Turma" },
+            { "field": "classEndtDate", "label": "Data de Fim da Turma" },
+        ];
+        for (let VALUE of camposObrigatorios) {
+            if (data[VALUE.field]) { continue; }
+            Swal.fire({
+                icon: 'info',
+                text: `O campo '${VALUE.label}' é obrigatório.`,
+            });
+            return;
+        }
+        /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+        data.classStartDate = DateFormat.getISODateFromBRDate(data.classStartDate);
+        data.classEndtDate = DateFormat.getISODateFromBRDate(data.classEndtDate);
+        data.schoolYear = Number(data.schoolYear);
+
+        let result: boolean = await (async () => {
+            if (codigo) {
+                return await context.updateTurma(data as TurmaModel);
+            } else {
+                return await context.addTurma(data as TurmaModel);
+            }
+        })();
+
+        Swal.fire({
+            icon: result ? "success" : "error",
+            text: result ? "Registro Salvo." : "Não foi possível salvar o registro.",
+        }).then(() => {
+            if (result) {
+                navigate("/main/turma");
+            }
+        });
     }
 
     return (
@@ -116,6 +158,7 @@ const CadastroTurmaContent = ({ refsMap }: { refsMap: Map<string, React.MutableR
             />
             </>
             <><TextFieldComponent label='Código da Turma'
+                required
                 id={style["codigo_da_turma"]}
                 sx={{ width: "100%" }}
                 value={context.turma?.classCode}
@@ -123,6 +166,7 @@ const CadastroTurmaContent = ({ refsMap }: { refsMap: Map<string, React.MutableR
             />
             </>
             <><DateField label={"Ano Letivo"}
+                required
                 value={(() => {
                     let value = context.turma?.schoolYear;
                     if (value) {
@@ -137,6 +181,7 @@ const CadastroTurmaContent = ({ refsMap }: { refsMap: Map<string, React.MutableR
             />
             </>
             <><SelectComponent inputLabel='Status da Turma'
+                required
                 id={style["status_da_turma"]}
                 sx={{ width: "100%" }}
                 asyncOptions={false}
@@ -205,6 +250,7 @@ const CadastroTurmaContent = ({ refsMap }: { refsMap: Map<string, React.MutableR
             />
             </>
             <><SelectSearchComponent inputLabel='Professor Responsável'
+                required
                 id={style["professor_responsavel"]}
                 sx={{ width: "100%" }}
                 defaulOption={(() => {
@@ -236,6 +282,7 @@ const CadastroTurmaContent = ({ refsMap }: { refsMap: Map<string, React.MutableR
             />
             </>
             <><DateField label='Data de Início da Turma'
+                required
                 value={context.turma?.classStartDate}
                 id={style["data_de_inicio_da_turma"]}
                 sx={{ width: "100%" }}
@@ -243,6 +290,7 @@ const CadastroTurmaContent = ({ refsMap }: { refsMap: Map<string, React.MutableR
             />
             </>
             <><DateField label='Data de Fim da Turma'
+                required
                 value={context.turma?.classEndtDate}
                 id={style["data_de_fim_da_turma"]}
                 sx={{ width: "100%" }}
