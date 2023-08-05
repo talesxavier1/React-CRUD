@@ -2,14 +2,15 @@ import { useContext } from "react";
 import BackDrop from "../Components/Components/BackDrop/BackDrop";
 import { AuthContext } from "../Contexts/Auth";
 import { useQuery } from 'react-query'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 
 const RouterGuard = (props: any) => {
     const StorageData = sessionStorage.getItem("userToken");
     const authContext = useContext(AuthContext);
+    const location = useLocation();
 
     const { data, isFetching } = useQuery(
-        ["validateToken", props.children.type.name],
+        ["validateToken", location.pathname],
         async () => {
             if (!StorageData) { return false; }
             let result = await authContext?.validateUserToken(StorageData);
@@ -19,7 +20,7 @@ const RouterGuard = (props: any) => {
             }
             return true;
         },
-        { refetchOnWindowFocus: false, cacheTime: 2000 }
+        { refetchOnWindowFocus: false, cacheTime: 0 }
     );
 
 

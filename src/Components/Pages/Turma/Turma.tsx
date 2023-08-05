@@ -79,7 +79,7 @@ const Turma = () => {
                         color: '#222834',
                         backgroundColor: '#539553'
                     }}
-                    onClick={() => navigate("/main/turma/page/123")}
+                    onClick={() => navigate("/main/turma/page")}
                 />
                 </>
                 <><ButtonComponent value='Editar'
@@ -88,7 +88,7 @@ const Turma = () => {
                         color: '#222834',
                         backgroundColor: `${selectedRows.length == 1 ? "#6C757D" : ""}`
                     }}
-                    onClick={() => { navigate(`/main/turma/page?codigo=${selectedRows[0]}`) }}
+                    onClick={() => { navigate(`/main/turma/page/${selectedRows[0]}`) }}
                     disabled={selectedRows.length != 1}
                 />
                 </>

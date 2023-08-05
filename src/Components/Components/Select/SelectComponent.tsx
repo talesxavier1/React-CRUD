@@ -21,6 +21,7 @@ interface ISelectComponent {
     defaulOption?: IOption[]
     getOptions?: () => Promise<IOption[]>
     multiple?: boolean
+    required?: boolean
 }
 
 const SelectComponent = (props: ISelectComponent) => {
@@ -144,6 +145,7 @@ const SelectComponent = (props: ISelectComponent) => {
                 }}
                 renderInput={(params) => (
                     <TextField
+                        required={props.required}
                         {...params}
                         label={props.inputLabel}
                         InputProps={{
