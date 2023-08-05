@@ -25,12 +25,15 @@ interface ISelectComponent {
     defaulOption?: IOption[]
     getOptions?: (textSearch: string, skip: number, take: number) => Promise<IOption[]>
     countOptions?: (textSearch: string) => Promise<number>
+    required?: boolean
 }
 
 const SelectSearchComponent = (props: ISelectComponent) => {
-    const [selectedValue, setSelectedValue] = useState<IOption[] | null>(null);
     const [inputTextValue, setInputTextValue] = useState<string>("");
-    const debouncedValue = useDebounce<string>(inputTextValue, 1000);
+    const [eventTextValue, setEventTextValue] = useState<string>("");
+    const debouncedValue = useDebounce<string>(eventTextValue, 1000);
+
+    const [selectedValue, setSelectedValue] = useState<IOption[] | null>(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [page, setPage] = useState(0);
 
@@ -167,6 +170,9 @@ const SelectSearchComponent = (props: ISelectComponent) => {
                     setPage(0);
                 }}
                 onInputChange={(event, newInputValue) => {
+                    if (event) {
+                        setEventTextValue(newInputValue);
+                    }
                     setInputTextValue(newInputValue);
                 }}
                 inputMode='search'
@@ -221,6 +227,7 @@ const SelectSearchComponent = (props: ISelectComponent) => {
                 renderInput={(params) => (
                     <TextField
                         {...params}
+                        required={props.required}
                         label={props.inputLabel}
                         sx={{ width: "100%" }}
                         InputProps={{
