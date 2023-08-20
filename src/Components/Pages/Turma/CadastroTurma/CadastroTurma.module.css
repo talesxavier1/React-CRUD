@@ -1,5 +1,5 @@
 .container {
-    height: 100%;
+    height: auto;
     display: flex;
     flex-direction: column;
 }
@@ -21,7 +21,8 @@
 
 .content_wrapper {
     margin: 15px;
-    height: 85%;
+    min-height: 720px;
+    /* height: 85%; */
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
