@@ -82,8 +82,6 @@ const CadastroIdiomas = (props: ICadastroIdiomas) => {
             results.push({ "result": result, "id": VALUE.toString() });
         }
 
-
-
         Swal.fire({
             icon: 'success',
             html: (() => {
