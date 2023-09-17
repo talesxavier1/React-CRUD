@@ -75,6 +75,38 @@ const CadastroIdiomas = (props: ICadastroIdiomas) => {
         }
     }, [idiomasRefs, professorContext]);
 
+    const deleteIdioma = useCallback(async () => {
+        let results = [];
+        for (let VALUE of selectedRows) {
+            let result = await professorContext?.deleteIdioma(VALUE.toString());
+            results.push({ "result": result, "id": VALUE.toString() });
+        }
+
+        Swal.fire({
+            icon: 'success',
+            html: (() => {
+                let result = [];
+
+                let comSucesso = results.filter(VALUE => VALUE.result);
+                if (comSucesso.length > 0) {
+                    result.push("Registros apagados:");
+                    result.push(comSucesso.map(VALUE => `   ${VALUE.id}<br/>`).join(""));
+                }
+
+                let semSucesso = results.filter(VALUE => !VALUE.result);
+                if (semSucesso.length > 0) {
+                    result.push("Registros não apagados:");
+                    result.push(semSucesso.map(VALUE => `   ${VALUE.id}<br/>`).join(""));
+                }
+
+                return result.join("<br/>")
+            })(),
+        }).then(() => {
+            idiomasRefetch();
+        });
+
+    }, [selectedRows])
+
     return (
         <div className={styles["container"]} id={props.id}>
             <div className={styles["buttons-container"]}>
@@ -107,10 +139,10 @@ const CadastroIdiomas = (props: ICadastroIdiomas) => {
                     variant='outlined'
                     style={{
                         color: '#222834',
-                        // backgroundColor: `${selectedRows.length > 0 ? "#ff6868" : ""}`
+                        backgroundColor: `${selectedRows.length > 0 ? "#ff6868" : ""}`
                     }}
-                // disabled={selectedRows.length == 0}
-                // onClick={() => { deleteEndereco() }}
+                    disabled={selectedRows.length == 0}
+                    onClick={() => { deleteIdioma() }}
                 />
                 </>
             </div>
