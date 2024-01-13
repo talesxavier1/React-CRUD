@@ -9,4 +9,5 @@ export default interface IGradeCurricularRepository {
     getCurriculumPlansByQuery: (userToken: string, skip: number, take: number, query: string, codigoRef: string) => Promise<GradeCurricularModel[]>;
     logicalDeleteCurriculumPlan: (userToken: string, codigo: string) => Promise<boolean>;
     modifyCurriculumPlan: (userToken: string, gradeCurricularModel: GradeCurricularModel) => Promise<boolean>;
+    /* Teste */
 }
