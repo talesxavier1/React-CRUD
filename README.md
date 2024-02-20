@@ -37,7 +37,7 @@ Durante o desenvolvimento desse projeto dois principais problemas causaram lenti
 <h3>Funcionalidades:</h3>
 
 - Login </br>
-    [- GIF.](https://github.com/talesxavier1/Arquivos/blob/main/React%20CRUD/Cadastros%20Gerais%20-%20Turma%20-%20Componentes%20Curriculares.gif?raw=true "GIF")
+    <img src="https://github.com/talesxavier1/Arquivos/blob/main/React%20CRUD/Login.gif?raw=true" width="200" height="100">
 - Cadastros básicos.
     - Professor.
         - Formação Acadêmica. </br>
@@ -52,3 +52,20 @@ Durante o desenvolvimento desse projeto dois principais problemas causaram lenti
         - Componentes Curriculares. </br>
             [GIF.](XX "GIF")
         
+
+<!-- - Login </br>
+    [- GIF.](https://github.com/talesxavier1/Arquivos/blob/main/React%20CRUD/Cadastros%20Gerais%20-%20Turma%20-%20Componentes%20Curriculares.gif?raw=true "GIF")
+- Cadastros básicos.
+    - Professor.
+        - Formação Acadêmica. </br>
+            [GIF.](https://raw.githubusercontent.com/talesxavier1/Arquivos/main/React%20CRUD/Cadastros%20Gerais%20-%20Professor%20-%20Formação%20Acadêmica.gif "GIF")
+        - Área de Atuação. </br>
+            [GIF.](XX "GIF")
+        - Cargos. </br>
+            [GIF.](XX "GIF")
+    - Turma.
+        - Área de conhecimento. </br>
+            [GIF.](XX "GIF")
+        - Componentes Curriculares. </br>
+            [GIF.](XX "GIF")
+         -->
