@@ -41,7 +41,11 @@ Durante o desenvolvimento desse projeto dois principais problemas causaram lenti
 - Cadastros básicos.
     - Professor.
         - Formação Acadêmica.
+<<<<<<< HEAD
             [- GIF.](https://raw.githubusercontent.com/talesxavier1/Arquivos/main/React%20CRUD/Cadastros%20Gerais%20-%20Professor%20-%20Formação%20Acadêmica.gif "GIF")
+=======
+            - GIF.
+>>>>>>> e107eb99b2a922e4a5a2e3dee3984ca97e024b9b
         - Área de Atuação.
             [- GIF.](XX "GIF")
         - Cargos.
@@ -50,5 +54,11 @@ Durante o desenvolvimento desse projeto dois principais problemas causaram lenti
         - Área de conhecimento.
             [- GIF.](XX "GIF")
         - Componentes Curriculares.
+<<<<<<< HEAD
             [- GIF.](XX "GIF")
+=======
+
+<!-- ![](https://raw.githubusercontent.com/talesxavier1/Arquivos/main/React%20CRUD/Cadastros%20Gerais%20-%20Professor%20-%20Formação%20Acadêmica.gif )
+![](https://raw.githubusercontent.com/talesxavier1/Arquivos/main/Odata_CSharp/Odata_cshar__Idade%20decrescente.gif ) -->
+>>>>>>> e107eb99b2a922e4a5a2e3dee3984ca97e024b9b
         
