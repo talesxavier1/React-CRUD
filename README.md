@@ -41,7 +41,6 @@ Durante o desenvolvimento desse projeto dois principais problemas causaram lenti
 - Cadastros básicos.
     - Professor.
         - Formação Acadêmica.
-        
             [- GIF.](https://raw.githubusercontent.com/talesxavier1/Arquivos/main/React%20CRUD/Cadastros%20Gerais%20-%20Professor%20-%20Formação%20Acadêmica.gif "GIF")
         - Área de Atuação.
             [- GIF.](XX "GIF")
