@@ -37,7 +37,7 @@ Durante o desenvolvimento desse projeto dois principais problemas causaram lenti
 <h3>Funcionalidades:</h3>
 
 - Login </br>
-    <img src="https://github.com/talesxavier1/Arquivos/blob/main/React%20CRUD/Login.gif?raw=true" width="700" height="600">
+        <img src="https://github.com/talesxavier1/Arquivos/blob/main/React%20CRUD/Login.gif?raw=true" width="700" height="500">
 - Cadastros básicos.
     - Professor.
         - Formação Acadêmica. </br>
