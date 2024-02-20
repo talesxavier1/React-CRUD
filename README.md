@@ -40,15 +40,15 @@ Durante o desenvolvimento desse projeto dois principais problemas causaram lenti
     [- GIF.](XX "GIF")
 - Cadastros básicos.
     - Professor.
-        - Formação Acadêmica.
+        - Formação Acadêmica. </br>
             [- GIF.](https://raw.githubusercontent.com/talesxavier1/Arquivos/main/React%20CRUD/Cadastros%20Gerais%20-%20Professor%20-%20Formação%20Acadêmica.gif "GIF")
-        - Área de Atuação.
+        - Área de Atuação. </br>
             [- GIF.](XX "GIF")
-        - Cargos.
+        - Cargos. </br>
             [- GIF.](XX "GIF")
     - Turma.
-        - Área de conhecimento.
+        - Área de conhecimento. </br>
             [- GIF.](XX "GIF")
-        - Componentes Curriculares.
+        - Componentes Curriculares. </br>
             [- GIF.](XX "GIF")
         
