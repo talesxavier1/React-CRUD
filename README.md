@@ -51,21 +51,3 @@ Durante o desenvolvimento desse projeto dois principais problemas causaram lenti
             <img src="https://github.com/talesxavier1/Arquivos/blob/main/React%20CRUD/Cadastros%20Gerais%20-%20Professor%20-%20Cargos.gif?raw=true">
         - Componentes Curriculares. </br>
             <img src="https://github.com/talesxavier1/Arquivos/blob/main/React%20CRUD/Cadastros%20Gerais%20-%20Professor%20-%20Cargos.gif?raw=true">
-        
-
-<!-- - Login </br>
-    [- GIF.](https://github.com/talesxavier1/Arquivos/blob/main/React%20CRUD/Cadastros%20Gerais%20-%20Turma%20-%20Componentes%20Curriculares.gif?raw=true "GIF")
-- Cadastros básicos.
-    - Professor.
-        - Formação Acadêmica. </br>
-            [GIF.](https://raw.githubusercontent.com/talesxavier1/Arquivos/main/React%20CRUD/Cadastros%20Gerais%20-%20Professor%20-%20Formação%20Acadêmica.gif "GIF")
-        - Área de Atuação. </br>
-            [GIF.](XX "GIF")
-        - Cargos. </br>
-            [GIF.](XX "GIF")
-    - Turma.
-        - Área de conhecimento. </br>
-            [GIF.](XX "GIF")
-        - Componentes Curriculares. </br>
-            [GIF.](XX "GIF")
-         -->
