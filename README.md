@@ -37,20 +37,20 @@ Durante o desenvolvimento desse projeto dois principais problemas causaram lenti
 <h3>Funcionalidades:</h3>
 
 - Login </br>
-        <img src="https://github.com/talesxavier1/Arquivos/blob/main/React%20CRUD/Login.gif?raw=true" width="1200" height="700">
+        <img src="https://github.com/talesxavier1/Arquivos/blob/main/React%20CRUD/Login.gif?raw=true">
 - Cadastros básicos.
     - Professor.
         - Formação Acadêmica. </br>
-            <img src="https://raw.githubusercontent.com/talesxavier1/Arquivos/main/React%20CRUD/Cadastros%20Gerais%20-%20Professor%20-%20Formação%20Acadêmica.gif" width="1200" height="700">
+            <img src="https://raw.githubusercontent.com/talesxavier1/Arquivos/main/React%20CRUD/Cadastros%20Gerais%20-%20Professor%20-%20Formação%20Acadêmica.gif">
         - Área de Atuação. </br>
-            <img src="https://github.com/talesxavier1/Arquivos/blob/main/React%20CRUD/Cadastros%20Gerais%20-%20Professor%20-%20Area%20atuacao.gif?raw=true" width="1200" height="700">
+            <img src="https://github.com/talesxavier1/Arquivos/blob/main/React%20CRUD/Cadastros%20Gerais%20-%20Professor%20-%20Area%20atuacao.gif?raw=true">
         - Cargos. </br>
-            <img src="https://github.com/talesxavier1/Arquivos/blob/main/React%20CRUD/Cadastros%20Gerais%20-%20Professor%20-%20Cargos.gif?raw=true" width="1200" height="700">
+            <img src="https://github.com/talesxavier1/Arquivos/blob/main/React%20CRUD/Cadastros%20Gerais%20-%20Professor%20-%20Cargos.gif?raw=true">
     - Turma.
         - Área de conhecimento. </br>
-            <img src="https://github.com/talesxavier1/Arquivos/blob/main/React%20CRUD/Cadastros%20Gerais%20-%20Professor%20-%20Cargos.gif?raw=true" width="1200" height="700">
+            <img src="https://github.com/talesxavier1/Arquivos/blob/main/React%20CRUD/Cadastros%20Gerais%20-%20Professor%20-%20Cargos.gif?raw=true">
         - Componentes Curriculares. </br>
-            <img src="https://github.com/talesxavier1/Arquivos/blob/main/React%20CRUD/Cadastros%20Gerais%20-%20Professor%20-%20Cargos.gif?raw=true" width="1200" height="700">
+            <img src="https://github.com/talesxavier1/Arquivos/blob/main/React%20CRUD/Cadastros%20Gerais%20-%20Professor%20-%20Cargos.gif?raw=true">
         
 
 <!-- - Login </br>
